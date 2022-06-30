@@ -3,7 +3,21 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<h1>Accueil</h1>
+    <div class="col-12" id="header"></div>
+    <div class="col-12" id="news"></div>
+    <div class="col-12 d-flex flex-row" id="menu">
+        <a href="#" class=" col-4 d-flex justify-content-center align-items-center text-center menu-link hvr-bounce-to-top" id="podcasts">
+            Grille des programmes et podcasts
+        </a>
+        
+        <div class="col-4" id="player"></div>
+        
+       
+        <a href="#" class=" col-4 d-flex justify-content-center align-items-center text-center menu-link hvr-bounce-to-top" id="more-news">
+                Encore + d'actus
+        </a>
+        
+    </div>
 {% endblock %}
 
 

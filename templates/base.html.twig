@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
-{% block body %}{% endblock %}
+    <div class="container-fluid p-0">
+    
+    {% block body %}{% endblock %}
 
-{% block jsIncludes %}{% endblock %}
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('js/script.js') }}"></script>
+    </div>
+    
+    {% block jsIncludes %}{% endblock %}
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>
