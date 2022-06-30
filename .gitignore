@@ -18,3 +18,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> custom settings ###
+/.idea
+/migrations/*.php
+###< custom settings ###
