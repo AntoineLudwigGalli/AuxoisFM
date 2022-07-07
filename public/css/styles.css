@@ -33,6 +33,14 @@
     font-size: 3rem;
 }
 
+.blue-background{
+    background-color: #1f3c5c !important;
+}
+
+.overlayed-podcast{
+    color: rgb(255, 255, 255) !important;
+    background-color: #1f3c5c !important;
+}
 
 
 
@@ -72,10 +80,18 @@
 }
 .hvr-bounce-to-top:hover, .hvr-bounce-to-top:focus, .hvr-bounce-to-top:active {
     color: rgb(255, 255, 255) !important;
+    cursor: pointer;
 }
 .hvr-bounce-to-top:hover:before, .hvr-bounce-to-top:focus:before, .hvr-bounce-to-top:active:before {
     -webkit-transform: scaleY(1);
     transform: scaleY(1);
     -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
     transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
+
+/*Grille des programmes et podcasts*/
+
+.target .normal{
+    display: none;
 }
