@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+.audio-player{
+    max-width: 30vw;
+    width: 80%;
+    margin-top: 1rem;
+}
+.audiosvg-container{
+    position: relative;
+}
+.play-text{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    /*   text-transform: uppercase; */
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+}
+.pause-text{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 35px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    /*   text-transform: uppercase; */
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+}
+.active-box{
+    width: 40%;
+    max-width: 350px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    display: none;
+}
+.audiosvg{
+    width: 40%;
+    max-width: 300px;
+    max-height: 50vh;
+    margin: auto;
+    display: block;
+}
+#hover-circle .st4{
+    transition: all 0.25s;
+}
+#ripple-circle circle{
+    opacity: 0.5;
+}
+.audio-overlay{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+    z-index: 100;
+    bottom: 0;
+}
+st0 {
+    fill: none;
+    stroke: #486CA3;
+    stroke-width: 5.6943;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+
+.st1 {
+    fill: white;
+}
+
+.st2 {
+    fill: none;
+    stroke: #1A478C;
+    stroke-width: 5.8983;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+
+.st3 {
+    fill: #1A478C;
+}
+
+.st4 {
+    fill: #486CA3;
+}
+
+.st5 {
+    fill: none;
+    stroke: #1A478C;
+    stroke-width: 7.5924;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+
+.st6 {
+    fill: #FFFFFF;
+}
+
+.st7 {
+    fill: none;
+    stroke: #7691BA;
+    stroke-width: 13.2866;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+
+.st8 {
+    fill: none;
+    stroke: #486CA3;
+    stroke-width: 4.4082;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+
+.st9 {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 0.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+}
+@media screen and (max-width: 768px) {
+    .js-video {
+        border: none;
+    }
+    .slideshow ul li {
+        padding: 0;
+    }
+    .info-container p {
+        text-align: center;
+    }
+    .video-container{
+        padding: 20px 20px 8vh 20px;
+    }
+    .audio-container{
+        padding: 8vh 20px 20px 20px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .circle {
+        width: 4px;
+        height: 4px;
+        margin: 2px 4px;
+    }
+    #videosvg, .audiosvg {
+        width: 66%;
+    }
+    .dialog__content {
+        width: 80% !important;
+        padding: 10px !important;
+    }
+    .dialog__content button {
+        border-radius: 0 !important;
+        height: 30px !important;
+    }
+    .qingli-logo {
+        width: 36px;
+        height: 36px;
+        top: 15px;
+        right: -10px;
+    }
+}

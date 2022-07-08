@@ -7,11 +7,12 @@
     <title>{% block title %}{% endblock %}</title>
     {% block cssIncludes %}{% endblock %}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/audio-player.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
-<body>
+<body class="{{ bgc }}">
     <div class="container-fluid p-0">
-    
+    {{ include('partials/header.html.twig') }}
     {% block body %}{% endblock %}
 
     </div>
