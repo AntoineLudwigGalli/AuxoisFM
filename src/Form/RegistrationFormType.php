@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -74,6 +75,50 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => "Votre mot de passe doit contenir au moins {{ limit }} caractères",
                         'maxMessage' => 'Votre mot de passe ne peut pas contenir plus de {{ limit }} caractères'
                     ])
+                ],
+            ])
+            // Champ Prénom
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de saisir votre prénom'
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 100,
+                        'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères.',
+                        'maxMessage' => 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères'
+                    ]),
+                ],
+            ])
+            // Champ Nom
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de saisir votre nom'
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 100,
+                        'minMessage' => 'Votre nom doit contenir au moins {{ limit }} caractères.',
+                        'maxMessage' => 'Votre nom ne peut pas contenir plus de {{ limit }} caractères'
+                    ]),
+                ],
+            ])
+            ->add('pseudonym', TextType::class, [
+                'label' => 'Pseudo',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de saisir votre pseudo'
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 100,
+                        'minMessage' => 'Votre pseudo doit contenir au moins {{ limit }} caractères.',
+                        'maxMessage' => 'Votre pseudo ne peut pas contenir plus de {{ limit }} caractères'
+                    ]),
                 ],
             ])
         ;

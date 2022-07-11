@@ -1,7 +1,62 @@
-<div class="col-12" id="header">
+<div class="col-12 d-flex flex-row align-items-center" id="header">
     <div class="col-3">
         <a href="{{ path('main_home') }}"><img src="{{ asset('images/logo.png') }}" alt="logo d'AuxoisFM" id="logo" class="img-fluid"></a>
     </div>
+    
+    {% if app.user %}
+        <ul class="btn btn-light log-btn col-2 offset-6">
+            <li class="nav-item dropdown">
+                {# Texte du bouton du menu déroulant #}
+                <a class="nav-link dropdown-toggle" href="#" id="profil-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {# Affichage du prénom de l'utilisateur connecté #}
+                    <i class="fa-solid fa-briefcase mx-1"></i>{{ app.user.pseudonym }}
+                </a>
+                {# Liste des boutons du menu déroulant #}
+                <div class="dropdown-menu " aria-labelledby="profil-dropdown">
+                    {# Bouton de la page mon profil #}
+                    <a class="dropdown-item ms-0" href="#
+{#{{ path('user_panel_profil') }}#}
+">
+                        <i class="fa-solid fa-user me-1"></i>Mon Profil
+                    </a>
+                
+                    {# Bouton de la page Administration #}
+                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                        <a class="dropdown-item ms-0" href="#
+{#todo {{ path('admin_panel_index') }}#}
+">
+                            <i class="fa-solid fa-gears me-1"></i>Administration
+                        </a>
+                    {% endif %}
+                
+                    {# Bouton de la page User Panel #}
+                    {% if app.user.roles[0] == "ROLE_MEMBER" or app.user.roles[0] == "ROLE_ADMIN" %}
+                        <a class="dropdown-item ms-0" href="#
+{#todo {{ path('user_panel_manage_shop') }}#}
+">
+                            <i class="fa-solid fa-store me-1"></i>Boutiques
+                        </a>
+                    {% endif %}
+                
+                    {# Séparateur #}
+                    <div class="dropdown-divider"></div>
+                
+                    {# Bouton de la page de déconnexion #}
+                    <a class="dropdown-item ms-0" href="{{ path('app_logout') }}">
+                        <i class="fas fa-sign-out-alt me-1"></i>Déconnexion
+                    </a>
+                </div>
+            </li>
+        </ul>
+    {% else %}
+        <div class="col-1 offset-6 me-4">
+            <a href="{{ path('app_login') }}" class="btn btn-light log-btn ms-5">Connexion</a>
+        </div>
+        <div class="col-1">
+            <a href="{{ path('app_register') }}" class="btn btn-light log-btn ms-5">Inscription</a>
+        </div>
+    {% endif %}
+    
 </div>
     
     

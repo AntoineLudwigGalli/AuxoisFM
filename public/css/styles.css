@@ -17,6 +17,12 @@ body{
     max-height: 100vh;
 }
 
+/*Header*/
+#header {
+    background-color: #1f3c5c;
+    height: 10vh;
+}
+
 #logo{
     border-radius: 25px;
     border: #7adcf1 5px solid;
@@ -25,18 +31,26 @@ body{
     margin-left: .5vh;
 }
 
-#logo:hover{
+#logo:hover {
     border-radius: 25px;
     border: #c95f5f 5px solid;
     height: 9vh;
     margin-top: 0.5vh;
     margin-left: .5vh;
 }
-/*Header*/
-#header {
-    background-color: #1f3c5c;
-    height: 10vh;
+
+.log-btn{
+    border-radius: 25px;
+    border: #7adcf1 5px solid;
+    color: #1f3c5c;
+    list-style-type: none;
 }
+
+.log-btn:hover {
+    border-radius: 25px;
+    border: #c95f5f 5px solid;
+}
+
 /*Accueil*/
 
 
