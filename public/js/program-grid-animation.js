@@ -18,11 +18,11 @@ function openView(){
         'width' : "100vw",
 
     }, 750, function(){
-        $('#header').fadeOut();
+        $('#header').attr("style", "display: none !important");
         $('#more-news').removeClass("d-flex");
         $('#more-news').hide();
         $('#menu').removeClass("d-flex");
-        $('#menu').fadeOut();
+        $('#menu').hide();
         $('#news').fadeOut();
         $('#player').hide();
         $('body').append($(".target"));
