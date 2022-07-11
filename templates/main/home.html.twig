@@ -6,43 +6,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css">
     {#  lecteur audio #}
     <link rel="stylesheet" href='{{ asset('css/audio-player.css') }}'>
-{#    Slider cards#}
+    {#    Slider cards #}
     <link rel="stylesheet" href="{{ asset('css/slider-cards.css') }}">
+{#    Player flip#}
+    <link rel="stylesheet" href="{{ asset('css/player-flip.css') }}">
 {% endblock %}
 
 {% block body %}
     
     <div class="col-12 d-flex flex-row align-items-center" id="news">
-    
         <div class="menu">
             <div class="menu--wrapper">
-                
-                
                 <div class="menu--item ">
                     <figure>
-                        <img src="{{ asset('images/metalesia.jpg') }}" alt="" />
+                        <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
                     </figure>
-                    <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>Metalesia</h3></a>
+                    <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
-            
-                <div class="menu--item">
-                    <figure><img src="https://images.unsplash.com/photo-1594786118579-95ba90c801ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" /></figure>
+                <div class="menu--item ">
+                    <figure>
+                        <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
+                    </figure>
+                    <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
-            
-                <div class="menu--item">
-                    <figure><img src="https://images.unsplash.com/photo-1509339022327-1e1e25360a41?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" /></figure>
+                <div class="menu--item ">
+                    <figure>
+                        <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
+                    </figure>
+                    <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
-            
-                <div class="menu--item">
-                    <figure><img src="https://images.unsplash.com/photo-1525417071002-5ee4e6bb44f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" /></figure>
-                </div>
-            
-                <div class="menu--item">
-                    <figure><img src="https://images.unsplash.com/photo-1594072702031-f0e2a602dd2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" /></figure>
-                </div>
-            
-                <div class="menu--item">
-                    <figure><img src="https://images.unsplash.com/photo-1592989819277-a3aafa40c66a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" /></figure>
+                <div class="menu--item ">
+                    <figure>
+                        <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
+                    </figure>
+                    <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
             </div>
         </div>
@@ -56,9 +53,10 @@
             </div>
         </div>
         
-        <div class="col-4 d-flex flex-column align-items-center justify-content-center" id="player">
-            <div class="d-flex flex-column align-content-end audio-player">
-                <div class="audio-container img-fluid">
+        <div class="col-4 d-flex flex-column align-items-center justify-content-center flip-card" id="player">
+            
+            <div class="d-flex flex-column align-content-end justify-content-center audio-player flip-card-inner">
+                <div class="audio-container img-fluid flip-card-front">
                     <div class="audiosvg-container">
                         <h1 class="play-text">play</h1>
                         <h1 class="pause-text">pause</h1>
@@ -134,13 +132,23 @@
                         </g>
 										</svg>
                     </div>
+                    <div class="now-playing front-btn btn btn-outline-light">
+                        <h3>Now Playing...</h3>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h3 class="on-air-txt">Rockin'Auxois / Metalesia</h3>
-            </div>
-            <div class="on-air-img mb-3">
-                <img src='{{ asset('images/metalesia.jpg') }}' alt="" class="img-fluid">
+                
+                
+                <div class="flip-card-back d-flex flex-column justify-content-around">
+                    <a href="{{ path('main_news') }}">
+                        <h3 class="on-air-txt ">Rockin'Auxois / Metalesia</h3>
+                    </a>
+                    <a href='{{ path('main_news') }}' class="on-air-img mb-3">
+                        <img src='{{ asset('images/metalesia.jpg') }}' alt="" class="img-fluid">
+                    </a>
+                    <div class="now-playing back-btn btn btn-outline-light col-8 offset-2">
+                        <h3>Now Playing...</h3>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -159,7 +167,7 @@
     {#    lecteur audio #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
     <script src="{{ asset('js/audio-player.js') }}"></script>
-{#    Slider cards#}
+    {#    Slider cards #}
     <script src='{{ asset('js/slider-cards.js') }}'></script>
 
 

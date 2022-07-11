@@ -43,7 +43,7 @@ $('.active-box').hover(function(){
     TweenMax.to('.pause-text', 0.35, {autoAlpha: 0, y:0, transformOrigin:'50% 50%', ease:Back.easeIn});
 });
 
-var audioMp3 = new Audio();
+let audioMp3 = new Audio();
 audioMp3.src = 'http://auxoisfm.ice.infomaniak.ch/auxoisfm-128';
 
 function playAudio(){

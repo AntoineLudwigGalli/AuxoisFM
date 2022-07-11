@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
 .audio-player{
-    max-width: 30vw;
-    width: 80%;
+    width: 100%;
     margin-top: 1rem;
+    z-index: 900;
 }
 .audiosvg-container{
     position: relative;
+
 }
 .play-text{
     position: absolute;

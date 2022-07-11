@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/audio-player.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
-<body class="{{ bgc }}">
+<body class="{{ bgc|default('') }}">
     <div class="container-fluid p-0">
     {{ include('partials/header.html.twig') }}
     {% block body %}{% endblock %}
