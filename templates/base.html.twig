@@ -13,6 +13,9 @@
 <body class="{{ bgc|default('') }}">
     <div class="container-fluid p-0">
     {{ include('partials/header.html.twig') }}
+    
+    {# Affihcage des messages flashes #}
+    {% include 'partials/flashes.html.twig' %}
     {% block body %}{% endblock %}
 
     </div>
