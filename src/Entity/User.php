@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -38,6 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 60)]
     private $pseudonym;
+
+    #[ORM\OneToMany(mappedBy: 'animator', targetEntity: RadioShow::class)]
+    private $radioShows;
+
+    public function __construct()
+    {
+        $this->radioShows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -153,6 +163,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudonym(string $pseudonym): self
     {
         $this->pseudonym = $pseudonym;
+
+        return $this;
+    }
+    public function __toString() {
+    return $this->pseudonym;
+    }
+
+    /**
+     * @return Collection<int, RadioShow>
+     */
+    public function getRadioShows(): Collection
+    {
+        return $this->radioShows;
+    }
+
+    public function addRadioShow(RadioShow $radioShow): self
+    {
+        if (!$this->radioShows->contains($radioShow)) {
+            $this->radioShows[] = $radioShow;
+            $radioShow->setAnimator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRadioShow(RadioShow $radioShow): self
+    {
+        if ($this->radioShows->removeElement($radioShow)) {
+            // set the owning side to null (unless already changed)
+            if ($radioShow->getAnimator() === $this) {
+                $radioShow->setAnimator(null);
+            }
+        }
 
         return $this;
     }

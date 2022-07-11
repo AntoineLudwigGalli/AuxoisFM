@@ -17,26 +17,28 @@
                     <a class="dropdown-item ms-0" href="#
 {#{{ path('user_panel_profil') }}#}
 ">
-                        <i class="fa-solid fa-user me-1"></i>Mon Profil
+                        <i class="fa-solid fa-user me-1"></i>Profil
                     </a>
-                
+    
+                    {# Bouton de la page Mon Emission #}
+                    {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
+                        <a class="dropdown-item ms-0" href="#">
+                            <i class="fa-solid fa-user me-1"></i>Emissions
+                        </a>
+                    {% endif %}
+                    
+                    <div class="dropdown-divider"></div>
+                    
                     {# Bouton de la page Administration #}
                     {% if app.user.roles[0] == "ROLE_ADMIN" %}
                         <a class="dropdown-item ms-0" href="#
-{#todo {{ path('admin_panel_index') }}#}
+{# todo {{ path('admin_panel_index') }} #}
 ">
                             <i class="fa-solid fa-gears me-1"></i>Administration
                         </a>
                     {% endif %}
-                
-                    {# Bouton de la page User Panel #}
-                    {% if app.user.roles[0] == "ROLE_MEMBER" or app.user.roles[0] == "ROLE_ADMIN" %}
-                        <a class="dropdown-item ms-0" href="#
-{#todo {{ path('user_panel_manage_shop') }}#}
-">
-                            <i class="fa-solid fa-store me-1"></i>Boutiques
-                        </a>
-                    {% endif %}
+            
+                  
                 
                     {# Séparateur #}
                     <div class="dropdown-divider"></div>
