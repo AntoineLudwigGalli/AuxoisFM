@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier la photo de profil{% endblock %}
+
+{% block body %}
+<div class="row mt-5">
+    <h1 class="text-center">Modifier la photo de profil</h1>
+</div>
+<div class="row">
+    <div class="col-12 d-flex justify-content-center my-5">
+    {% if app.user.photo %}
+        <img src="{{ asset('images/profil/' ~ app.user.photo) }}" alt="">
+    {% else %}
+        <img src="{{ asset('images/profil/default_profile.jpg') }}" alt="" class="img-fluid col-3">
+    {% endif %}
+    </div>
+</div>
+    <div class="row">
+        <div class="col-4 offset-4">
+            {{ form(form) }}
+            <a href="{{ path('user_profile') }}" class="btn btn-danger col-12">Retour</a>
+        </div>
+        
+    </div>
+
+{% endblock %}
+
+
+

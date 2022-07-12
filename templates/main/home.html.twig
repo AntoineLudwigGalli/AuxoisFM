@@ -19,13 +19,14 @@
             <div class="menu--wrapper">
                 <div class="menu--item ">
                     <figure>
+{#                        todo: ajouter des alt dynamiques#}
                         <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
                     </figure>
                     <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
                 <div class="menu--item ">
                     <figure>
-                        <img src="{{ asset('images/test-news.jpg') }}" alt=""/>
+                        <img src="{{ asset('images/test-news.jpg')}}" alt=""/>
                     </figure>
                     <a href="{{ path('main_news') }}" class="mx-auto mb-3"><h3>La Salamandre Noire en direct d'AuxoisFM</h3></a>
                 </div>
@@ -143,7 +144,7 @@
                         <h3 class="on-air-txt ">Rockin'Auxois / Metalesia</h3>
                     </a>
                     <a href='{{ path('main_news') }}' class="on-air-img mb-3">
-                        <img src='{{ asset('images/metalesia.jpg') }}' alt="" class="img-fluid">
+                        <img src='{{ asset('images/metalesia.jpg')|imagine_filter('now_playing') }}' alt="" class="img-fluid">
                     </a>
                     <div class="now-playing back-btn btn btn-outline-light col-8 offset-2">
                         <h3>Now Playing...</h3>
@@ -163,6 +164,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {#     animsition.js  #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js"></script>
+    <script src="{{ asset('js/animsition.js') }}"></script>
     <script src="{{ asset('js/program-grid-animation.js') }}"></script>
     {#    lecteur audio #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>

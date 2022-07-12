@@ -1,29 +1,3 @@
-// Animsition pour le bouton + d'actus sur l'accueil
-
-$(document).ready(function() {
-    $(".animsition").animsition({
-        inClass: 'flip-in-x',
-        outClass: 'flip-out-x',
-        inDuration: 1500,
-        outDuration: 800,
-        linkElement: '.animsition-link',
-        loading: true,
-        loadingParentElement: 'body', //animsition wrapper element
-        loadingClass: 'animsition-loading',
-        loadingInner: '', // e.g '<img src="loading.svg" />'
-        timeout: false,
-        timeoutCountdown: 5000,
-        // onLoadEvent: true,
-        browser: [ 'animation-duration', '-webkit-animation-duration'],
-        // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
-        // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
-        overlay : false,
-        overlayClass : 'animsition-overlay-slide',
-        overlayParentElement : 'body',
-        transition: function(url){ window.location.href = url; }
-    });
-});
-
 // Flip animation on player
 
 $(".front-btn").click(function () {
@@ -32,4 +6,28 @@ $(".front-btn").click(function () {
 
 $(".back-btn").click(function () {
     $('#player .flip-card-inner').removeClass('is-flipped');
+})
+
+
+// Modif du champ adresse mail au click dans le profil user
+$(".user-profile-form").hide();
+
+$(".user-profile-data.user-email").click(function (){
+    $('.user-profile-data.user-email').hide();
+    $(".user-profile-form.user-email").show();
+    $('.user-profile-form.user-pseudo').hide();
+    $(".user-profile-data.user-pseudo").show();
+})
+
+$(".user-profile-data.user-pseudo").click(function (){
+    $('.user-profile-data.user-pseudo').hide();
+    $(".user-profile-form.user-pseudo").show();
+    $('.user-profile-form.user-email').hide();
+    $(".user-profile-data.user-email").show();
+
+})
+
+$(".user-profile-cancel").click(function (){
+    $('.user-profile-data').show();
+    $(".user-profile-form").hide();
 })

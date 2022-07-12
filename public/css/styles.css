@@ -172,3 +172,13 @@ body{
   display: none;
 }
 
+/* Profil */
+.user-profile-data{
+    cursor: pointer;
+}
+.list-group .list-group-item .user-profile-data:hover{
+    color: white !important;
+}
+.list-group-item{
+    height: 8vh;
+}

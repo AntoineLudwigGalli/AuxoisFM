@@ -35,11 +35,30 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $user->setRegistrationDate(new \DateTime());
+
+//            Enregistrement de la photo avec nouveau nom
+            $photo = $form->get('photo')->getData();
+
+            /*Génération nom*/
+            if($photo) {
+                do {
+                    $newFileName = md5(random_bytes(50)) . '.' . $photo->guessExtension();
+                } while (file_exists($this->getParameter('app.user.photo.directory') . $newFileName));
+
+                $user->setPhoto($newFileName);
+
+                $photo->move(
+                    $this->getParameter('app.user.photo.directory'),
+                    $newFileName,
+                );
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -53,7 +72,6 @@ class RegistrationController extends AbstractController
                     ->subject('Merci de confirmer votre adresse mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_login');
         }
