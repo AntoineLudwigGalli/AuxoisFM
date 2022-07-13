@@ -21,9 +21,9 @@ function openView(){
         $('#header').attr("style", "display: none !important");
         $('#more-news').removeClass("d-flex");
         $('#more-news').hide();
-        $('#menu').removeClass("d-flex");
         $('#menu').hide();
         $('#news').fadeOut();
+        $('.owl-carousel').fadeOut();
         $('#player').hide();
         $('body').append($(".target"));
         // Animation d'apparition du grand texte
@@ -54,6 +54,7 @@ function closeView(){
     $('#menu').addClass("d-flex");
     $('#menu').fadeIn();
     $('#news').fadeIn();
+    $('.owl-carousel').fadeIn();
     $('#player').fadeIn();
     $('#menu').prepend($(".target"));
 

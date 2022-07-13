@@ -57,12 +57,17 @@ body{
 #news {
   height: 45vh;
   background-color: #085f8c;
+    display: flex;
 }
 
 #podcasts {
   background-color: #7adcf1;
     max-height: 45vh;
     min-height: 45vh;
+    color: #1f3c5c;
+    font-weight: bold;
+    font-size: 3rem;
+    display: flex;
 }
 
 
@@ -71,6 +76,7 @@ body{
     object-fit: cover;
     max-height: 45vh;
     min-height: 45vh;
+    display: flex;
 }
 
 .on-air-img img{
@@ -98,14 +104,6 @@ body{
     min-height: 45vh;
 }
 
-.menu-link {
-    min-height: 45vh;
-  max-height: 45vh;
-  text-decoration: none;
-  color: #1f3c5c;
-  font-weight: bold;
-  font-size: 3rem;
-}
 
 .blue-background {
   background-color: #1f3c5c !important;
@@ -181,4 +179,17 @@ body{
 }
 .list-group-item{
     height: 8vh;
+}
+
+.profile-container{
+    height: 60vh;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px black;
+}
+
+/*Shows*/
+
+.show-list-logo{
+    max-height: 15vh;
 }

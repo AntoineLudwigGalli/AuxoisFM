@@ -1,0 +1,48 @@
+.owl-carousel{
+    height: 100%;
+}
+
+.owl-stage-outer{
+    object-fit: cover;
+    min-height: 100%;
+    max-height: 100%;
+}
+
+.owl-stage{
+    object-fit: cover;
+    min-height: 45vh;
+    max-height: 100%;
+}
+
+.owl-item .slide{
+    position: relative;
+    height: 45vh;
+    max-height: 100%;
+}
+
+.owl-item .slide img{
+    position: absolute;
+    object-fit: cover;
+    min-height: 100%;
+    z-index: 1;
+}
+
+.owl-item .slide a{
+   position: absolute;
+   z-index: 100;
+    text-decoration: none;
+    text-align: center;
+    color: #1f3c5c;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem 0;
+}
+.owl-item .slide a:hover{
+    background-color: rgba(6, 14, 44, 0.6);
+    color: white;
+}
+.owl-item .slide{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}

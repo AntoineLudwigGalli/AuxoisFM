@@ -16,8 +16,6 @@ class RadioShow
     #[ORM\Column(type: 'string', length: 300)]
     private $name;
 
-    #[ORM\Column(type: 'datetime')]
-    private $time;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'radioShows')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,6 +26,12 @@ class RadioShow
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $logo;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
 
     public function getId(): ?int
     {
@@ -46,17 +50,6 @@ class RadioShow
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
-    {
-        return $this->time;
-    }
-
-    public function setTime(\DateTimeInterface $time): self
-    {
-        $this->time = $time;
-
-        return $this;
-    }
 
     public function getAnimator(): ?User
     {
@@ -93,4 +86,29 @@ class RadioShow
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 }

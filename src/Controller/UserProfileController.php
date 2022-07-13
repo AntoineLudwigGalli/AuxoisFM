@@ -19,6 +19,8 @@ class UserProfileController extends AbstractController
     #[Route('/', name: 'profile')]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
+        $bgc = "red";
+
         $emailForm=$this->createForm(ChangeEmailFormType::class);
         $emailForm->handleRequest($request);
 
@@ -44,14 +46,15 @@ class UserProfileController extends AbstractController
             $em = $doctrine->getManager();
             $em->flush();
 
-            $this->addFlash('success', 'Pseudonyme modifié avec succès');
+            $this->addFlash('success', 'Pseudo modifié avec succès');
 
             return $this->redirectToRoute('user_profile');
         }
         return $this->render('user_profile/profile_index.html.twig', [
             'controller_name' => 'UserProfileController',
             'emailForm' => $emailForm->createView(),
-            'pseudoForm' => $pseudoForm->createView()
+            'pseudoForm' => $pseudoForm->createView(),
+            'bgc' => $bgc
         ]);
     }
 

@@ -4,113 +4,95 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-    
-    <div class="container-fluid">
-        
+    <div class="col-md-10 offset-md-1">
         <div class="row">
-            <h1 class="col-12 text-center my-5">Profil</h1>
+            <h1 class="col-12 text-center text-light my-5">Mon profil</h1>
         </div>
         
         <div class="row">
-            
-            <div class="col-12 col-md-10 mx-auto">
-                
+            <div class="col-6 offset-3 profile-container">
                 <div class="row">
-                    
-                    {# Bloc de gauche #}
-                    <div class="col-12 col-md-3 bg-black px-2 py-3 text-center">
+                    <div class="col-8 offset-2 mt-4">
+                        {% if app.user.photo is null %}#}
+                            <img src="{{ asset('images/profil/default_profile.jpg')|imagine_filter('profil') }}" alt="Photo de profil par défaut" class="img-fluid img-thumbnail">
                         
-                        {# Image de profil #}
-                        <div class="row">
+                        {% else %}
                             
-                            <div class="col-10 mx-auto">
-                                {# Si l'utilisateur a une photo de profil non null, on l'affiche, sinon on affiche une
-                                 photo par défaut #}
-                                {% if app.user.photo is null %}
-                                    
-                                    <img src="{{ asset('images/profil/default_profile.jpg')|imagine_filter('profil') }}" alt="Photo par défaut de Shrek"
-                                            class="img-fluid
-                                    img-thumbnail">
-                                
-                                {% else  %}
-                                    
-                                    <img src="{{ asset('images/profil/'~ app.user.photo)|imagine_filter('profil') }}"
-                                            alt="Photo de profil"
-                                            class="img-fluid
-                                    img-thumbnail">
-                                
-                                {% endif %}
-                            
-                            
-                            
-                            </div>
+                            <img src="{{ asset('images/profil/'~ app.user.photo)|imagine_filter('profil') }}" alt="Photo de profil" class="img-fluid
+                        img-thumbnail">
                         
-                        </div>
-                        
-                        {# Lien vers la page de changement de photo #}
-                        <div class="row">
-                            <div class="col-12 pt-3">
-                                <a href="{{ path('user_edit_photo') }}" class="text-decoration-none">Modifier la photo de profil</a>
-                            </div>
-                        </div>
+                        {% endif %}
                     </div>
-                    
-                    {# Bloc de droite #}
-                    <div class="col-12 col-md-9 px-2 py-3 bg-dark d-flex justify-content-center align-items-center">
-                        
-                        <ul class="list-group col-12 col-md-8 p-0">
-                            <li class="list-group-item bg-black text-white d-flex flex-row">
-                                <span class="col-3 me-4">Pseudonyme : </span>
-                                <span class="text-info user-profile-data user-pseudo">{{ app.user.pseudonym }}</span>
-                                <div class="user-profile-form me-2 user-pseudo">
-                                    {{ form_start(pseudoForm) }}
-                                    {{ form_row(pseudoForm.pseudonym) }}
-                                </div>
-                                <div class="user-profile-form me-2 user-pseudo">
-                                    {{ form_row(pseudoForm.save) }}
-                                    {{ form_end(pseudoForm) }}
-                                </div>
-                                <div class="user-profile-form user-profile-cancel user-pseudo">
-                                    <button class="btn btn-danger">Annuler</button>
-                                </div>
-    
-                            </li>
-                            <li class="list-group-item bg-black text-white d-flex flex-row">
-                                <span class="col-3 me-4">Adresse Email : </span>
-                                <span class="text-info user-profile-data user-email">{{ app.user.email }}</span>
-                                <div class="user-profile-form user-email me-2">
-                                        {{ form_start(emailForm) }}
-                                        {{ form_row(emailForm.email) }}
-                                </div>
-                                <div class="user-profile-form user-email me-2">
-                                    {{ form_row(emailForm.save) }}
-                                    {{ form_end(emailForm) }}
-                                </div>
-                                <div class="user-profile-form user-profile-cancel user-email">
-                                    <button class="btn btn-danger">Annuler</button>
-                                </div>
-                               
-                            </li>
-                            
-                           
-                            <li class="list-group-item bg-black text-white">Date d'inscription : <span
-                                        class="text-info">{{ app.user.registrationDate|date('d/m/Y à H\\hi')
-                                    }}</span></li>
-                            <li class="list-group-item bg-black text-white">Compte : <span class="text-info">
-                                    {{ is_granted('ROLE_ADMIN') ? 'Administrateur' : "Utilisateur"}}
-                                </span></li>
-                        </ul>
-                    
-                    </div>
-                
                 </div>
-            
+                <div class="row">
+                    <div class="col-6 offset-3 text-center">
+                        <a href="{{ path('user_edit_photo') }}" class="text-decoration-none text-dark ">Modifier la photo de profil</a>
+                    </div>
+                </div>
+                <div class="row d-flex flex-row">
+                    <div class="col-3 offset-2">
+                        <span>Pseudonyme: </span>
+                    </div>
+                    <div class="col-6 d-flex flex-row">
+                        <span class="user-profile-data user-pseudo">{{ app.user.pseudonym }}</span>
+                        <div class="user-profile-form me-2 user-pseudo">
+                            {{ form_start(pseudoForm) }}
+                            {{ form_row(pseudoForm.pseudonym) }}
+                        </div>
+                        <div class="user-profile-form me-2 user-pseudo">
+                            {{ form_row(pseudoForm.save) }}
+                            {{ form_end(pseudoForm) }}
+                        </div>
+                        <div class="user-profile-form user-profile-cancel user-pseudo">
+                            <button class="btn btn-danger px-3">X</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row d-flex flex-row">
+                    <div class="col-3 offset-2">
+                        <span>Email: </span>
+                    </div>
+                    <div class="col-6 d-flex flex-row">
+                        <span class="user-profile-data user-email">{{ app.user.email }}</span>
+                        <div class="user-profile-form me-2 user-email">
+                            {{ form_start(emailForm) }}
+                            {{ form_row(emailForm.email) }}
+                        </div>
+                        <div class="user-profile-form me-2 user-email">
+                            {{ form_row(emailForm.save) }}
+                            {{ form_end(emailForm) }}
+                        </div>
+                        <div class="user-profile-form user-profile-cancel user-email">
+                            <button class="btn btn-danger px-3">X</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row d-flex flex-row">
+                    <div class="col-3 offset-2">
+                        <span>Inscrit le: </span>
+                    </div>
+                    <div class="col-6 d-flex flex-row">
+                        <span>{{ app.user.registrationDate|date('d/m/Y à H\\hi') }}</span>
+                    </div>
+                </div>
+                
+                <div class="row d-flex flex-row">
+                    <div class="col-3 offset-2">
+                        <span>Compte: </span>
+                    </div>
+                    <div class="col-6 d-flex flex-row">
+                        <span>{{ is_granted('ROLE_ADMIN') ? 'Administrateur' : (is_granted('ROLE_ANIMATOR') ? "Animateur" : "Utilisateur")}}</span>
+                    </div>
+                </div>
+                
+                
             </div>
-        
         </div>
+    
     
     </div>
-
 {% endblock %}
 {% block jsIncludes %}
     {#  jQuery  #}

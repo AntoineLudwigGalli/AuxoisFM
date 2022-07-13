@@ -15,3 +15,9 @@ liip_imagine:
         filters:
           scale:
             dim: [ 200, 200 ]
+
+      show_logo:
+        quality: 75
+        filters:
+          scale:
+            dim: [ 300, 300]
