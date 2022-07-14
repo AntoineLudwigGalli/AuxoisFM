@@ -21,8 +21,8 @@ class RadioShow
     #[ORM\JoinColumn(nullable: false)]
     private $animator;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $podcastLink;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $webPageLink;
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $logo;
@@ -63,14 +63,14 @@ class RadioShow
         return $this;
     }
 
-    public function getPodcastLink(): ?string
+    public function getwebPageLink(): ?string
     {
-        return $this->podcastLink;
+        return $this->webPageLink;
     }
 
-    public function setPodcastLink(?string $podcastLink): self
+    public function setwebPageLink(?string $webPageLink): self
     {
-        $this->podcastLink = $podcastLink;
+        $this->webPageLink = $webPageLink;
 
         return $this;
     }

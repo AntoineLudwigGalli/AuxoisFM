@@ -2,50 +2,47 @@
 
 {% block title %}Accueil{% endblock %}
 {% block cssIncludes %}
-    {#    animsition.css  #}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css">
+    {#    animations accueil  #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     {#  lecteur audio #}
     <link rel="stylesheet" href='{{ asset('css/audio-player.css') }}'>
     {#    Slider carrousel cards SplideJS #}
     <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">    <link rel="stylesheet" href="{{ asset('css/slider.css') }}">
-{#    Player flip#}
+    <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="{{ asset('css/slider.css') }}">
+    {#    Player flip #}
     <link rel="stylesheet" href="{{ asset('css/player-flip.css') }}">
 {% endblock %}
 
 {% block body %}
     
-    <div class="col-12 flex-row align-items-center" id="news">
+    <div class="col-12 flex-row align-items-center animate__animated animate__fadeInLeft" id="news">
         <div class="owl-carousel owl-theme">
             <div class=" slide">
-                <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt="" />
-                <a href="{{ path('main_news') }}" >
+                <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/> <a href="{{ path('main_news') }}">
                     <h3>La Salamandre Noire en direct d'AuxoisFM</h3>
                 </a>
             </div>
             
             <div class=" slide">
-                <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
-                <a href="{{ path('main_news') }}" >
+                <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/> <a href="{{ path('main_news') }}">
                     <h3>Scoop : Shrek est de la jaquette et il kiffe ça !</h3>
                 </a>
             </div>
-    
+            
             <div class=" slide">
-                <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
-                <a href="{{ path('main_news') }}" >
+                <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/> <a href="{{ path('main_news') }}">
                     <h3>Metalesia, l'émission qui te fait frissonner de joie</h3>
                 </a>
             </div>
-            
+        
         </div>
-    {#                        todo: ajouter des alt dynamiques#}
-                       
+        {#                        todo: ajouter des alt dynamiques #}
     
-                
+    
     </div>
     
-    <div class="col-12 d-flex flex-row animsition" id="menu">
+    <div class="col-12 d-flex flex-row animate__animated animate__fadeInUp" id="menu">
         <div class=" col-4  justify-content-center align-items-center text-center menu-link hvr-bounce-to-top target " id="podcasts">
             <p class="tiny">Grille des programmes et podcasts</p>
             <div class="normal">
@@ -141,10 +138,7 @@
                 <div class="flip-card-back d-flex flex-column justify-content-around">
                     <a href="{{ path('main_news') }}">
                         <h3 class="on-air-txt ">Rockin'Auxois / Metalesia</h3>
-                    </a>
-                    <a href='{{ path('main_news') }}' class="on-air-img mb-3">
-                        <img src='{{ asset('images/metalesia.jpg')|imagine_filter('now_playing') }}' alt="" class="img-fluid">
-                    </a>
+                    </a> <a href='{{ path('main_news') }}' class="on-air-img mb-3"> <img src='{{ asset('images/metalesia.jpg')|imagine_filter('now_playing') }}' alt="" class="img-fluid"> </a>
                     <div class="now-playing back-btn btn btn-outline-light col-8 offset-2">
                         <h3>Now Playing...</h3>
                     </div>

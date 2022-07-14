@@ -41,16 +41,6 @@ class RadioShowCreationFormType extends AbstractType
                     ])
                 ],
             ])
-            ->add('podcastLink', TextType::class, [
-                'label' => 'Lien du podcast (facultatif)',
-                'empty_data' => "",
-                'constraints' => [
-                    new Length([
-                        'max' => 255,
-                        'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ],
-            ])
 
             ->add('description', TextareaType::class, [
                 'label' => "Description de l'émission (facultatif)",

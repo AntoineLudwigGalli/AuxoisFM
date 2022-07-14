@@ -53,6 +53,9 @@ body{
 
 /*Accueil*/
 
+.animate__animated.animate__fadeInUp {
+    --animate-duration: 2s;
+}
 
 #news {
   height: 45vh;
@@ -192,4 +195,13 @@ body{
 
 .show-list-logo{
     max-height: 15vh;
+}
+
+.show-webpage-logo{
+    min-height: 10vh;
+    max-height: 15vh;
+}
+
+.separation-line{
+    border-right:  black 1px solid;
 }
