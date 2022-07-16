@@ -55,6 +55,35 @@ class RadioShowCreationFormType extends AbstractType
                 ]
             ])
 
+            ->add('youtubeURL', TextType::class, [
+                'label' => "URL de la playlist Youtube (facultatif)",
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
+                    ])
+                ]
+            ])
+            ->add('spotifyURL', TextType::class, [
+                'label' => "URL de la playlist Spotify (facultatif)",
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
+                    ])
+                ]
+            ])
+            ->add('deezerURL', TextType::class, [
+                'label_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
+                'label' => "URL de la playlist Deezer (facultatif) <a href='https://widget.deezer.com/' target='_blank'><sup>?</sup></a>",
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
+                    ])
+                ]
+            ])
+
             ->add('logo', FileType::class, [
                 'label' => 'Sélectionnez le logo de l\'émission (facultatif)',
                 'attr' => [

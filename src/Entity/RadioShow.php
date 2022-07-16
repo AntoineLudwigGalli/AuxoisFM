@@ -33,6 +33,15 @@ class RadioShow
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $youtubeURL = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $spotifyURL = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $deezerURL = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +116,42 @@ class RadioShow
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getYoutubeURL(): ?string
+    {
+        return $this->youtubeURL;
+    }
+
+    public function setYoutubeURL(?string $youtubeURL): self
+    {
+        $this->youtubeURL = $youtubeURL;
+
+        return $this;
+    }
+
+    public function getSpotifyURL(): ?string
+    {
+        return $this->spotifyURL;
+    }
+
+    public function setSpotifyURL(?string $spotifyURL): self
+    {
+        $this->spotifyURL = $spotifyURL;
+
+        return $this;
+    }
+
+    public function getDeezerURL(): ?string
+    {
+        return $this->deezerURL;
+    }
+
+    public function setDeezerURL(?string $deezerURL): self
+    {
+        $this->deezerURL = $deezerURL;
 
         return $this;
     }
