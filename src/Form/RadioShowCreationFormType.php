@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RadioShowCreationFormType extends AbstractType
 {
-    private $allowedMimeTypes = [
+    private array $allowedMimeTypes = [
         'jpg' => 'image/jpeg',
         'png' => 'image/png',
         'gif' => 'image/gif',

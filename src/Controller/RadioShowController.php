@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\DynamicContent;
 use App\Entity\RadioShow;
+use App\Form\DynamicContentFormType;
 use App\Form\RadioShowCreationFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -118,4 +120,41 @@ class RadioShowController extends AbstractController
         ]);
     }
 
+
+    #[Route('/contenu-dynamique/modifier/{title}/', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
+    public function dynamicContentEdit($title, ManagerRegistry $doctrine, Request $request): Response
+    {
+        //On va chercher par nom (qui sert de clé) le dynamic content correspondant
+        $dynamicContentRepo = $doctrine->getRepository(DynamicContent::class);
+
+        $currentDynamicContent = $dynamicContentRepo->findOneByTitle($title);
+
+        $em = $doctrine->getManager();
+
+        // Si le contenu est vide, on en crée un avec le nom passé dans la fonction twig
+        if (empty($currentDynamicContent)) {
+            $currentDynamicContent = new DynamicContent();
+            $currentDynamicContent->setTitle($title);
+            $em->persist($currentDynamicContent);
+        }
+
+        // Sinon, on modifie le contenu existant par le nouveau contenu
+        $form = $this->createForm(DynamicContentFormType::class, $currentDynamicContent);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été modifié !');
+
+            return $this->redirectToRoute('show_webpage');
+
+        }
+
+        return $this->render('radio_show/dynamic_content_edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
