@@ -2,18 +2,22 @@
 
 {% block title %}{{ show.name }}{% endblock %}
 
+{% block cssIncludes %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/css/green-audio-player.min.css">
+{% endblock %}
+
 {% block body %}
     <div class="row ">
         <div class="row">
             <div class="col-12 d-flex flex-column align-items-center justify-content-center mt-5">
                 {% if show.logo is null %}
-                
-                    <img src="{{ asset('images/show_logo/default_logo.jpeg')|imagine_filter('show_logo') }}" alt="Logo d'émission par défaut" class="img-fluid img-thumbnail">
-            
-                {% else %}
-                
-                    <img src="{{ asset('images/show_logo/'~ show.logo)|imagine_filter('show_logo') }}" alt="Logo de l'émission {{ show.name }}" class="img-fluid img-thumbnail show-webpage-logo">
                     
+                    <img src="{{ asset('images/show_logo/default_logo.jpeg')|imagine_filter('show_logo') }}" alt="Logo d'émission par défaut" class="img-fluid img-thumbnail">
+                
+                {% else %}
+                    
+                    <img src="{{ asset('images/show_logo/'~ show.logo)|imagine_filter('show_logo') }}" alt="Logo de l'émission {{ show.name }}" class="img-fluid img-thumbnail show-webpage-logo ">
+                
                 {% endif %}
             </div>
         </div>
@@ -23,42 +27,71 @@
     </div>
     
     <div class="row">
-        
         <div class="col-10 offset-1 d-flex flex-row align-items-center justify-content-center my-4">
-            <p>{{ display_dynamic_content( (show.slug ~ '-description') |lower, show.slug) }}</p>
+            <p class="d-flex flex-column align-items-center justify-content-center" title="Ajoutez une description à l'émission">{{ display_dynamic_content( (show.slug ~ '-description'), show.slug) }} </p>
         </div>
     </div>
     
-    <div class="row mt-3">
+    <div class="row mt-3 me-1 d-flex flex-row">
     
-        {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL  %}
-                <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
-        {% else %}
-            <div class="col-7 separation-line">
-                <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
+    {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL %}
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
+        <div class="row">
+            <h3>Playlist</h3>
+            <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'), show.slug) }}</div>
+        </div>
+    {% else %}
+        <div class="col-7 separation-line">
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
+        {#                {% set i = 0 %} #}
+        {% for podcast in podcasts %}
+            <div class="row ms-3">
+                <h4 class="col-12">Emission du 8 juillet 2021 :</h4>
             </div>
-            
-    {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
-            {% if show.youtubeURL %}
-            <div class="col-4">
-                <iframe width="100%" height="315" src="{{ show.youtubeURL }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
+            <div class="row ms-3 d-flex flex-row align-items-center ">
+                <div class="gap-audio-player col-9">
+                    <audio>
+                        <source src="{{ asset('audio/' ~ podcast.podcastLink) }}">
+                    </audio>
+                </div>
+                
+                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center">Playlist<i class="fas fa-angle-down ms-2"></i></h5>
+                <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'
+                    ), show.slug) }}</div>
             </div>
-            {% endif %}
+            </div>
         
-            {% if show.deezerURL %}
-                <div class="col-4 offset-7">
-                    {{ show.deezerURL }}
-                </div>
-            {% endif %}
+        {% endfor %}
         
-            {% if show.spotifyURL %}
-                <div class="col-4 offset-7">
-                    <iframe style="border-radius:12px" src="{{ show.spotifyURL }}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-                </div>
-            {% endif %}
+        
+        {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
+        {% if show.youtubeURL %}
+            <div class="col-5">
+                <iframe width="100%" height="315" src="{{ show.youtubeURL }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         {% endif %}
+        
+        {% if show.deezerURL %}
+            <div class="col-5">
+                {{ show.deezerURL }}
+            </div>
+        {% endif %}
+        
+        {% if show.spotifyURL %}
+            <div class="col-5">
+                <iframe style="border-radius:12px" src="{{ show.spotifyURL }}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            </div>
+        {% endif %}
+    {% endif %}
     </div>
-    
-    
+
+
 {% endblock %}
+
+{% block jsIncludes %}
+    
+    <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>
+{% endblock %}
+
+
+

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DynamicContent;
+use App\Entity\Podcast;
 use App\Entity\RadioShow;
 use App\Form\DynamicContentFormType;
 use App\Form\RadioShowCreationFormType;
@@ -111,12 +112,15 @@ class RadioShowController extends AbstractController
     }
     #[Route('/{slug}/', name: 'webpage')]
     #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
-    public function showWebPage(RadioShow $show): Response {
+    public function showWebPage(RadioShow $show, ManagerRegistry $doctrine): Response {
 
-
+        $podcastsRepo = $doctrine->getRepository(Podcast::class);
+        $podcasts = $podcastsRepo->findBy(['radioShow' => $show->getId()]);
 
         return $this->render("radio_show/show_webpage.html.twig", [
-            'show' => $show
+            'show' => $show,
+            'controller_name' => 'RadioShowController',
+            'podcasts' => $podcasts
         ]);
     }
 
@@ -152,8 +156,9 @@ class RadioShowController extends AbstractController
 
             $this->addFlash('success', 'Le contenu a bien été modifié !');
 
-            return $this->render("radio_show/show_webpage.html.twig", [
-                'show' => $show
+            return $this->redirectToRoute("show_webpage", [
+                'show' => $show,
+                'slug' => $show->getSlug()
             ]);
 
         }
