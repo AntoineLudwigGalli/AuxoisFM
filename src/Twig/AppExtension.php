@@ -4,12 +4,10 @@ namespace App\Twig;
 
 use App\Entity\DynamicContent;
 use Doctrine\Persistence\ManagerRegistry;
-use Exercise\HTMLPurifierBundle\HTMLPurifiersRegistry;
 use HTMLPurifier;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 
@@ -38,7 +36,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function displayDynamicContent(string $title): string
+    public function displayDynamicContent(string $title, string $slug): string
     {
 // On va chercher par nom le dynamic content que l'on souhaite
         $dynamicContentRepo = $this->doctrine->getRepository(DynamicContent::class);
@@ -47,7 +45,7 @@ class AppExtension extends AbstractExtension
 
         if($this->authenticateUser->isGranted('ROLE_ANIMATOR')){
 // Si l'utilisateur est admin, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
-            return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('show_dynamic_content_edit', ['title' => $title]) . '">Modifier</a>');
+            return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('show_dynamic_content_edit', ['title' => $title, 'slug' => $slug]) . '">Modifier</a>');
 
         } else {
             //Sinon, on affiche le contenu dynamique

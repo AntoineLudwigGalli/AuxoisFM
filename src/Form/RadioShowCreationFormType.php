@@ -42,18 +42,6 @@ class RadioShowCreationFormType extends AbstractType
                 ],
             ])
 
-            ->add('description', TextareaType::class, [
-                'label' => "Description de l'émission (facultatif)",
-                'attr' => [
-                    "rows" => 8,
-                ],
-                'constraints' => [
-                    new Length([
-                        'max' => 50000,
-                        'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ]
-            ])
 
             ->add('youtubeURL', TextType::class, [
                 'label' => "URL de la playlist Youtube (facultatif)",

@@ -9,12 +9,10 @@
                 {% if show.logo is null %}
                 
                     <img src="{{ asset('images/show_logo/default_logo.jpeg')|imagine_filter('show_logo') }}" alt="Logo d'émission par défaut" class="img-fluid img-thumbnail">
-                    <div>{{ display_dynamic_content(show.name ~ "-logo") }}</div>
             
                 {% else %}
                 
                     <img src="{{ asset('images/show_logo/'~ show.logo)|imagine_filter('show_logo') }}" alt="Logo de l'émission {{ show.name }}" class="img-fluid img-thumbnail show-webpage-logo">
-                    <div>{{ display_dynamic_content((show.name|lower) ~ "-logo") }}</div>
                     
                 {% endif %}
             </div>
@@ -25,8 +23,9 @@
     </div>
     
     <div class="row">
+        
         <div class="col-10 offset-1 d-flex flex-row align-items-center justify-content-center my-4">
-            <p>{{ show.description }}</p>
+            <p>{{ display_dynamic_content( (show.slug ~ '-description') |lower, show.slug) }}</p>
         </div>
     </div>
     

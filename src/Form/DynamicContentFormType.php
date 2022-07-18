@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\DynamicContent;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,6 +15,9 @@ class DynamicContentFormType extends AbstractType
         $builder
 
             ->add('content')
+            ->add('save', SubmitType::class, [
+                'label' => "Modifier"
+            ])
         ;
     }
 

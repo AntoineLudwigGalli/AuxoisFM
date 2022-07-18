@@ -121,8 +121,9 @@ class RadioShowController extends AbstractController
     }
 
 
-    #[Route('/contenu-dynamique/modifier/{title}/', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
-    public function dynamicContentEdit($title, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/contenu-dynamique/modifier/{slug}/{title}', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
+    #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
+    public function dynamicContentEdit(ManagerRegistry $doctrine, Request $request, $title, $slug, RadioShow $show): Response
     {
         //On va chercher par nom (qui sert de clé) le dynamic content correspondant
         $dynamicContentRepo = $doctrine->getRepository(DynamicContent::class);
@@ -145,11 +146,15 @@ class RadioShowController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+            $em = $doctrine->getManager();
             $em->flush();
 
             $this->addFlash('success', 'Le contenu a bien été modifié !');
 
-            return $this->redirectToRoute('show_webpage');
+            return $this->render("radio_show/show_webpage.html.twig", [
+                'show' => $show
+            ]);
 
         }
 
@@ -157,4 +162,5 @@ class RadioShowController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

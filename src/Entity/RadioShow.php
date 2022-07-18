@@ -27,8 +27,6 @@ class RadioShow
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $logo;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
@@ -101,12 +99,6 @@ class RadioShow
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getSlug(): ?string
     {
