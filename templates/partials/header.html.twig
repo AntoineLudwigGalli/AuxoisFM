@@ -9,19 +9,19 @@
                 {# Texte du bouton du menu déroulant #}
                 <a class="nav-link dropdown-toggle" href="#" id="profil-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {# Affichage du prénom de l'utilisateur connecté #}
-                    <i class="fa-solid fa-briefcase mx-1"></i>{{ app.user.pseudonym }}
+                    <i class="fa-solid fa-headphones me-1"></i>{{ app.user.pseudonym }}
                 </a>
                 {# Liste des boutons du menu déroulant #}
                 <div class="dropdown-menu " aria-labelledby="profil-dropdown">
                     {# Bouton de la page mon profil #}
                     <a class="dropdown-item ms-0" href="{{ path('user_profile') }}">
-                        <i class="fa-solid fa-user me-1"></i>Profil
+                        <i class="fa-solid fa-circle-user me-1"></i>Profil
                     </a>
     
                     {# Bouton de la page Mon Emission #}
                     {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
                         <a class="dropdown-item ms-0" href="{{ path('show_list') }}">
-                            <i class="fa-solid fa-user me-1"></i>Emissions
+                            <i class="fa-solid fa-radio me-1"></i>Emissions
                         </a>
                     {% endif %}
                     

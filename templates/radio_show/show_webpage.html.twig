@@ -46,8 +46,14 @@
         {#                {% set i = 0 %} #}
         {% for podcast in podcasts %}
             <div class="row ms-3">
-                <h4 class="col-12">Emission du 8 juillet 2021 :</h4>
+                <h4 class="col-12">Emission du
+{#                    {{ podcast.broadcastDate }} #}
+                    :</h4>
             </div>
+            <div class="row ms-3 ">
+                <h6 class="col-12 d-flex flex-column" title="Ajoutez un nom à votre émission">{{ display_dynamic_content( (show.slug ~ '-podcast_name'), show.slug) }}</h6>
+            </div>
+            
             <div class="row ms-3 d-flex flex-row align-items-center ">
                 <div class="gap-audio-player col-9">
                     <audio>
