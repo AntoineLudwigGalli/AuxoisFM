@@ -41,3 +41,42 @@ GreenAudioPlayer.init({
     showDownloadButton : true,
     enableKeystrokes : true
 });
+
+// Afficher ou replier la playlist
+
+// $(playlistButtons).each(function (){
+//     $(this).click( function (){
+//         $('.playlist-display').toggleClass('d-none')
+//         if ($('.angle').hasClass('fa-angle-down')) {
+//             $('.angle').removeClass('fa-angle-down');
+//             $('.angle').addClass('fa-angle-up');
+//         } else {
+//             $('.angle').removeClass('fa-angle-up');
+//             $('.angle').addClass('fa-angle-down');
+//         }
+//     })
+// })
+function displayPlaylist(playlistToDisplay){
+
+    $('.playlist-display-' + playlistToDisplay).toggleClass('d-none')
+        if ($('.angle-'+playlistToDisplay).hasClass('fa-angle-down')) {
+            $('.angle-'+playlistToDisplay).removeClass('fa-angle-down').addClass('fa-angle-up');
+        } else {
+            $('.angle-'+playlistToDisplay).removeClass('fa-angle-up').addClass('fa-angle-down');
+        }
+}
+
+let playlistButtons = document.querySelectorAll('.playlist-button');
+
+playlistButtons.forEach((playlistButton) => {
+
+    // Chaque bouton "Playlist" aura un écouteur d'évènement "click"
+    playlistButton.addEventListener('click', function(){
+
+        // On récupère le numéro de la playlist à afficher (stocké dans l'attribut data-playlist du bouton cliqué)
+        let playlistNumber = this.dataset.playlist;
+
+        // Affichage de la playlist correspondant au numéro récupéré précédemment en le passant en paramètre de notre fonction displayPlaylist()
+        displayPlaylist(playlistNumber);
+    });
+});

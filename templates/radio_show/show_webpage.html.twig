@@ -36,22 +36,29 @@
     
     {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL %}
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
+        {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
+            <a href="" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
+        {% endif %}
         <div class="row">
             <h3>Playlist</h3>
             <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'), show.slug) }}</div>
         </div>
     {% else %}
-        <div class="col-7 separation-line">
-        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
-        {#                {% set i = 0 %} #}
+        <div class="col-8 separation-line">
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3">Podcasts</h2>
+            {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
+                <a href="" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
+            {% endif %}
+        {% set i = 0 %}
         {% for podcast in podcasts %}
-            <div class="row ms-3">
+          
+            <div class="row ms-3 my-4">
                 <h4 class="col-12">Emission du
 {#                    {{ podcast.broadcastDate }} #}
                     :</h4>
             </div>
             <div class="row ms-3 ">
-                <h6 class="col-12 d-flex flex-column" title="Ajoutez un nom à votre émission">{{ display_dynamic_content( (show.slug ~ '-podcast_name'), show.slug) }}</h6>
+                <h6 class="col-6 d-flex flex-column" title="Ajoutez un nom à votre émission">{{ display_dynamic_content( (show.slug ~ '-podcast_name' ~ i ), show.slug) }}</h6>
             </div>
             
             <div class="row ms-3 d-flex flex-row align-items-center ">
@@ -61,30 +68,31 @@
                     </audio>
                 </div>
                 
-                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center">Playlist<i class="fas fa-angle-down ms-2"></i></h5>
-                <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'
+                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center playlist-button" data-playlist="{{ i }}">Playlist<i class="fas fa-angle-down angle-{{ i }} ms-2 " data-angle="{{ i }}"></i></h5>
+                
+                <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist'
                     ), show.slug) }}</div>
             </div>
-            </div>
-        
+            
+            {% set i = i + 1 %}
         {% endfor %}
-        
-        
+
+        </div>
         {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
         {% if show.youtubeURL %}
-            <div class="col-5">
+            <div class="col-4">
                 <iframe width="100%" height="315" src="{{ show.youtubeURL }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         {% endif %}
         
         {% if show.deezerURL %}
-            <div class="col-5">
+            <div class="col-4">
                 {{ show.deezerURL }}
             </div>
         {% endif %}
         
         {% if show.spotifyURL %}
-            <div class="col-5">
+            <div class="col-4">
                 <iframe style="border-radius:12px" src="{{ show.spotifyURL }}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
             </div>
         {% endif %}

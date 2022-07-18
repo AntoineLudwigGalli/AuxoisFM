@@ -3,18 +3,16 @@
 
 {% block body %}
     
-    
-    <div class="container-fluid">
         
         <div class="row">
-            <h1 class="col-10 offset-2 text-center my-5">Modifier le contenu</h1>
+            <h1 class="col-10 offset-1 text-center my-5">Modifier le contenu</h1>
         </div>
         
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-3">
+            <div class="col-10 offset-1">
                 {{ form(form) }}
+                <a href=" {{ show.webPageLink }}" class="btn btn-danger ">Retour</a>
             </div>
         </div>
-    </div>
     
 {% endblock %}

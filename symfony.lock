@@ -47,6 +47,31 @@
             "config/packages/exercise_html_purifier.yaml"
         ]
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "f5ad42002183a6881962683e6d84bbb25cdfce5d"
+        },
+        "files": [
+            "config/packages/fos_ckeditor.yaml"
+        ]
+    },
+    "helios-ag/fm-elfinder-bundle": {
+        "version": "12.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "10.0",
+            "ref": "addd79a9903ee92664f4cff61eb6cdd1b95945e7"
+        },
+        "files": [
+            "config/packages/fm_elfinder.yaml",
+            "config/routes/fm_elfinder.yaml"
+        ]
+    },
     "liip/imagine-bundle": {
         "version": "2.8",
         "recipe": {

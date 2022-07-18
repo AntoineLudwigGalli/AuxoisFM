@@ -205,3 +205,15 @@ body{
 .separation-line{
     border-right:  black 1px solid;
 }
+
+.playlist-display{
+    margin-top: 1rem;
+    padding: 1rem 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+    border-radius: 10px;
+}
+
+.playlist-button{
+    cursor: pointer;
+}
+

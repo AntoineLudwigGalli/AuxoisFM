@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -165,6 +164,7 @@ class RadioShowController extends AbstractController
 
         return $this->render('radio_show/dynamic_content_edit.html.twig', [
             'form' => $form->createView(),
+            'show' => $show,
         ]);
     }
 

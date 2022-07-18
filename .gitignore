@@ -22,7 +22,7 @@
 ###> custom settings ###
 /.idea
 /migrations/*.php
-/public/audio
+/public/audio/*
 ###< custom settings ###
 
 ###> liip/imagine-bundle ###
