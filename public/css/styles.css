@@ -217,3 +217,16 @@ body{
     cursor: pointer;
 }
 
+.external_playlist li{
+    list-style-type: none;
+    text-align: start;
+}
+
+.external_playlist li a{
+    color: black;
+    text-decoration: none;
+}
+
+table th, table td{
+    text-align: center;
+}
