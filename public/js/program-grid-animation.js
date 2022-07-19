@@ -1,92 +1,58 @@
-// Fonction permettant "d'ouvrir la vue"
-function openView(){
+// Fonction permettant d'afficher une image avec une croix de fermeture dans un overlay
+function displayCalendar(){
 
-    // Suppression de l'ancien écouteur d'évènement click pour éviter leur accumulation
-    $('.target').off('click');
 
-    // Animation sur petit texte (le masquer)
-    $('.target .tiny').fadeOut();
+    //---------- Création de l'overlay (une div) : <div class="overlay"></div>
+    let overlayElement = document.createElement('div');
+    overlayElement.classList.add('overlay');
 
-    $("body").addClass("blue-background");
-    $(".target").removeClass("hvr-bounce-to-top");
-    $(".target").addClass("overlayed-podcast");
 
-    // Animations sur target (déplacement + agrandissement)
-    $('.target').animate({
+    //---------- Création du lien du bouton de fermeture (un lien) : <a href="#" class="close">X</a>
+    let closeButtonElement = document.createElement('a');
+    closeButtonElement.textContent = 'X';
+    closeButtonElement.setAttribute('href', '#');
+    closeButtonElement.classList.add('close');
 
-        'height' : '100vh',
-        'width' : "100vw",
+    // Ajout du bouton dans l'overlay
+    overlayElement.prepend(closeButtonElement);
 
-    }, 750, function(){
-        $('#header').attr("style", "display: none !important");
-        $('#more-news').removeClass("d-flex");
-        $('#more-news').hide();
-        $('#menu').hide();
-        $('#news').fadeOut();
-        $('.owl-carousel').fadeOut();
-        $('#player').hide();
-        $('body').append($(".target"));
-        // Animation d'apparition du grand texte
-        $('.target .normal').fadeIn();
-
-        // Mise en place d'un écouteur d'évènement permettant au click de fermer la vue
-        $('.target').click(function(){
-
-            closeView();
-
-        });
-
+    // Écouteur d'évènement sur le bouton pour supprimer l'overlay au clic
+    closeButtonElement.addEventListener('click', function(){
+        removeCalendar();
     });
 
-}
 
-// Fonction permettant de "fermer la vue"
-function closeView(){
+    //---------- Création du calendrier : <div id="calendar-holder"</div>
+    //     </div>
+    let calendarElement = document.querySelector('#calendar-holder');
+    calendarElement.classList.remove("d-none");
 
-    // Suppression de l'ancien écouteur d'évènement click pour éviter leur accumulation
-    $('.target').off('click');
+    // Ajout de l'image dans l'overlay
+    overlayElement.prepend(calendarElement);
 
-    // Animation sur le grand texte (le masquer)
-    $('.target .normal').hide();
-    $('#header').fadeIn();
-    $('#more-news').addClass("d-flex");
-    $('#more-news').fadeIn();
-    $('#menu').addClass("d-flex");
-    $('#menu').fadeIn();
-    $('#news').fadeIn();
-    $('.owl-carousel').fadeIn();
-    $('#player').fadeIn();
-    $('#menu').prepend($(".target"));
 
-    $(".target").addClass("hvr-bounce-to-top");
-    $(".target").removeClass("overlayed-podcast");
-
-    // Animations sur target (deplacement + agrandissement)
-    $('.target').animate({
-
-        'height' : '45vh',
-        'width' : "34%",
-
-    }, 750, function(){
-        $("body").removeClass("blue-background");
-        // Animation d'apparition du petit texte
-        $('.target .tiny').fadeIn();
-
-        // Mise en place d'un écouteur d'évènement permettant au click d'ouvrir la vue
-        $('.target').click(function(){
-
-            openView();
-
-        });
-
-    });
-
+    // Ajout de l'overlay (+ le bouton et le calendrier qui sont déjà dedans) dans le body
+    document.querySelector('body').append(overlayElement);
 }
 
 
-// Si la div target est cliquée, on ouvre la vue en appelant la fonction openView()
-$('.target').click(function(){
+// Fonction permettant de supprimer l'overlay affiché (avec le calendrier et le bouton dedans)
+function removeCalendar(){
+    let calendarElement = document.querySelector('#calendar-holder');
+    document.querySelector('body').prepend(calendarElement);
+    calendarElement.classList.add("d-none");
+    let overlayElement = document.querySelector('.overlay');
+    overlayElement.parentElement.removeChild(overlayElement);
 
-    openView();
+}
 
-});
+// Écouteur d'évènement sur la section "grille et podcasts pour afficher l'overlay au clic
+
+
+    document.querySelector("#podcasts").addEventListener('click', function(){
+        if (!document.querySelector(".overlay")){
+        displayCalendar();
+        }
+    });
+
+

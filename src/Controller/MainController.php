@@ -14,6 +14,8 @@ class MainController extends AbstractController
     {
         $bgc = "blue";
 
+
+
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',
             'bgc' => $bgc,
@@ -26,6 +28,19 @@ class MainController extends AbstractController
         $bgc = "red";
 
         return $this->render('main/news.html.twig', [
+            'controller_name' => 'MainController',
+            'bgc' => $bgc,
+        ]);
+    }
+
+    #[Route('/test', name: 'test')]
+    public function test(): Response
+    {
+        $bgc = "blue";
+
+
+
+        return $this->render('main/test.html.twig', [
             'controller_name' => 'MainController',
             'bgc' => $bgc,
         ]);

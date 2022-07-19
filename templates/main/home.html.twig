@@ -12,10 +12,15 @@
     <link rel="stylesheet" href="{{ asset('css/slider.css') }}">
     {#    Player flip #}
     <link rel="stylesheet" href="{{ asset('css/player-flip.css') }}">
+    {#    Calendar#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+
 {% endblock %}
 
 {% block body %}
-    
+    <div id="calendar-holder" class="d-none"></div>
     <div class="col-12 flex-row align-items-center animate__animated animate__fadeInLeft" id="news">
         <div class="owl-carousel owl-theme">
             <div class=" slide">
@@ -43,12 +48,11 @@
     </div>
     
     <div class="col-12 d-flex flex-row animate__animated animate__fadeInUp" id="menu">
-        <div class=" col-4  justify-content-center align-items-center text-center menu-link hvr-bounce-to-top target " id="podcasts">
-            <p class="tiny">Grille des programmes et podcasts</p>
-            <div class="normal">
-                Texte normal
-            </div>
+        
+        <div class=" col-4  justify-content-center align-items-center text-center menu-link target " id="podcasts">
+            <h2>Grille des programmes et podcasts</h2>
         </div>
+        
         
         <div class="col-4 flex-column align-items-center justify-content-center flip-card" id="player">
             <div class="d-flex flex-column align-content-end justify-content-center audio-player flip-card-inner">
@@ -78,17 +82,24 @@
 
 {% endblock %}
 {% block jsIncludes %}
-    
+
     {#  jQuery  #}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  
     <script src="{{ asset('js/program-grid-animation.js') }}"></script>
+
     {#    lecteur audio #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
     <script src="{{ asset('js/audio-player.js') }}"></script>
     {#    Splide Js pour le carrousel slider #}
     <script type="text/javascript" src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
     <script src="{{ asset('js/slider.js') }}"></script>
+    {#    Calendar#}
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+    <script src="{{ asset('js/full-calendar-custom.js') }}"></script>
+    
 
 
 {% endblock %}

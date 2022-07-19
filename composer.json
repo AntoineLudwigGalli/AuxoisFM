@@ -49,7 +49,9 @@
         "symfony/yaml": "6.*",
         "symfonycasts/reset-password-bundle": "^1.13",
         "symfonycasts/verify-email-bundle": "^1.10",
+        "tattali/calendar-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.4",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\RadioShowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RadioShowRepository::class)]
@@ -44,6 +45,21 @@ class RadioShow
 
     #[ORM\OneToMany(mappedBy: 'radioShow', targetEntity: Podcast::class, orphanRemoval: true)]
     private Collection $podcasts;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $timeInterval = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $showTime = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $showDuration = null;
+
+    #[ORM\Column(length: 8)]
+    private ?string $broadcastDay = null;
 
     public function __construct()
     {
@@ -184,6 +200,66 @@ class RadioShow
                 $podcast->setRadioShow(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getTimeInterval(): ?\DateInterval
+    {
+        return $this->timeInterval;
+    }
+
+    public function setTimeInterval(?\DateInterval $timeInterval): self
+    {
+        $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    public function getShowTime(): ?\DateTimeInterface
+    {
+        return $this->showTime;
+    }
+
+    public function setShowTime(\DateTimeInterface $showTime): self
+    {
+        $this->showTime = $showTime;
+
+        return $this;
+    }
+
+    public function getShowDuration(): ?\DateTimeInterface
+    {
+        return $this->showDuration;
+    }
+
+    public function setShowDuration(?\DateTimeInterface $showDuration): self
+    {
+        $this->showDuration = $showDuration;
+
+        return $this;
+    }
+
+    public function getBroadcastDay(): ?string
+    {
+        return $this->broadcastDay;
+    }
+
+    public function setBroadcastDay(string $broadcastDay): self
+    {
+        $this->broadcastDay = $broadcastDay;
 
         return $this;
     }

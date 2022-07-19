@@ -4,14 +4,17 @@ namespace App\Form;
 
 use App\Entity\RadioShow;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -41,8 +44,6 @@ class RadioShowCreationFormType extends AbstractType
                     ])
                 ],
             ])
-
-
             ->add('youtubeURL', TextType::class, [
                 'label' => "URL de la playlist Youtube (facultatif)",
                 'constraints' => [
@@ -71,7 +72,6 @@ class RadioShowCreationFormType extends AbstractType
                     ])
                 ]
             ])
-
             ->add('logo', FileType::class, [
                 'label' => 'Sélectionnez le logo de l\'émission (facultatif)',
                 'attr' => [
@@ -86,6 +86,80 @@ class RadioShowCreationFormType extends AbstractType
                     ]),
                 ],
             ])
+
+            ->add('startDate', DateType::class, [
+                'label' => 'Sélectionnez la date de la prochaine émission',
+                'model_timezone' => 'Europe/Paris', //Date au format FR
+                'widget' => 'single_text', //Date au format input date html
+                'help' => 'Saisir une date future uniquement',
+                'constraints' => [
+                    new NotBlank([ // Erreur si le champ n'est pas rempli
+                        'message' => 'Merci de saisir une date valide pour la prochaine émission'
+                    ]),
+                    new GreaterThan([ //Erreur si date antérieure à aujourd'hui
+                        'value' => 'today',
+                        'message' => "La date doit être postérieure à aujourd'hui."
+                    ]),
+                ]
+            ])
+            ->add('broadcastDay', ChoiceType::class, [
+                'label' => "Jour de diffusion",
+                'placeholder' => 'Choisissez le jour de diffusion',
+                'choices'  => [
+                    'Lundi' => "lundi",
+                    'Mardi' => "mardi",
+                    'Mercredi' => "mercredi",
+                    'Jeudi' => "jeudi",
+                    'Vendredi' => "vendredi",
+                    'Samedi' => "samedi",
+                    'Dimanche' => "Dimanche",
+                ],
+                'constraints' => [
+                    new NotBlank([ // Erreur si le champ n'est pas rempli
+                        'message' => 'Merci de saisir un jour de diffusion valide pour votre émission'
+                    ]),
+                ]
+            ])
+            ->add('timeInterval', DateIntervalType::class, [
+                'label' => "L'émission a lieu tous les ",
+                'widget' => 'choice',
+                'with_days' => true,
+                'with_months' => true,
+                'with_years' => true,
+                'placeholder' => [
+                    'days' => 'Jours',
+                    'months' => 'Mois',
+                    'years' => 'Ans',
+                ],
+                'constraints' => [
+                    new NotBlank([ // Erreur si le champ n'est pas rempli
+                        'message' => 'Merci de saisir une fréquence valide pour votre émission'
+                    ]),
+                ]
+            ])
+
+            ->add('showTime', TimeType::class, [
+                'label' => 'Horaire de diffusion de l\'émission',
+                'input' => 'datetime',
+                'widget' => 'choice',
+                'constraints' => [
+                    new NotBlank([ // Erreur si le champ n'est pas rempli
+                        'message' => 'Merci de saisir un horaire valide pour votre émission'
+                    ]),
+                ]
+            ])
+
+            ->add('showDuration', TimeType::class, [
+                'label' => 'Durée de l\'émission',
+                'input' => 'datetime',
+                'widget' => 'choice',
+                'constraints' => [
+                    new NotBlank([ // Erreur si le champ n'est pas rempli
+                        'message' => 'Merci de saisir une durée valide pour votre émission'
+                    ]),
+                ]
+            ])
+
             ->add('save', SubmitType::class, [
                 'label' => "Créer l'émission"
             ])
