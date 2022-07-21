@@ -44,18 +44,6 @@ GreenAudioPlayer.init({
 
 // Afficher ou replier la playlist
 
-// $(playlistButtons).each(function (){
-//     $(this).click( function (){
-//         $('.playlist-display').toggleClass('d-none')
-//         if ($('.angle').hasClass('fa-angle-down')) {
-//             $('.angle').removeClass('fa-angle-down');
-//             $('.angle').addClass('fa-angle-up');
-//         } else {
-//             $('.angle').removeClass('fa-angle-up');
-//             $('.angle').addClass('fa-angle-down');
-//         }
-//     })
-// })
 function displayPlaylist(playlistToDisplay){
 
     $('.playlist-display-' + playlistToDisplay).toggleClass('d-none')

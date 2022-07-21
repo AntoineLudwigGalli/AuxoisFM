@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\RadioShow;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,15 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function home(): Response
+    public function home(ManagerRegistry $doctrine): Response
     {
         $bgc = "blue";
 
-
+        $showsRepo = $doctrine->getRepository(RadioShow::class);
+        $shows = $showsRepo->findBy([], ['name' => 'ASC']);
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',
             'bgc' => $bgc,
+            'shows' => $shows
         ]);
     }
 

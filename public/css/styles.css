@@ -142,7 +142,8 @@ cursor: pointer;
 }
 
 .overlay #calendar-holder{
-    max-width: 75%;
+    max-width: 75vw;
+    max-height: 75vh;
     background-color: rgba(255,255,255,.9);
     border-radius: 10px;
     object-fit: cover;
@@ -157,17 +158,19 @@ cursor: pointer;
     top: 10px;
     right: 10px;
 }
-
-
-@media(min-width: 600px){
-    .gallery>img{
-        width: 40%;
-    }
+.overlay .switchToShowList{
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
-@media(min-width: 1200px){
-    .gallery>img{
-        width: 20%;
-    }
+
+.overlay #show-list{
+    height: 75vh;
+    width: 75vw;
+    background-color: rgba(255,255,255,.9);
+    border-radius: 10px;
+    object-fit: cover;
+    overflow: scroll;
 }
 
 /* Profil */
