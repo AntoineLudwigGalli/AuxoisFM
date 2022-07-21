@@ -1,6 +1,5 @@
 
 function renderCalendar(){
-        let DateTime = luxon.DateTime;
         let calendarEl = document.getElementById('calendar-holder');
 
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -26,25 +25,31 @@ function renderCalendar(){
                 right: 'dayGridMonth,timeGridWeek,timeGridDay',
             },
             plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'rrule' ], // https://fullcalendar.io/docs/plugin-index
-            timeZone: 'UTC',
+            timeZone: 'local',
         });
 
         $.getJSON("/json/shows", function(data) {
 
             for (let i = 0; i < data.length; i++) {
 
-                let startDate = new Date(data[i].startDate.date);
-                let showTime = new Date(data[i].showTime.date);
+                const startDate = new Date(data[i].startDate.date);
+                const showTime = new Date(data[i].showTime.date);
+                const showDuration = new Date(data[i].showDuration.date);
 
-                // let startDate =
-                // let showTime =  data[i].showTime.date;
+                // let showStartingMoment = startDate.getFullYear() + "-" + (startDate.getMonth()+1).toString().padStart(2, '0') + "-" + startDate.getDate().toString().padStart(2, '0') + " "  + showTime.getHours().toString().padStart(2, '0') + ":" + showTime.getMinutes().toString().padStart(2, '0');
+                // const showStartingMoment = new Date(startDate.getTime() + showTime.getTime());
+                const showStartingMoment = new Date(startDate).setHours(startDate.getHours() + showTime.getHours());
+                const showEndingMoment = new Date(startDate).setHours(startDate.getHours() + showTime.getHours() + showDuration.getHours());
+                console.log(showStartingMoment);
+                console.log(showEndingMoment);
+
 
                 calendar.addEvent({
                     // title: 'Metalesia',
                     // start: '2022-07-22 20:00',
                     title: data[i].name,
-                    start: startDate.getFullYear() + "-" + (startDate.getMonth()+1).toString().padStart(2, '0') + "-" + startDate.getDate().toString().padStart(2, '0') + " "  + showTime.getHours().toString().padStart(2, '0') + ":" + showTime.getMinutes().toString().padStart(2, '0'),
-                    slotDuration: data[i].showDuration.date,
+                    start: showStartingMoment,
+                    end: showEndingMoment,
                 })
             }
         })
