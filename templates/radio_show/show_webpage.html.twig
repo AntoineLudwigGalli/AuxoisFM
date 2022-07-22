@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block body %}
+    
+    
     <div class="row ">
         <div class="row">
             <div class="col-12 d-flex flex-column align-items-center justify-content-center mt-5">
@@ -36,7 +38,8 @@
     
     {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL %}
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
-        {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
+        
+        {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
             <a href="" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
         {% endif %}
         <div class="row">

@@ -38,7 +38,7 @@
                                         
                                         <td>{{ show.name }}</td>
                                         <td>{{ show.animator }}</td>
-                                        <td>{{ show.startDate|date_modify('+' ~ show.timeInterval|date)|date|format_date('full')|capitalize }} à {{ show.showTime|format_time('short') }}</td>
+                                        <td>{{ show.startDate|date_modify('+' ~ show.timeInterval)|date|format_date('full')|capitalize }} à {{ show.showTime|format_time('short') }}</td>
                                         <td>{{ show.showDuration|format_time(pattern="h'h'mm") }}</td>
                                         <td><a href="{{ show.webPageLink }}">{{ show.webPageLink }}</a></td>
                                         <td class="text-center">

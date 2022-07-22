@@ -21,6 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class RadioShowController extends AbstractController
 {
     #[Route('/list', name: 'list')]
+    #[IsGranted('ROLE_ANIMATOR')]
     public function show_list(ManagerRegistry $doctrine): Response
     {
         $showsRepo = $doctrine->getRepository(RadioShow::class);
@@ -33,6 +34,7 @@ class RadioShowController extends AbstractController
     }
 
     #[Route('/supprimer/{id}/', name: 'delete', priority: 10)]
+    #[IsGranted('ROLE_ANIMATOR')]
     public function showDelete(RadioShow $radioShow, Request $request, ManagerRegistry $doctrine): Response
     {
 //        Token CSRF
@@ -57,7 +59,7 @@ class RadioShowController extends AbstractController
 
     #[Route('/nouvelle-emission/', name: 'new_show')]
     #[isGranted('ROLE_ANIMATOR')]
-    public function newPublication(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, UrlGeneratorInterface $router): Response {
+    public function newRadioShow(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, UrlGeneratorInterface $router): Response {
         $show = new RadioShow();
 
         $form = $this->createForm(RadioShowCreationFormType::class, $show);
@@ -125,6 +127,7 @@ class RadioShowController extends AbstractController
 
 
     #[Route('/contenu-dynamique/modifier/{slug}/{title}', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
+    #[IsGranted('ROLE_ANIMATOR')]
     #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
     public function dynamicContentEdit(ManagerRegistry $doctrine, Request $request, $title, $slug, RadioShow $show): Response
     {

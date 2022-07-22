@@ -24,16 +24,20 @@ class UserProfileController extends AbstractController
         $emailForm=$this->createForm(ChangeEmailFormType::class);
         $emailForm->handleRequest($request);
 
-        if($emailForm->isSubmitted() && $emailForm->isValid()) {
-            $newEmail = $emailForm->get('email')->getData();
-            $this->getUser()->setEmail($newEmail);
+        if($this->getUser()== null){
+           return $this->redirectToRoute("app_login");
+        } else {
+            if ($emailForm->isSubmitted() && $emailForm->isValid()) {
+                $newEmail = $emailForm->get('email')->getData();
+                $this->getUser()->setEmail($newEmail);
 
-            $em = $doctrine->getManager();
-            $em->flush();
+                $em = $doctrine->getManager();
+                $em->flush();
 
-            $this->addFlash('success', 'Adresse Email modifiée avec succès');
+                $this->addFlash('success', 'Adresse Email modifiée avec succès');
 
-            return $this->redirectToRoute('user_profile');
+                return $this->redirectToRoute('user_profile');
+            }
         }
 
         $pseudoForm=$this->createForm(ChangePseudoFormType::class);

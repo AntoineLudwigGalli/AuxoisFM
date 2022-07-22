@@ -49,8 +49,6 @@ class RadioShow
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateInterval $timeInterval = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $showTime = null;
@@ -58,8 +56,14 @@ class RadioShow
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $showDuration = null;
 
-    #[ORM\Column(length: 8)]
-    private ?string $broadcastDay = null;
+
+    #[ORM\Column]
+    private ?int $timeInterval = null;
+
+    #[ORM\Column]
+    private array $broadcastDay = [];
+
+
 
     public function __construct()
     {
@@ -216,17 +220,6 @@ class RadioShow
         return $this;
     }
 
-    public function getTimeInterval(): ?\DateInterval
-    {
-        return $this->timeInterval;
-    }
-
-    public function setTimeInterval(?\DateInterval $timeInterval): self
-    {
-        $this->timeInterval = $timeInterval;
-
-        return $this;
-    }
 
     public function getShowTime(): ?\DateTimeInterface
     {
@@ -252,16 +245,32 @@ class RadioShow
         return $this;
     }
 
-    public function getBroadcastDay(): ?string
+
+
+    public function getTimeInterval(): ?int
+    {
+        return $this->timeInterval;
+    }
+
+    public function setTimeInterval(int $timeInterval): self
+    {
+        $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    public function getBroadcastDay(): array
     {
         return $this->broadcastDay;
     }
 
-    public function setBroadcastDay(string $broadcastDay): self
+    public function setBroadcastDay(array $broadcastDay): self
     {
         $this->broadcastDay = $broadcastDay;
 
         return $this;
     }
+
+
 
 }

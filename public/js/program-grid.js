@@ -4,8 +4,9 @@ function renderCalendar(){
 
         let calendar = new FullCalendar.Calendar(calendarEl, {
             themeSystem: 'bootstrap5',
+            lazyFetching: true,
             locale: 'fr',
-            defaultView: 'dayGridMonth',
+            defaultView: 'timeGridWeek',
             editable: true,
             eventSources: [
                 {
@@ -19,6 +20,7 @@ function renderCalendar(){
                     },
                 },
             ],
+
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -27,30 +29,64 @@ function renderCalendar(){
             plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'rrule' ], // https://fullcalendar.io/docs/plugin-index
             timeZone: 'local',
         });
-
+        //On récupère le tableau json des émissions pour afficher les infos dans le calendrier
         $.getJSON("/json/shows", function(data) {
 
             for (let i = 0; i < data.length; i++) {
 
-                const startDate = new Date(data[i].startDate.date);
-                const showTime = new Date(data[i].showTime.date);
-                const showDuration = new Date(data[i].showDuration.date);
+                let now = new Date();
+                let startDate = new Date(data[i].startDate.date);
+                let showTime = new Date(data[i].showTime.date);
+                let showDuration = new Date(data[i].showDuration.date);
+                // On formate les dates issues de la bdd pour alimenter le calendrier
+                let showStartingMoment = new Date(startDate)
+                showStartingMoment.setHours(startDate.getHours() + showTime.getHours());
+                showStartingMoment.setMinutes(startDate.getHours() + showTime.getMinutes());
+                let showEndingMoment = new Date(startDate);
+                showEndingMoment.setHours(startDate.getHours() + showTime.getHours() + showDuration.getHours());
+                showEndingMoment.setMinutes(startDate.getMinutes() + showTime.getMinutes() + showDuration.getMinutes());
 
-                // let showStartingMoment = startDate.getFullYear() + "-" + (startDate.getMonth()+1).toString().padStart(2, '0') + "-" + startDate.getDate().toString().padStart(2, '0') + " "  + showTime.getHours().toString().padStart(2, '0') + ":" + showTime.getMinutes().toString().padStart(2, '0');
-                // const showStartingMoment = new Date(startDate.getTime() + showTime.getTime());
-                const showStartingMoment = new Date(startDate).setHours(startDate.getHours() + showTime.getHours());
-                const showEndingMoment = new Date(startDate).setHours(startDate.getHours() + showTime.getHours() + showDuration.getHours());
-                console.log(showStartingMoment);
-                console.log(showEndingMoment);
+
+                if (data[i].timeInterval != 0){
+                    for (let j = 0; j < 52; j++) {
 
 
-                calendar.addEvent({
-                    // title: 'Metalesia',
-                    // start: '2022-07-22 20:00',
-                    title: data[i].name,
-                    start: showStartingMoment,
-                    end: showEndingMoment,
-                })
+                        if (j != 0) {
+                            showStartingMoment = new Date(showStartingMoment.setDate(showStartingMoment.getDate()+data[i].timeInterval));
+                        }
+
+                        calendar.addEvent({
+                            title: data[i].name,
+                            start: showStartingMoment,
+                            end: showEndingMoment,
+                            url: data[i].webpageLink,
+                            overlap: false,
+                        }) ;
+                    }
+
+                    } else {
+
+                    let startTimeTimestamp = new Date(showTime.getTime());
+                    let showDurationTimestamp = new Date(showDuration.getTime());
+                    let endTimeTimestamp = new Date(startTimeTimestamp);
+                    endTimeTimestamp.setHours(startTimeTimestamp.getHours() + showDurationTimestamp.getHours());
+                    endTimeTimestamp.setMinutes(startTimeTimestamp.getMinutes() + showDurationTimestamp.getMinutes());
+
+                    let startTime = ("0" + startTimeTimestamp.getHours()).slice(-2) + ":" + ("0" + startTimeTimestamp.getMinutes()).slice(-2);
+                    let endTime = ("0" + endTimeTimestamp.getHours()).slice(-2) + ":" + ("0" + endTimeTimestamp.getMinutes()).slice(-2);
+
+
+
+console.log( endTime);
+                    calendar.addEvent({
+                        title: data[i].name,
+                        daysOfWeek: data[i].broadcastDay, // these recurrent events move separately
+                        startTime: startTime,
+                        endTime: endTime,
+                        url: data[i].webpageLink,
+                        overlap: false,
+                    }) ;
+                }
             }
         })
         calendar.render();

@@ -104,15 +104,17 @@ class RadioShowCreationFormType extends AbstractType
             ])
             ->add('broadcastDay', ChoiceType::class, [
                 'label' => "Jour de diffusion",
+                'expanded' => true,
+                'multiple' => true,
                 'placeholder' => 'Choisissez le jour de diffusion',
                 'choices'  => [
-                    'Lundi' => "lundi",
-                    'Mardi' => "mardi",
-                    'Mercredi' => "mercredi",
-                    'Jeudi' => "jeudi",
-                    'Vendredi' => "vendredi",
-                    'Samedi' => "samedi",
-                    'Dimanche' => "Dimanche",
+                    'Lundi' => "1",
+                    'Mardi' => "2",
+                    'Mercredi' => "3",
+                    'Jeudi' => "4",
+                    'Vendredi' => "5",
+                    'Samedi' => "6",
+                    'Dimanche' => "7",
                 ],
                 'constraints' => [
                     new NotBlank([ // Erreur si le champ n'est pas rempli
@@ -120,16 +122,20 @@ class RadioShowCreationFormType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('timeInterval', DateIntervalType::class, [
+            ->add('timeInterval', ChoiceType::class, [
                 'label' => "L'émission a lieu tous les ",
-                'widget' => 'choice',
-                'with_days' => true,
-                'with_months' => true,
-                'with_years' => true,
-                'placeholder' => [
-                    'days' => 'Jours',
-                    'months' => 'Mois',
-                    'years' => 'Ans',
+                "choices" => [
+                  'Tous les jours' => 1,
+                  'Certains jours toutes les semaines' => 0,
+                  'Tous les 2 jours' => 2,
+                  'Tous les 3 jours' => 3,
+                  'Tous les 4 jours' => 4,
+                  'Tous les 5 jours' => 5,
+                  'Tous les 6 jours' => 6,
+                  'Toutes les semaines' => 7,
+                  'Toutes les 2 semaines' => 14,
+                  'Toutes les 3 semaines' => 21,
+                  'Toutes les 4 semaines' => 28,
                 ],
                 'constraints' => [
                     new NotBlank([ // Erreur si le champ n'est pas rempli
@@ -137,6 +143,23 @@ class RadioShowCreationFormType extends AbstractType
                     ]),
                 ]
             ])
+// ->add('timeInterval', DateIntervalType::class, [
+//                'label' => "L'émission a lieu tous les ",
+//                'widget' => 'choice',
+//                'with_days' => true,
+//                'with_months' => true,
+//                'with_years' => true,
+//                'placeholder' => [
+//                    'days' => 'Jours',
+//                    'months' => 'Mois',
+//                    'years' => 'Ans',
+//                ],
+//                'constraints' => [
+//                    new NotBlank([ // Erreur si le champ n'est pas rempli
+//                        'message' => 'Merci de saisir une fréquence valide pour votre émission'
+//                    ]),
+//                ]
+//            ])
 
             ->add('showTime', TimeType::class, [
                 'label' => 'Horaire de diffusion de l\'émission',
