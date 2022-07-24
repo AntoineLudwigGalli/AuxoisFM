@@ -1,6 +1,8 @@
 /*Paramètres Généraux*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
-
+html{
+    max-height: 100%;
+}
 
 body{
     font-family: 'Montserrat', sans-serif;
@@ -13,9 +15,6 @@ body.blue{
 body.red{
     background-color: rgba(201, 95, 95, 0.8);
 }
-body{
-    max-height: 100vh;
-}
 
 /*Header*/
 #header {
@@ -27,8 +26,7 @@ body{
     border-radius: 25px;
     border: #7adcf1 5px solid;
     height: 9vh;
-    margin-top: 0.5vh;
-    margin-left: .5vh;
+    margin: .5vh .5vw
 }
 
 #logo:hover {
@@ -58,15 +56,15 @@ body{
 }
 
 #news {
-  height: 45vh;
+  height: 50vh;
   background-color: #085f8c;
     display: flex;
 }
 
 #podcasts {
   background-color: #7adcf1;
-    max-height: 45vh;
-    min-height: 45vh;
+    max-height: 40vh;
+    min-height: 40vh;
     color: #1f3c5c;
 cursor: pointer;
     display: flex;
@@ -82,8 +80,8 @@ cursor: pointer;
 #player {
     background-color: #c95f5f;
     object-fit: cover;
-    max-height: 45vh;
-    min-height: 45vh;
+    max-height: 40vh;
+    min-height: 40vh;
     display: flex;
 }
 
@@ -97,6 +95,10 @@ cursor: pointer;
     text-decoration: none;
 }
 
+.on-air-txt:hover{
+    color: #1f3c5c;
+}
+
 .now-playing{
     font-style: italic;
 }
@@ -108,8 +110,8 @@ cursor: pointer;
   color: #1f3c5c;
   font-weight: bold;
     font-size: 3rem;
-    max-height: 45vh;
-    min-height: 45vh;
+    max-height: 40vh;
+    min-height: 40vh;
 }
 
 
@@ -177,6 +179,12 @@ cursor: pointer;
 .user-profile-data{
     cursor: pointer;
 }
+
+.user-pseudo:hover, .user-email:hover{
+    font-style: italic;
+    font-size: larger;
+}
+
 .list-group .list-group-item .user-profile-data:hover{
     color: white !important;
 }
@@ -185,7 +193,7 @@ cursor: pointer;
 }
 
 .profile-container{
-    height: 60vh;
+    min-height: 60vh;
     background-color: white;
     border-radius: 30px;
     box-shadow: 5px 5px 10px black;

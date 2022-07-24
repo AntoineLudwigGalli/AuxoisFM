@@ -84,7 +84,7 @@
         {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
         {% if show.youtubeURL %}
             <div class="col-4">
-                <iframe width="100%" height="315" src="{{ show.youtubeURL }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {{ show.youtubeURL }}
             </div>
         {% endif %}
         
@@ -96,7 +96,7 @@
         
         {% if show.spotifyURL %}
             <div class="col-4">
-                <iframe style="border-radius:12px" src="{{ show.spotifyURL }}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                {{ show.spotifyURL }}
             </div>
         {% endif %}
     {% endif %}
@@ -108,6 +108,7 @@
 {% block jsIncludes %}
     
     <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>
+    <script src="{{ asset('js/gap-audio-player.js') }}"></script>
 {% endblock %}
 
 

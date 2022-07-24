@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\RadioShow;
-use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/", name: "main_")]
 class MainController extends AbstractController
 {
-    /**
-     * @throws \Exception
-     */
+
     #[Route('/', name: 'home')]
     public function home(ManagerRegistry $doctrine): Response
     {
@@ -23,17 +21,31 @@ class MainController extends AbstractController
         $showsRepo = $doctrine->getRepository(RadioShow::class);
         $shows = $showsRepo->findBy([], ['name' => 'ASC']);
 
+        // Afin d'avoir une boucle qui n'affiche plus les émissions après 52 itérations, on réinitialise la date de début à la date de diffusion de l'avant dernière émission
+        foreach ($shows as $show) {
+            if ($show->getTimeInterval() != 0) {
+                $date = $show->getStartDate();
+                $addOneInterval = strtotime('+' . $show->getTimeInterval() . ' days', date_timestamp_get($date));
+                $oneInterval = $addOneInterval - date_timestamp_get($date);
+                $intervalNumber = ceil((time() - date_timestamp_get($date)) / $oneInterval);
+                dump($show->getTimeInterval() * $intervalNumber);
 
+                if (date_timestamp_get($date) < time()) {
 
-//        $date = $shows->getStartDate();
-//        if( $date > date('Y-m-d')) {
-//            $shows->setStartDate($date->add(new \DateInterval($shows->getTimeInterval())));
-//        }
+                    $show->setStartDate(new \DateTime(($show->getStartDate()->modify('+' . $show->getTimeInterval() * $intervalNumber . ' day'))->format('Y-m-d')));
+
+                    $em = $doctrine->getManager();
+                    $em->flush();
+
+                }
+            }
+        }
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',
             'bgc' => $bgc,
-            'shows' => $shows
+            'shows' => $shows,
+
         ]);
     }
 

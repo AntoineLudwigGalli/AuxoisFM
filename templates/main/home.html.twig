@@ -29,30 +29,59 @@
     {{ include('main/show-list.html.twig') }}
     </div>
     <div class="col-12 flex-row align-items-center animate__animated animate__fadeInLeft" id="news">
-        <div class="owl-carousel owl-theme">
-            <div class=" slide">
-                <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/> <a href="{{ path('main_news') }}">
-                    <h3>La Salamandre Noire en direct d'AuxoisFM</h3>
-                </a>
+     
+            <div class="owl-carousel owl-theme ">
+                <div class="item py-2">
+                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
+                </div>
+                <div class="item py-2">
+                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
+                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
+                </div>
             </div>
-            
-            <div class=" slide">
-                <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/> <a href="{{ path('main_news') }}">
-                    <h3>Scoop : Shrek est de la jaquette et il kiffe ça !</h3>
-                </a>
-            </div>
-            
-            <div class=" slide">
-                <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/> <a href="{{ path('main_news') }}">
-                    <h3>Metalesia, l'émission qui te fait frissonner de joie</h3>
-                </a>
-            </div>
-        
         </div>
-        {#                        todo: ajouter des alt dynamiques #}
-    
-    
-    </div>
+   
     
     <div class="col-12 d-flex flex-row animate__animated animate__fadeInUp" id="menu">
         
@@ -73,8 +102,22 @@
                 
                 
                 <div class="flip-card-back d-flex flex-column justify-content-around">
-                    <a href="{{ path('main_news') }}">
-                        <h3 class="on-air-txt ">Rockin'Auxois / Metalesia</h3>
+                    <a class="on-air-txt" href="{{ path('main_news') }}">
+                        <h3 >
+{#                            and show.showTime|date('H:i') > "now"|date("H:i") and "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')#}
+                            {% for show in shows %}
+                     
+                                {% if
+                                    show.startDate|date('Y-m-d') == "now"|date("Y-m-d") and
+                                    show.showTime|date('H:i') < "now"|date("H:i") and
+                                    "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')
+                                %}
+                                   {{ "OK "}}
+                                    {% else %}
+                                    {{ "Pas OK" }}
+                                {% endif %}
+                            {% endfor %}
+                        </h3>
                     </a> <a href='{{ path('main_news') }}' class="on-air-img mb-3"> <img src='{{ asset('images/metalesia.jpg')|imagine_filter('now_playing') }}' alt="" class="img-fluid"> </a>
                     <div class="now-playing back-btn btn btn-outline-light col-8 offset-2">
                         <h3>Now Playing...</h3>
@@ -84,7 +127,7 @@
         </div>
         
         
-        <a href='{{ path('main_news') }}' class=" col-4 d-flex justify-content-center align-items-center hvr-bounce-to-top text-center" id="more-news"> Encore + d'actus </a>
+        <a href='{{ path('main_news') }}' target="_blank" class=" col-4 d-flex justify-content-center align-items-center hvr-bounce-to-top text-center" id="more-news"> Encore + d'actus </a>
     </div>
 
 {% endblock %}

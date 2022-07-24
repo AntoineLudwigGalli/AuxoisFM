@@ -14,7 +14,7 @@
                 {# Liste des boutons du menu déroulant #}
                 <div class="dropdown-menu " aria-labelledby="profil-dropdown">
                     {# Bouton de la page mon profil #}
-                    <a class="dropdown-item ms-0" href="{{ path('user_profile') }}">
+                    <a class="dropdown-item ms-0" href="{{ path('user_profile') }}" target="_blank">
                         <i class="fa-solid fa-circle-user me-1"></i>Profil
                     </a>
     
@@ -30,7 +30,7 @@
                     {# Bouton de la page Administration #}
                     {% if app.user.roles[0] == "ROLE_ADMIN" %}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item ms-0" href="#
+                        <a class="dropdown-item ms-0" target="_blank" href="#
 {# todo {{ path('admin_panel_index') }} #}
 ">
                             <i class="fa-solid fa-gears me-1"></i>Administration

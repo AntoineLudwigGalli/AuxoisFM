@@ -1,4 +1,3 @@
-
 function renderCalendar(){
         let calendarEl = document.getElementById('calendar-holder');
 
@@ -20,7 +19,13 @@ function renderCalendar(){
                     },
                 },
             ],
+            eventClick: function(info) {
+                info.jsEvent.preventDefault(); // don't let the browser navigate
 
+                if (info.event.url) {
+                    window.open(info.event.url);
+                }
+            },
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -29,12 +34,12 @@ function renderCalendar(){
             plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'rrule' ], // https://fullcalendar.io/docs/plugin-index
             timeZone: 'local',
         });
+
         //On récupère le tableau json des émissions pour afficher les infos dans le calendrier
         $.getJSON("/json/shows", function(data) {
 
             for (let i = 0; i < data.length; i++) {
 
-                let now = new Date();
                 let startDate = new Date(data[i].startDate.date);
                 let showTime = new Date(data[i].showTime.date);
                 let showDuration = new Date(data[i].showDuration.date);
@@ -49,8 +54,7 @@ function renderCalendar(){
 
                 if (data[i].timeInterval != 0){
                     for (let j = 0; j < 52; j++) {
-
-
+                        
                         if (j != 0) {
                             showStartingMoment = new Date(showStartingMoment.setDate(showStartingMoment.getDate()+data[i].timeInterval));
                         }
@@ -75,9 +79,6 @@ function renderCalendar(){
                     let startTime = ("0" + startTimeTimestamp.getHours()).slice(-2) + ":" + ("0" + startTimeTimestamp.getMinutes()).slice(-2);
                     let endTime = ("0" + endTimeTimestamp.getHours()).slice(-2) + ":" + ("0" + endTimeTimestamp.getMinutes()).slice(-2);
 
-
-
-console.log( endTime);
                     calendar.addEvent({
                         title: data[i].name,
                         daysOfWeek: data[i].broadcastDay, // these recurrent events move separately
@@ -88,8 +89,10 @@ console.log( endTime);
                     }) ;
                 }
             }
-        })
-        calendar.render();
+
+        });
+
+    calendar.render();
     }
 // Fonction permettant d'afficher une image avec une croix de fermeture dans un overlay
 function displayCalendar(){

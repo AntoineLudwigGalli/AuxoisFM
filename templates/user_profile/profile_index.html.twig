@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 offset-3 text-center">
-                        <a href="{{ path('user_edit_photo') }}" class="text-decoration-none text-dark ">Modifier la photo de profil</a>
+                    <div class="col-6 offset-3 text-center my-3">
+                        <a href="{{ path('user_edit_photo') }}" class="text-decoration-none btn btn-outline-dark">Modifier la photo de profil</a>
                     </div>
                 </div>
-                <div class="row d-flex flex-row">
+                <div class="row d-flex flex-row mb-3">
                     <div class="col-3 offset-2">
                         <span>Pseudonyme: </span>
                     </div>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 
-                <div class="row d-flex flex-row">
+                <div class="row d-flex flex-row mb-3">
                     <div class="col-3 offset-2">
                         <span>Email: </span>
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 
-                <div class="row d-flex flex-row">
+                <div class="row d-flex flex-row mb-3">
                     <div class="col-3 offset-2">
                         <span>Inscrit le: </span>
                     </div>
@@ -78,11 +78,11 @@
                     </div>
                 </div>
                 
-                <div class="row d-flex flex-row">
+                <div class="row d-flex flex-row mb-3">
                     <div class="col-3 offset-2">
                         <span>Compte: </span>
                     </div>
-                    <div class="col-6 d-flex flex-row">
+                    <div class="col-6 d-flex flex-row mb-3">
                         <span>{{ is_granted('ROLE_ADMIN') ? 'Administrateur' : (is_granted('ROLE_ANIMATOR') ? "Animateur" : "Utilisateur")}}</span>
                     </div>
                 </div>

@@ -32,7 +32,8 @@ class ChangePseudoFormType extends AbstractType
             ])
 
             ->add('save', SubmitType::class, [
-                'label' => 'OK',
+                'label_html' => true,
+                'label' => '<i class="fa-solid fa-check"></i>',
                 'attr' => [
                     'class' => 'btn btn-outline-primary',]]);
         ;

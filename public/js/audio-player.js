@@ -1,3 +1,5 @@
+
+
 TweenMax.set('#ripple-circle circle', {scale:0.5, transformOrigin:'50% 50%'});
 TweenMax.fromTo('#svg-line', 2, {x:-2.5}, {x:2.5,repeat:-1,ease:Elastic.easeInOut, yoyo:true});
 TweenMax.fromTo('.loading-image', 2, {scale:1, autoAlpha:1}, {scale:0.75, autoAlpha:0.5, transformOrigin:'50% 50%',ease:Bounce.easeIn,yoyo:true, repeat:-1});
@@ -44,7 +46,8 @@ $('.active-box').hover(function(){
 });
 
 let audioMp3 = new Audio();
-audioMp3.src = 'http://auxoisfm.ice.infomaniak.ch/auxoisfm-128';
+audioMp3.src = "http://auxoisfm.ice.infomaniak.ch/auxoisfm-128";
+
 
 function playAudio(){
     audioMp3.play();
