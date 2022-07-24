@@ -11,8 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -30,7 +28,6 @@ class RadioShowCreationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            todo : ajouter heure et fréquence de l'émission
             ->add('name', TextType::class, [
                 'label' => 'Nom de l\'émission',
                 'constraints' => [
@@ -62,10 +59,10 @@ class RadioShowCreationFormType extends AbstractType
             ])
             ->add('timeInterval', ChoiceType::class, [
                 'label' => "L'émission a lieu ",
-                'placeholder' => 'Sélectionner la fréquence',
+                'placeholder' => 'Sélectionnez la fréquence',
                 "choices" => [
-                    'Tous les jours' => 1,
                     'Certains jours toutes les semaines' => 0,
+                    'Tous les jours' => 1,
                     'Tous les 2 jours' => 2,
                     'Tous les 3 jours' => 3,
                     'Tous les 4 jours' => 4,
@@ -122,7 +119,7 @@ class RadioShowCreationFormType extends AbstractType
 
 
             ->add('showTime', TimeType::class, [
-                'label' => 'Horaire de diffusion de l\'émission',
+                'label' => 'Horaire de diffusion:',
                 'input' => 'datetime',
                 'widget' => 'choice',
                 'constraints' => [
@@ -133,7 +130,7 @@ class RadioShowCreationFormType extends AbstractType
             ])
 
             ->add('showDuration', TimeType::class, [
-                'label' => 'Durée de l\'émission',
+                'label' => 'Durée de l\'émission:',
                 'input' => 'datetime',
                 'widget' => 'choice',
                 'constraints' => [
@@ -172,9 +169,7 @@ class RadioShowCreationFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('save', SubmitType::class, [
-                'label' => "Créer l'émission"
-            ])
+
         ;
     }
 

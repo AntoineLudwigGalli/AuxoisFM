@@ -238,3 +238,19 @@ cursor: pointer;
 table th, table td{
     text-align: center;
 }
+
+/*Formulaire de création d'émission*/
+#radio_show_creation_form_broadcastDay{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+}
+
+.time-input>fieldset{
+    display: flex;
+    flex-direction: row;
+}
+
+.time-input>fieldset>legend{
+    width: 50%;
+}

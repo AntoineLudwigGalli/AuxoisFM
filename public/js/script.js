@@ -60,3 +60,20 @@ playlistButtons.forEach((playlistButton) => {
         displayPlaylist(playlistNumber);
     });
 });
+
+
+// Afficher les champs relatifs à la playlist à la création de l'émission
+
+$('.display-playlist-form-button').click(function (){
+    $('.display-playlist-form').removeClass('d-none');
+    $('.display-playlist-form-button').addClass('d-none');
+    $('.cancel-playlist-form-button').removeClass('d-none');
+})
+
+$('.cancel-playlist-form-button').click(function (){
+    $('.display-playlist-form div input').val(''); // On remet les champs vides quand on clic sur retour pour éviter d'envoyer des données non voulues
+    $('.display-playlist-form').addClass('d-none');
+    $('.display-playlist-form-button').removeClass('d-none');
+    $('.cancel-playlist-form-button').addClass('d-none');
+
+})
