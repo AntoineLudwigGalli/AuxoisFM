@@ -9,9 +9,29 @@
 {% block body %}
     
     
-    <div class="row ">
+    <div class="row mt-3">
+        {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
+            <div class="row d-flex flex-row position-absolute">
+                <a href="{{ path('show_list') }}" class="btn btn-danger col-1 mt-2 ms-4 position-absolute">Retour</a>
+                <div class="col-4 offset-8 d-flex flex-row justify-content-end">
+                    {{ form_start(optionsForm) }}
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="me-3">{{ form_label(optionsForm.backgroundColor) }}</div>
+                        {{ form_widget(optionsForm.backgroundColor) }}
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="me-3">{{ form_label(optionsForm.textColor) }}</div>
+                        {{ form_widget(optionsForm.textColor) }}
+                    </div>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                    {{ form_end(optionsForm) }}
+                </div>
+            </div>
+        {% endif %}
+        
         <div class="row">
-            <div class="col-12 d-flex flex-column align-items-center justify-content-center mt-5">
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center">
                 {% if show.logo is null %}
                     
                     <img src="{{ asset('images/show_logo/default_logo.jpeg')|imagine_filter('show_logo') }}" alt="Logo d'émission par défaut" class="img-fluid img-thumbnail">
@@ -24,40 +44,68 @@
             </div>
         </div>
         <div class="row">
-            <h1 class="col-12 d-flex flex-row align-items-center justify-content-center my-4">{{ show.name }}</h1>
+            <h1 class="col-12 d-flex flex-row align-items-center justify-content-center my-4" style="color: {{ textColor }}">{{ show.name }}</h1>
         </div>
     </div>
     
     <div class="row">
         <div class="col-10 offset-1 d-flex flex-row align-items-center justify-content-center my-4">
-            <p class="d-flex flex-column align-items-center justify-content-center" title="Ajoutez une description à l'émission">{{ display_dynamic_content( (show.slug ~ '-description'), show.slug) }} </p>
+            <p class="d-flex flex-column align-items-center justify-content-center" title="Ajoutez une description à l'émission">{{ display_dynamic_content( (show.slug ~ '-description'), show.slug, ) }} </p>
         </div>
     </div>
     
     <div class="row mt-3 me-1 d-flex flex-row">
     
     {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL %}
-        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center">Podcasts</h2>
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center" style="color: {{ textColor }}">Podcasts</h2>
         
         {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
-            <a href="" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
+            <a href="{{ path('show_new_podcast', {'slug' : show.slug}) }}" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
         {% endif %}
         <div class="row">
-            <h3>Playlist</h3>
+            <h3 class="text-center" style="color: {{ textColor }}">Playlist</h3>
             <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'), show.slug) }}</div>
         </div>
+        {% set i = 0 %}
+        {% for podcast in podcasts %}
+        
+            <div class="row ms-3 my-4">
+                <h4 class="col-12" style="color: {{ textColor }}">Emission du
+                    {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}
+                    :</h4>
+            </div>
+            <div class="row ms-3 ">
+                <h6 class="col-6 d-flex flex-column" title="Ajoutez un nom à votre émission">{{ display_dynamic_content( (show.slug ~ '-podcast_name' ~ i ), show.slug) }}</h6>
+            </div>
+        
+            <div class="row ms-3 d-flex flex-row align-items-center ">
+                <div class="gap-audio-player col-9">
+                    <audio>
+                        <source src="{{ asset('audio/' ~ podcast.podcastLink) }}">
+                    </audio>
+                </div>
+            
+                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center playlist-button" data-playlist="{{ i }}" style="color: {{ textColor }}">Playlist<i class="fas fa-angle-down angle-{{ i }} ms-2 " data-angle="{{ i }}"></i></h5>
+            
+                <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist' ~ i
+                    ), show.slug) }}</div>
+            </div>
+        
+            {% set i = i + 1 %}
+        {% endfor %}
     {% else %}
         <div class="col-8 separation-line">
-        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3">Podcasts</h2>
-            {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
-                <a href="" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3" style="color: {{ textColor }}">Podcasts</h2>
+            {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
+                <a href="" class="btn btn-primary col-4 offset-4" style="color: {{ textColor }}">Ajouter un podcast</a>
             {% endif %}
+        
         {% set i = 0 %}
         {% for podcast in podcasts %}
           
             <div class="row ms-3 my-4">
-                <h4 class="col-12">Emission du
-{#                    {{ podcast.broadcastDate }} #}
+                <h4 class="col-12" style="color: {{ textColor }}">Emission du
+                    {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}
                     :</h4>
             </div>
             <div class="row ms-3 ">
@@ -71,9 +119,9 @@
                     </audio>
                 </div>
                 
-                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center playlist-button" data-playlist="{{ i }}">Playlist<i class="fas fa-angle-down angle-{{ i }} ms-2 " data-angle="{{ i }}"></i></h5>
+                <h5 class="col-3 d-flex flex-row align-items-center justify-content-center playlist-button" data-playlist="{{ i }}" style="color: {{ textColor }}">Playlist<i class="fas fa-angle-down angle-{{ i }} ms-2 " data-angle="{{ i }}"></i></h5>
                 
-                <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist'
+                <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist' ~ i
                     ), show.slug) }}</div>
             </div>
             
@@ -82,23 +130,28 @@
 
         </div>
         {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
+        <div class="d-flex flex-column col-4">
         {% if show.youtubeURL %}
-            <div class="col-4">
-                {{ show.youtubeURL }}
+            <div>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list={{ show.youtubeURL }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
             </div>
         {% endif %}
         
-        {% if show.deezerURL %}
-            <div class="col-4">
-                {{ show.deezerURL }}
-            </div>
-        {% endif %}
         
         {% if show.spotifyURL %}
-            <div class="col-4">
-                {{ show.spotifyURL }}
+            <div>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{{ show.spotifyURL }}?utm_source=generator" width="100%" height="380" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
             </div>
         {% endif %}
+    
+        {% if show.deezerURL %}
+            <div>
+                <iframe title="deezer-widget" src="https://widget.deezer.com/widget/dark/playlist/{{ show.deezerURL }}" width="100%" height="300"  allowtransparency="true" allow="encrypted-media; clipboard-write"></iframe>
+                
+            </div>
+        {% endif %}
+        </div>
     {% endif %}
     </div>
 

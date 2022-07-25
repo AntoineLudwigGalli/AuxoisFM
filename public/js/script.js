@@ -75,5 +75,7 @@ $('.cancel-playlist-form-button').click(function (){
     $('.display-playlist-form').addClass('d-none');
     $('.display-playlist-form-button').removeClass('d-none');
     $('.cancel-playlist-form-button').addClass('d-none');
-
 })
+
+// Paramètres de page d'émission
+

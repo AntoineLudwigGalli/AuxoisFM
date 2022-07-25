@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\RadioShow;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -45,6 +46,7 @@ class RadioShowCreationFormType extends AbstractType
 
             ->add('logo', FileType::class, [
                 'label' => 'Sélectionnez le logo de l\'émission (facultatif)',
+                'data_class' => null,
                 'attr' => [
                     'accept' => implode(", ", $this->allowedMimeTypes),
                 ],
@@ -57,6 +59,7 @@ class RadioShowCreationFormType extends AbstractType
                     ]),
                 ],
             ])
+
             ->add('timeInterval', ChoiceType::class, [
                 'label' => "L'émission a lieu ",
                 'placeholder' => 'Sélectionnez la fréquence',
@@ -140,31 +143,34 @@ class RadioShowCreationFormType extends AbstractType
                 ]
             ])
             ->add('youtubeURL', TextType::class, [
-                'label_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
-                'label' => "URL de la playlist Youtube (facultatif) <a href='https://support.google.com/youtube/answer/171780?hl=fr' target='_blank'><sup>?</sup></a>",
+                'help_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
+                'label' => "URL de la playlist Youtube (facultatif)",
+                'help' => "Saisir le code identifiant de la playlist présent dans le lien de la playlist (exemple : https://www.youtube.com/playlist?list=<b>PLd-1gAwLCGHPDCa5waBdkUjedPT0CzUtQ</b>)",
                 'constraints' => [
                     new Length([
-                        'max' => 255,
+                        'max' => 1000,
                         'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
                     ])
                 ]
             ])
             ->add('spotifyURL', TextType::class, [
-                'label_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
-                'label' => "URL de la playlist Spotify (facultatif) <a href='https://www.sidify.fr/guide/comment-integrer-spotify-musique-dans-votre-siteweb.html' target='_blank'><sup>?</sup></a>",
+                'help_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
+                'label' => "URL de la playlist Spotify (facultatif)",
+                'help' => "Saisir le code identifiant de la playlist présent dans le lien de la playlist (exemple : https://open.spotify.com/playlist/<b>37i9dQZF1DXe9Gx5fVy1RT</b>)",
                 'constraints' => [
                     new Length([
-                        'max' => 255,
+                        'max' => 1000,
                         'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
                     ])
                 ]
             ])
             ->add('deezerURL', TextType::class, [
-                'label_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
-                'label' => "URL de la playlist Deezer (facultatif) <a href='https://widget.deezer.com/' target='_blank'><sup>?</sup></a>",
+                'help_html' => true, //Permet de contourner l'échappement des balises HTML dans le label
+                'label' => "URL de la playlist Deezer (facultatif)",
+                'help' => "Saisir le code identifiant de la playlist présent dans le lien de la playlist (exemple : https://www.deezer.com/fr/playlist/<b>1388965575</b>)",
                 'constraints' => [
                     new Length([
-                        'max' => 255,
+                        'max' => 1000,
                         'maxMessage' => "Le lien doit contenir au maximum {{ limit }} caractères.",
                     ])
                 ]

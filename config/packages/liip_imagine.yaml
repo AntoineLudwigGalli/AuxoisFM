@@ -10,11 +10,7 @@ liip_imagine:
           scale:
             dim: [700, 700]
 
-      now_playing:
-        quality: 75
-        filters:
-          scale:
-            dim: [ 200, 200 ]
+
 
       show_logo:
         quality: 75

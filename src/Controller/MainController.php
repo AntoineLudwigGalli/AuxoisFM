@@ -16,7 +16,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(ManagerRegistry $doctrine): Response
     {
-        $bgc = "blue";
+        $bgc = "#c95f5f";
 
         $showsRepo = $doctrine->getRepository(RadioShow::class);
         $shows = $showsRepo->findBy([], ['name' => 'ASC']);
@@ -28,9 +28,8 @@ class MainController extends AbstractController
                 $addOneInterval = strtotime('+' . $show->getTimeInterval() . ' days', date_timestamp_get($date));
                 $oneInterval = $addOneInterval - date_timestamp_get($date);
                 $intervalNumber = ceil((time() - date_timestamp_get($date)) / $oneInterval);
-                dump($show->getTimeInterval() * $intervalNumber);
 
-                if (date_timestamp_get($date) < time()) {
+                if (date_timestamp_get($date) <= time()) {
 
                     $show->setStartDate(new \DateTime(($show->getStartDate()->modify('+' . $show->getTimeInterval() * $intervalNumber . ' day'))->format('Y-m-d')));
 
@@ -52,7 +51,7 @@ class MainController extends AbstractController
     #[Route('/news', name: 'news')]
     public function news(): Response
     {
-        $bgc = "red";
+        $bgc = "rgba(201, 95, 95, 0.8)";
 
         return $this->render('main/news.html.twig', [
             'controller_name' => 'MainController',

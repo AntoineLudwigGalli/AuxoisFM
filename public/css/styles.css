@@ -8,13 +8,13 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
-body.blue{
-    background-color: #c95f5f;
-}
+/*body.blue{*/
+/*    background-color: #c95f5f;*/
+/*}*/
 
-body.red{
-    background-color: rgba(201, 95, 95, 0.8);
-}
+/*body.red{*/
+/*    background-color: rgba(201, 95, 95, 0.8);*/
+/*}*/
 
 /*Header*/
 #header {
@@ -85,14 +85,16 @@ cursor: pointer;
     display: flex;
 }
 
-.on-air-img img{
-    max-height: 30vh;
+.on-air-img img, .on-air-img{
+    height: 60%;
+
 }
 
 .on-air-txt{
     color: white;
     text-transform: uppercase;
     text-decoration: none;
+    height: 10%;
 }
 
 .on-air-txt:hover{
@@ -101,6 +103,7 @@ cursor: pointer;
 
 .now-playing{
     font-style: italic;
+    height: 15%;
 }
 
 

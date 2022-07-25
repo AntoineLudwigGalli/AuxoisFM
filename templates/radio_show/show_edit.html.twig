@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une nouvelle émission{% endblock %}
+{% block title %}Modifier une émission{% endblock %}
 
 {% block body %}
     <div class="row">
-        <h1 class="col-12 text-center my-5">Créer une nouvelle émission</h1>
+        <h1 class="col-12 text-center my-5">Modifier une émission</h1>
     </div>
     
     <div class="row">
@@ -24,18 +24,18 @@
                 </div>
             </div>
             <div class="row">
-            
-            <div class="display-playlist-form-button btn btn-outline-success my-4 mx-auto col-4">Ajouter une playlist externe</div>
-            <div class="display-playlist-form d-none">
-                {{ form_row(form.youtubeURL) }}
-                {{ form_row(form.spotifyURL) }}
-                {{ form_row(form.deezerURL) }}
-            </div>
+                
+                <div class="display-playlist-form-button btn btn-outline-success my-4 mx-auto col-4">Ajouter une playlist externe</div>
+                <div class="display-playlist-form d-none">
+                    {{ form_row(form.youtubeURL) }}
+                    {{ form_row(form.spotifyURL) }}
+                    {{ form_row(form.deezerURL) }}
+                </div>
                 <div class="cancel-playlist-form-button btn btn-outline-danger my-4 mx-auto col-4 d-none">Ne pas saisir de playlist externe</div>
             </div>
             <div class="row d-flex flex-row justify-content-around mb-4">
-                <button class="col-4 btn btn-primary" type="submit">Créer l'émission</button>
-                <a href="{{ path('show_list') }}" class="col-4 btn btn-danger">Annuler la création de l'émission</a>
+                <button class="col-4 btn btn-primary" type="submit">Modifier l'émission</button>
+                <a href="{{ path('show_list') }}" class="col-4 btn btn-danger">Annuler la modification</a>
             </div>
             {{ form_end(form) }}
         </div>

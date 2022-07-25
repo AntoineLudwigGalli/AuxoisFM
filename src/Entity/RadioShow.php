@@ -34,13 +34,13 @@ class RadioShow
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $youtubeURL = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $spotifyURL = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $deezerURL = null;
 
     #[ORM\OneToMany(mappedBy: 'radioShow', targetEntity: Podcast::class, orphanRemoval: true)]
@@ -63,11 +63,15 @@ class RadioShow
     #[ORM\Column]
     private array $broadcastDay = [];
 
+    #[ORM\OneToMany(mappedBy: 'webpage', targetEntity: ShowWebpageOptions::class, orphanRemoval: true)]
+    private Collection $showWebpageOptions;
+
 
 
     public function __construct()
     {
         $this->podcasts = new ArrayCollection();
+        $this->showWebpageOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,6 +271,36 @@ class RadioShow
     public function setBroadcastDay(array $broadcastDay): self
     {
         $this->broadcastDay = $broadcastDay;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ShowWebpageOptions>
+     */
+    public function getShowWebpageOptions(): Collection
+    {
+        return $this->showWebpageOptions;
+    }
+
+    public function addShowWebpageOption(ShowWebpageOptions $showWebpageOption): self
+    {
+        if (!$this->showWebpageOptions->contains($showWebpageOption)) {
+            $this->showWebpageOptions[] = $showWebpageOption;
+            $showWebpageOption->setWebpage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShowWebpageOption(ShowWebpageOptions $showWebpageOption): self
+    {
+        if ($this->showWebpageOptions->removeElement($showWebpageOption)) {
+            // set the owning side to null (unless already changed)
+            if ($showWebpageOption->getWebpage() === $this) {
+                $showWebpageOption->setWebpage(null);
+            }
+        }
 
         return $this;
     }

@@ -95,31 +95,36 @@
                 <div class="audio-container img-fluid flip-card-front">
 {#                    Inclusion du lecteur audio (fichier à part pour plus de lisibilité dans le code#}
                     {{ include( 'partials/audio-player.html.twig' ) }}
-                    <div class="now-playing front-btn btn btn-outline-light">
+                    <div class="now-playing front-btn btn btn-outline-light mt-3 col-8 offset-2 d-flex flex-row align-items-center justify-content-center">
                         <h3>Now Playing...</h3>
                     </div>
                 </div>
                 
                 
                 <div class="flip-card-back d-flex flex-column justify-content-around">
-                    <a class="on-air-txt" href="{{ path('main_news') }}">
-                        <h3 >
-{#                            and show.showTime|date('H:i') > "now"|date("H:i") and "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')#}
+    
+                        {% set a_show_is_on_air = false  %}
                             {% for show in shows %}
-                     
                                 {% if
                                     show.startDate|date('Y-m-d') == "now"|date("Y-m-d") and
                                     show.showTime|date('H:i') < "now"|date("H:i") and
                                     "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')
                                 %}
-                                   {{ "OK "}}
-                                    {% else %}
-                                    {{ "Pas OK" }}
+                                    {% set a_show_is_on_air = true  %}
+                                    <a class="on-air-txt" href="{{ show.webPageLink }}">
+                                        <h3>{{ show.name|upper }}</h3>
+                                    </a>
+                                    <a href='{{ show.webPageLink }}' class="on-air-img mb-3 col-8 offset-2 d-flex align-items-center justify-content-center"> <img src='{{ asset('images/show_logo/' ~ show.logo) }}' alt="" class="img-fluid"> </a>
                                 {% endif %}
                             {% endfor %}
-                        </h3>
-                    </a> <a href='{{ path('main_news') }}' class="on-air-img mb-3"> <img src='{{ asset('images/metalesia.jpg')|imagine_filter('now_playing') }}' alt="" class="img-fluid"> </a>
-                    <div class="now-playing back-btn btn btn-outline-light col-8 offset-2">
+                        {% if a_show_is_on_air == false %}
+                            <h3 class="on-air-txt">La Playlist AuxoisFM</h3>
+                            <img src='{{ asset('images/show_logo/playlistauxoisfm.png' ) }}' alt="" class="img-fluid on-air-img mb-3 col-8 offset-2">
+                        {% endif %}
+    
+    
+    
+                    <div class="now-playing back-btn btn btn-outline-light col-8 offset-2 d-flex flex-row align-items-center justify-content-center mb-3">
                         <h3>Now Playing...</h3>
                     </div>
                 </div>
