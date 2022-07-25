@@ -23,6 +23,12 @@
 /.idea
 /migrations/*.php
 /public/audio/*
+/public/images/profil/*
+!/public/images/profil/.gitignore
+/public/images/show_logo/*
+!/public/images/show_logo/.gitignore
+/public/images/articles_covers/*
+!/public/images/articles_covers/.gitignore
 ###< custom settings ###
 
 ###> liip/imagine-bundle ###
