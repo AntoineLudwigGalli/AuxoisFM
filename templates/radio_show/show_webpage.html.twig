@@ -62,10 +62,7 @@
         {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
             <a href="{{ path('show_new_podcast', {'slug' : show.slug}) }}" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
         {% endif %}
-        <div class="row">
-            <h3 class="text-center" style="color: {{ textColor }}">Playlist</h3>
-            <div class="d-flex flex-column align-items-center justify-content-center">{{ display_dynamic_content( (show.slug ~ '-playlist'), show.slug) }}</div>
-        </div>
+    
         {% set i = 0 %}
         {% for podcast in podcasts %}
         
@@ -97,7 +94,7 @@
         <div class="col-8 separation-line">
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3" style="color: {{ textColor }}">Podcasts</h2>
             {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
-                <a href="" class="btn btn-primary col-4 offset-4" style="color: {{ textColor }}">Ajouter un podcast</a>
+                <a href="{{  path('show_new_podcast', {'slug' : show.slug}) }} " class="btn btn-primary col-4 offset-4" >Ajouter un podcast</a>
             {% endif %}
         
         {% set i = 0 %}

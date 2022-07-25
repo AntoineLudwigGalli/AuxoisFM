@@ -8,13 +8,6 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 
-/*body.blue{*/
-/*    background-color: #c95f5f;*/
-/*}*/
-
-/*body.red{*/
-/*    background-color: rgba(201, 95, 95, 0.8);*/
-/*}*/
 
 /*Header*/
 #header {
@@ -111,12 +104,13 @@ cursor: pointer;
   background-color: #CA9721;
   text-decoration: none;
   color: #1f3c5c;
-  font-weight: bold;
-    font-size: 3rem;
     max-height: 40vh;
     min-height: 40vh;
 }
-
+#more-news h2 {
+    font-weight: bold;
+    font-size: 3rem;
+}
 
 .blue-background {
   background-color: #1f3c5c !important;
@@ -256,4 +250,26 @@ table th, table td{
 
 .time-input>fieldset>legend{
     width: 50%;
+}
+
+/*Section News*/
+
+.main-logo-articles{
+    border: solid 5px #1f3c5c;
+    border-radius: 20px;
+}
+
+.card{
+    border: solid 5px #1f3c5c;
+    width: 20vw;
+    height: 35vh;
+}
+
+.card img{
+    width: 100%;
+    max-height: 50%;
+}
+
+.card p{
+    font-size: smaller;
 }

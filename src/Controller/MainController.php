@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\RadioShow;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,23 +40,14 @@ class MainController extends AbstractController
                 }
             }
         }
+        $articlesRepo = $doctrine->getRepository(Article::class);
+        $articles = $articlesRepo->findBy([], ['publicationDate' => 'ASC']);
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',
             'bgc' => $bgc,
             'shows' => $shows,
-
-        ]);
-    }
-
-    #[Route('/news', name: 'news')]
-    public function news(): Response
-    {
-        $bgc = "rgba(201, 95, 95, 0.8)";
-
-        return $this->render('main/news.html.twig', [
-            'controller_name' => 'MainController',
-            'bgc' => $bgc,
+            'articles' => $articles
         ]);
     }
 

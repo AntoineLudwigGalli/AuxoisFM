@@ -29,64 +29,24 @@
     {{ include('main/show-list.html.twig') }}
     </div>
     <div class="col-12 flex-row align-items-center animate__animated animate__fadeInLeft" id="news">
-     
+    
+        
             <div class="owl-carousel owl-theme ">
+                {% for article in articles %}
                 <div class="item py-2">
-                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
+                    <img src="{{ asset('images/articles_covers/' ~ article.coverPicture) }}" class="img-fluid" alt=""/>
+                    <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug}) }}" target="_blank" class="img-text">{{ article.title }}</a>
                 </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/test-news.jpg') }}" class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">La Salamandre Noire en direct d'AuxoisFM</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/profil/default_profile.jpg') }} " class="img-fluid" alt=""/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Scoop : Shrek est de la jaquette et il kiffe ça !</a>
-                </div>
-                <div class="item py-2">
-                    <img src="{{ asset('images/metalesia.jpg') }}" alt="" class="img-fluid"/>
-                    <a href="{{ path('main_news') }}" target="_blank" class="img-text">Metalesia, l'émission qui te fait frissonner de joie</a>
-                </div>
+                {% endfor %}
             </div>
         </div>
-   
+        
     
     <div class="col-12 d-flex flex-row animate__animated animate__fadeInUp" id="menu">
         
-        <div class=" col-4  justify-content-center align-items-center text-center menu-link hvr-bounce-to-top target " id="podcasts">
-            <h2>Grille des programmes et podcasts</h2>
+        <div class=" col-4 d-flex flex-column justify-content-center align-items-center text-center menu-link hvr-bounce-to-top target " id="podcasts">
+            <h2 class="mb-2">Grille des programmes et podcasts</h2>
+{#            <img src="{{ asset('images/logo.png') }}" alt="Logo AuxoisFM" class="mt-2 logo-main-menu">#}
         </div>
         
         
@@ -132,7 +92,13 @@
         </div>
         
         
-        <a href='{{ path('main_news') }}' target="_blank" class=" col-4 d-flex justify-content-center align-items-center hvr-bounce-to-top text-center" id="more-news"> Encore + d'actus </a>
+        <a href='{{ path('news_list') }}' target="_blank" class=" col-4 d-flex flex-column justify-content-center align-items-center hvr-bounce-to-top text-center" id="more-news">
+            <h2>Encore<br>
+                + <br>
+                d'actus</h2>
+{#            <img src="{{ asset('images/logo.png') }}" alt="Logo AuxoisFM" class="mt-2 logo-main-menu">#}
+        </a>
+        
     </div>
 
 {% endblock %}

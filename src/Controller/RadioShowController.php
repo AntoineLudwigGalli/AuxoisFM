@@ -63,8 +63,6 @@ class RadioShowController extends AbstractController
     #[Route('/modification-d\'une-emission/{id}/', name: 'edit', priority: 10)]
     public function publicationEdit(RadioShow $radioShow, Request $request, ManagerRegistry $doctrine): Response
     {
-
-
         $form = $this->createForm(RadioShowCreationFormType::class, $radioShow);
 
         //instanciation d\'un formulaire
@@ -76,8 +74,11 @@ class RadioShowController extends AbstractController
             $logo = $form->get('logo')->getData();
 
             if(
-                $radioShow->getLogo() != null
+                $radioShow->getLogo() != null &&
+                file_exists($this->getParameter('show.logo.directory') . $radioShow->getLogo() )
             ){
+                unlink($this->getParameter('show.logo.directory') . $radioShow->getLogo() );
+            }
 
                 /*Génération nom*/
                 do {
@@ -90,7 +91,7 @@ class RadioShowController extends AbstractController
                     $this->getParameter('show.logo.directory'),
                     $newFileName,
                 );
-            }
+
             // Sauvegarde des données modifiées en BDD
             $em = $doctrine->getManager();
             $em->flush();
@@ -178,130 +179,134 @@ class RadioShowController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/{slug}/{id}/', name: 'webpage')]
-    #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
-    #[ParamConverter('options', options: ['mapping' => ['id' => 'id']])]
-    public function showWebPage(RadioShow $show, ManagerRegistry $doctrine, Request $request, ShowWebpageOptions $options): Response {
 
-        $podcastsRepo = $doctrine->getRepository(Podcast::class);
-        $podcasts = $podcastsRepo->findBy(['radioShow' => $show->getId()]);
+        #[Route('/{slug}/nouveau-podcast', name: 'new_podcast')]
+        #[IsGranted('ROLE_ANIMATOR')]
+        #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
+        public function newPodcast(ManagerRegistry $doctrine, Request $request, RadioShow $show): Response
+        {
+            $podcast = new Podcast();
 
-        $optionsForm = $this->createForm(ShowWebpageOptionsFormType::class, $options);
+            $form = $this->createForm(PodcastFormType::class, $podcast);
 
-        $optionsForm->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($optionsForm->isSubmitted() && $optionsForm->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $doctrine->getManager();
-            $em->flush();
+                $podcast->setRadioShow($show);
 
-            $this->addFlash('success', 'Les options de la page ont bien été modifiées !');
+                $em = $doctrine->getManager();
+                $em->persist($podcast);
+                $em->flush();
 
-            return $this->redirectToRoute('show_webpage', [
-                'slug' => $show->getSlug(),
-                'id' => $options->getId(),
+                $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);
+                $options = $showOptionsRepo->findOneBy(["webpage" => $show->getId()]);
+
+                $this->addFlash('success', 'Le contenu a bien été modifié !');
+
+                return $this->redirectToRoute("show_webpage", [
+                    'show' => $show,
+                    'slug' => $show->getSlug(),
+                    'id' => $options->getId(),
+                ]);
+
+            }
+
+            return $this->render('radio_show/new_podcast.html.twig', [
+                'form' => $form->createView(),
             ]);
         }
+        #[Route('/{slug}/{id}/', name: 'webpage')]
+        #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
+        #[ParamConverter('options', options: ['mapping' => ['id' => 'id']])]
+        public function showWebPage(RadioShow $show, ManagerRegistry $doctrine, Request $request, ShowWebpageOptions $options): Response {
 
-        $bgc = $options->getBackgroundColor();
-        $textColor = $options->getTextColor();
+            $podcastsRepo = $doctrine->getRepository(Podcast::class);
+            $podcasts = $podcastsRepo->findBy(['radioShow' => $show->getId()]);
 
+            $optionsForm = $this->createForm(ShowWebpageOptionsFormType::class, $options);
 
-        return $this->render("radio_show/show_webpage.html.twig", [
-            'optionsForm' => $optionsForm->createView(),
-            'show' => $show,
-            'options' => $options,
-            'controller_name' => 'RadioShowController',
-            'podcasts' => $podcasts,
-            'bgc' => $bgc,
-            'textColor' => $textColor,
+            $optionsForm->handleRequest($request);
 
-        ]);
-    }
-
-
-    #[Route('/contenu-dynamique/modifier/{slug}/{title}', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
-    #[IsGranted('ROLE_ANIMATOR')]
-    #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
-    public function dynamicContentEdit(ManagerRegistry $doctrine, Request $request, $title,  RadioShow $show): Response
-    {
-        //On va chercher par nom (qui sert de clé) le dynamic content correspondant
-        $dynamicContentRepo = $doctrine->getRepository(DynamicContent::class);
-
-        $currentDynamicContent = $dynamicContentRepo->findOneByTitle($title);
-
-        $em = $doctrine->getManager();
-
-        // Si le contenu est vide, on en crée un avec le nom passé dans la fonction twig
-        if (empty($currentDynamicContent)) {
-            $currentDynamicContent = new DynamicContent();
-            $currentDynamicContent->setTitle($title);
-            $em->persist($currentDynamicContent);
-        }
-
-        // Sinon, on modifie le contenu existant par le nouveau contenu
-        $form = $this->createForm(DynamicContentFormType::class, $currentDynamicContent);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-           $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);
-            $options = $showOptionsRepo->findOneBy(["webpage" => $show->getId()]);
+            if ($optionsForm->isSubmitted() && $optionsForm->isValid()) {
 
 
 
-            $em = $doctrine->getManager();
-            $em->flush();
+                $em = $doctrine->getManager();
+                $em->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été modifié !');
+                $this->addFlash('success', 'Les options de la page ont bien été modifiées !');
 
-            return $this->redirectToRoute("show_webpage", [
+                return $this->redirectToRoute('show_webpage', [
+                    'slug' => $show->getSlug(),
+                    'id' => $options->getId(),
+                ]);
+            }
+
+            $bgc = $options->getBackgroundColor();
+            $textColor = $options->getTextColor();
+
+
+            return $this->render("radio_show/show_webpage.html.twig", [
+                'optionsForm' => $optionsForm->createView(),
                 'show' => $show,
-                'slug' => $show->getSlug(),
-                'id' => $options->getId(),
-            ]);
+                'options' => $options,
+                'controller_name' => 'RadioShowController',
+                'podcasts' => $podcasts,
+                'bgc' => $bgc,
+                'textColor' => $textColor,
 
+            ]);
         }
 
-        return $this->render('radio_show/dynamic_content_edit.html.twig', [
-            'form' => $form->createView(),
-            'show' => $show,
-        ]);
-    }
+        #[Route('/contenu-dynamique/modifier/{slug}/{title}', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]
+        #[IsGranted('ROLE_ANIMATOR')]
+        #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
+        public function dynamicContentEdit(ManagerRegistry $doctrine, Request $request, $title,  RadioShow $show): Response
+        {
+            //On va chercher par nom (qui sert de clé) le dynamic content correspondant
+            $dynamicContentRepo = $doctrine->getRepository(DynamicContent::class);
 
-
-    #[Route('/{slug}/nouveau-podcast', name: 'new_podcast')]
-    #[IsGranted('ROLE_ANIMATOR')]
-    #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
-    public function newPodcast(ManagerRegistry $doctrine, Request $request, $slug, RadioShow $show): Response
-    {
-        $podcast = new Podcast();
-
-        $form = $this->createForm(PodcastFormType::class, $podcast);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $podcast->setRadioShow($show);
+            $currentDynamicContent = $dynamicContentRepo->findOneByTitle($title);
 
             $em = $doctrine->getManager();
-            $em->persist($podcast);
-            $em->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été modifié !');
+            // Si le contenu est vide, on en crée un avec le nom passé dans la fonction twig
+            if (empty($currentDynamicContent)) {
+                $currentDynamicContent = new DynamicContent();
+                $currentDynamicContent->setTitle($title);
+                $em->persist($currentDynamicContent);
+            }
 
-            return $this->redirectToRoute("show_webpage", [
+            // Sinon, on modifie le contenu existant par le nouveau contenu
+            $form = $this->createForm(DynamicContentFormType::class, $currentDynamicContent);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);
+                $options = $showOptionsRepo->findOneBy(["webpage" => $show->getId()]);
+
+
+
+                $em = $doctrine->getManager();
+                $em->flush();
+
+                $this->addFlash('success', 'Le contenu a bien été modifié !');
+
+                return $this->redirectToRoute("show_webpage", [
+                    'show' => $show,
+                    'slug' => $show->getSlug(),
+                    'id' => $options->getId(),
+                ]);
+
+            }
+
+            return $this->render('radio_show/dynamic_content_edit.html.twig', [
+                'form' => $form->createView(),
                 'show' => $show,
-                'slug' => $show->getSlug()
             ]);
-
         }
-
-        return $this->render('radio_show/new_podcast.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
 }
