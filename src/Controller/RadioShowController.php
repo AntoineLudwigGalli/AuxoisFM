@@ -74,10 +74,9 @@ class RadioShowController extends AbstractController
 
             $logo = $form->get('logo')->getData();
 
-            if(
-                $radioShow->getLogo() != null &&
-                file_exists($this->getParameter('show.logo.directory') . $radioShow->getLogo() )
-            ){
+            if($radioShow->getLogo() != null ){
+
+            if(file_exists($this->getParameter('show.logo.directory') . $radioShow->getLogo() )){
                 unlink($this->getParameter('show.logo.directory') . $radioShow->getLogo() );
             }
 
@@ -92,7 +91,7 @@ class RadioShowController extends AbstractController
                     $this->getParameter('show.logo.directory'),
                     $newFileName,
                 );
-
+            }
             // Sauvegarde des données modifiées en BDD
             $em = $doctrine->getManager();
             $em->flush();
@@ -100,8 +99,10 @@ class RadioShowController extends AbstractController
             // Message flash de succès
             $this->addFlash('success', 'Emission modifiée avec succès !');
 
-            // Redirection vers la liste des évènements contenant maintenant l'évènement modifié
-            return $this->redirectToRoute('show_list', ['id' => $radioShow->getId(),]);
+            // Redirection vers la liste des émissions contenant maintenant l'émission modifiée
+            return $this->redirectToRoute('show_list', [
+                'id' => $radioShow->getId(),
+                ]);
 
         }
 
@@ -191,7 +192,6 @@ class RadioShowController extends AbstractController
             return $this->redirectToRoute('show_webpage', [
                        'slug' => $show->getSlug(),
                         'id' => $webpageOptions->getId(),
-
                 ]);
         }
 
@@ -205,6 +205,7 @@ class RadioShowController extends AbstractController
         #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
         public function newPodcast(ManagerRegistry $doctrine, Request $request, RadioShow $show, SluggerInterface $slugger): Response
         {
+
             $podcast = new Podcast();
 
             $form = $this->createForm(PodcastFormType::class, $podcast);
@@ -253,6 +254,42 @@ class RadioShowController extends AbstractController
                 'form' => $form->createView(),
             ]);
         }
+
+    #[Route('/supprimer-podcast/{id}/', name: 'delete_podcast', priority: 10)]
+    #[IsGranted('ROLE_ANIMATOR')]
+    #[ParamConverter('podcast', options: ['mapping' => ['id' => 'id']])]
+    public function podcastDelete(Podcast $podcast, Request $request, ManagerRegistry $doctrine): Response
+    {
+
+//        Token CSRF
+        $csrfToken = $request->query->get('csrf_token', '');
+
+        if (!$this->isCsrfTokenValid('podcast_delete' . $podcast->getId(), $csrfToken)) {
+
+            $this->addFlash('error', 'Token de sécurité invalide, veuillez ré-essayer.');
+
+        } else {
+            // Suppression de l'émission en BDD
+            $em = $doctrine->getManager();
+            $em->remove($podcast);
+            $em->flush();
+
+
+            // Message flash de succès
+            $this->addFlash('success', "Le podcast a été supprimé avec succès !");
+        }
+
+        $showsRepo = $doctrine->getRepository(RadioShow::class);
+        $show = $showsRepo->findOneBy(['name' => $podcast->getRadioShow()->getName()]);
+        $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);
+        $options = $showOptionsRepo->findOneBy(["webpage" => $show->getId()]);
+
+        return $this->redirectToRoute("show_webpage", [
+            'slug' => $show->getSlug(),
+            'id' => $options->getId(),
+        ]);
+    }
+
         #[Route('/{slug}/{id}/', name: 'webpage')]
         #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
         #[ParamConverter('options', options: ['mapping' => ['id' => 'id']])]

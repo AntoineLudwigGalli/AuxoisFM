@@ -87,6 +87,11 @@
                 <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist' ~ i
                     ), show.slug) }}</div>
             </div>
+            <div class="mt-3 ms-3">
+                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce podcast ?')" href="{{ path('show_delete_podcast', {'id': podcast.id, 'csrf_token' : csrf_token('podcast_delete' ~ podcast.id)}) }}" class=" text-decoration-none text-danger"> <i
+                            class="fa-solid fa-trash-can"></i> Supprimer </a>
+    
+            </div>
         
             {% set i = i + 1 %}
         {% endfor %}
@@ -116,10 +121,16 @@
                     </audio>
                 </div>
                 
+                
                 <h5 class="col-3 d-flex flex-row align-items-center justify-content-center playlist-button" data-playlist="{{ i }}" style="color: {{ textColor }}">Playlist<i class="fas fa-angle-down angle-{{ i }} ms-2 " data-angle="{{ i }}"></i></h5>
                 
                 <div class="col-8 offset-2 d-flex flex-column align-items-center justify-content-center playlist-display-{{ i }} d-none">{{ display_dynamic_content( (show.slug ~ '-playlist' ~ i
                     ), show.slug) }}</div>
+            </div>
+            <div class="mt-3 ms-3">
+                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce podcast ?')" href="{{ path('show_delete_podcast', {'id': podcast.id, 'csrf_token' : csrf_token('podcast_delete' ~ podcast.id)}) }}" class=" text-decoration-none text-danger"> <i
+                            class="fa-solid fa-trash-can"></i> Supprimer </a>
+    
             </div>
             
             {% set i = i + 1 %}

@@ -66,6 +66,9 @@ class RadioShow
     #[ORM\OneToMany(mappedBy: 'webpage', targetEntity: ShowWebpageOptions::class, orphanRemoval: true)]
     private Collection $showWebpageOptions;
 
+    #[ORM\Column(length: 50)]
+    private ?string $genre = null;
+
 
 
     public function __construct()
@@ -301,6 +304,18 @@ class RadioShow
                 $showWebpageOption->setWebpage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }

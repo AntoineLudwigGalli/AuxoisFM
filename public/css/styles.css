@@ -197,6 +197,10 @@ cursor: pointer;
     box-shadow: 5px 5px 10px black;
 }
 
+.profile-picture{
+    height: 40vh;
+}
+
 /*Shows*/
 
 .show-list-logo{

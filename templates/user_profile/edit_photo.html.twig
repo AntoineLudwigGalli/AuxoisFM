@@ -6,11 +6,11 @@
     <h1 class="text-center">Modifier la photo de profil</h1>
 </div>
 <div class="row">
-    <div class="col-12 d-flex justify-content-center my-5">
+    <div class="col-12 d-flex justify-content-center my-5 profile-picture">
     {% if app.user.photo %}
-        <img src="{{ asset('images/profil/' ~ app.user.photo) }}" alt="">
+        <img src="{{ asset('images/profil/' ~ app.user.photo) }}" alt="Photo de profil">
     {% else %}
-        <img src="{{ asset('images/profil/default_profile.jpg') }}" alt="" class="img-fluid col-3">
+        <img src="{{ asset('images/profil/default_profile.jpg') }}" alt="Photo de profil par défaut" class="img-fluid col-3">
     {% endif %}
     </div>
 </div>

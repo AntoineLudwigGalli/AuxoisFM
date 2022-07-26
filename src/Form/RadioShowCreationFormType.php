@@ -43,7 +43,20 @@ class RadioShowCreationFormType extends AbstractType
                     ])
                 ],
             ])
-
+            ->add('genre', TextType::class, [
+                'label' => 'Genre',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner le nom de l\'émission'
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => "Le nom de l\émission doit contenir au minimum {{ limit }} caractères.",
+                        'maxMessage' => "Le nom de l\émission doit contenir au maximum {{ limit }} caractères.",
+                    ])
+                ],
+            ])
             ->add('logo', FileType::class, [
                 'label' => 'Sélectionnez le logo de l\'émission (facultatif)',
                 'data_class' => null,
