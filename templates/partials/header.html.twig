@@ -1,4 +1,4 @@
-<div class="row">
+
     <div class="col-12 d-flex flex-column flex-md-row align-items-md-center" id="header">
         <div class="col-6 offset-3 col-md-4 offset-md-0">
             <a href="{{ path('main_home') }}"><img src="{{ asset('images/logo.png') }}" alt="logo d'AuxoisFM" id="logo" class="img-fluid"></a>
@@ -51,16 +51,22 @@
                 </li>
             </ul>
         {% else %}
-            <div class="col-12 d-flex flex-row justify-content-center col-md-8 col-lg-12">
-                <div class="col-4 offset-1 col-md-2 offset-md-5 me-md-4 col-lg-1 offset-lg-1 ">
+            <div class="d-flex flex-row justify-content-center d-md-none">
+                <div class="col-4 d-flex flex-row justify-content-center d-md-block col-md-2 offset-md-3 col-lg-1 offset-lg-5">
                     <a href="{{ path('app_login') }}" class="btn btn-light log-btn me-md-2 ">Connexion</a>
                 </div>
                 <div class="col-4 col-md-2 me-md-4 col-lg-1">
                     <a href="{{ path('app_register') }}" class="btn btn-light log-btn ms-md-3">Inscription</a>
                 </div>
             </div>
+            <div class="d-none col-4 d-md-block col-md-2 offset-md-3 col-lg-1 offset-lg-5">
+                <a href="{{ path('app_login') }}" class="btn btn-light log-btn me-md-2 ">Connexion</a>
+            </div>
+            <div class="d-none d-md-block col-4 col-md-2 me-md-4 col-lg-1">
+                <a href="{{ path('app_register') }}" class="btn btn-light log-btn ms-md-3">Inscription</a>
+            </div>
         {% endif %}
     </div>
-</div>
+
     
     

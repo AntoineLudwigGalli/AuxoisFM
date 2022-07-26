@@ -4,6 +4,9 @@ twig:
       # Activation du thème Bootstrap 5 pour les formulaires du site
     form_themes: [ 'bootstrap_5_layout.html.twig' ]
 
+    globals:
+      radioUrl: '%auxoisfm.url.liveradio%'
+
 when@test:
     twig:
         strict_variables: true

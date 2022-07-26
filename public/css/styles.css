@@ -13,7 +13,8 @@ body{
 /*Header*/
 #header {
     background-color: #1f3c5c;
-    height: 15vh;
+    height: 17vh;
+    position: relative;
 }
 
 #logo{
@@ -60,7 +61,7 @@ body{
     max-height: 40vh;
     min-height: 40vh;
     color: #1f3c5c;
-cursor: pointer;
+    cursor: pointer;
     display: flex;
 }
 
@@ -74,9 +75,10 @@ cursor: pointer;
 #player {
     background-color: #c95f5f;
     object-fit: cover;
-    max-height: 40vh;
-    min-height: 40vh;
+    max-height: 60vh;
+    min-height: 60vh;
     display: flex;
+    position: relative;
 }
 
 .on-air-img img, .on-air-img{
@@ -414,4 +416,12 @@ table th, table td{
     #header {
         height: 10vh;
     }
+
+    #player {
+        max-height: 40vh;
+        min-height: 40vh;
+        position: static;
+    }
 }
+
+
