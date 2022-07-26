@@ -37,7 +37,7 @@ class NewsController extends AbstractController
         $query = $em->createQuery('SELECT a FROM App\Entity\Article a ORDER BY a.publicationDate DESC');
         $articles = $paginator->paginate($query, //Requête créée juste avant
             $requestedPage, // Page qu'on souhaite voir
-            8, // Nombre d'articles à afficher par page
+            5, // Nombre d'articles à afficher par page
         );
         return $this->render('news/list.html.twig', [
             'controller_name' => 'NewsController',
@@ -94,6 +94,9 @@ class NewsController extends AbstractController
     #[Route('/article/{id}/{slug}/', name: 'article_view')]
     #[ParamConverter('article', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
     public function articleView(Article $article, Request $request, ManagerRegistry $doctrine): Response {
+        //        Couleur du background
+        $bgc = "rgba(122, 220, 241, 0.4)";
+
         if (!$this->getUser()) {
             return $this->render('news/article_view.html.twig', [
                 'article' => $article,]);
@@ -121,7 +124,8 @@ class NewsController extends AbstractController
         }
         return $this->render('news/article_view.html.twig', [
             'article' => $article,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'bgc' => $bgc
         ]);
     }
 
@@ -205,7 +209,7 @@ class NewsController extends AbstractController
 
             $this->addFlash('success', 'Le commentaire a été supprimé avec succès');
         }
-        return $this->redirectToRoute('news_list', [
+        return $this->redirectToRoute('news_article_view', [
             'id' => $comment->getArticle()->getId(),
             'slug' => $comment->getArticle()->getSlug()]);
     }

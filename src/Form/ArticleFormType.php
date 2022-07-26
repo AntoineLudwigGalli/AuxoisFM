@@ -59,6 +59,7 @@ class ArticleFormType extends AbstractType
             ])
             ->add('coverPicture', FileType::class, [
                 'label' => 'Sélectionnez l\'image de couverture de l\'article',
+                'data_class' => null,
                 'attr' => [
                     'accept' => implode(", ", $this->allowedMimeTypes),
                 ],

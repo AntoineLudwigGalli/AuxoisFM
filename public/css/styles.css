@@ -1,5 +1,6 @@
 /*Paramètres Généraux*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+
 html{
     max-height: 100%;
 }
@@ -253,23 +254,151 @@ table th, table td{
 }
 
 /*Section News*/
-
-.main-logo-articles{
-    border: solid 5px #1f3c5c;
-    border-radius: 20px;
+/*    Liste */
+.card-list {
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 18vw;
 }
-
-.card{
-    border: solid 5px #1f3c5c;
-    width: 20vw;
-    height: 35vh;
-}
-
-.card img{
+.card-header-list img {
     width: 100%;
-    max-height: 50%;
+    height: 20vh;
+    object-fit: cover;
+}
+.card-body-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: .8rem;
+    min-height: 20vh;
 }
 
-.card p{
-    font-size: smaller;
+.card-body-list a{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
 }
+
+.card-body-list a h4{
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.tag {
+    background: #cccccc;
+    border-radius: 50px;
+    font-size: 12px;
+    margin: 0;
+    color: #fff;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.tag-teal {
+    background-color: #47bcd4;
+}
+.tag-purple {
+    background-color: #5e76bf;
+}
+.tag-pink {
+    background-color: #cd5b9f;
+}
+
+.card-body-list p {
+    font-size: .8rem;
+}
+
+
+/*Article View*/
+
+.card-view {
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 100%;
+}
+.card-header-view img {
+    max-width: 80%;
+    max-height: 50vh;
+    object-fit: contain;
+}
+.card-body-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: .8rem;
+    min-height: 20vh;
+}
+
+.card-body-view a{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+}
+
+.card-body-view a h4{
+    font-weight: bold;
+    font-size: 1rem;
+}
+/* Section commentaires*/
+
+.comment-section{
+    background: rgba(122, 220, 241, 0.8);
+    width: 100%;
+}
+
+.card-white  .card-heading {
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #1f3c5c;
+}
+.card-white  .card-footer {
+    background-color: #fff;
+    border-color: #1f3c5c;
+}
+.card-white .h5 {
+    font-size:14px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.card-white .time {
+    font-size:12px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.post .post-heading {
+    min-height: 10vh;
+    padding: 20px 15px;
+}
+.post .post-heading .avatar {
+    width: 15vh;
+    height: 15vh;
+    display: block;
+    margin-right: 15px;
+}
+
+.post .post-image .image {
+    width: 100%;
+    height: auto;
+}
+.post .post-description {
+    padding: 15px;
+    display: flex;
+    position: relative;
+}
+.post .post-description p {
+    font-size: 14px;
+    min-width: 0;
+
+}
+
+.post .post-footer {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+}
+
