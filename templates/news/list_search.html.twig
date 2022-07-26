@@ -1,12 +1,120 @@
 {% extends 'base.html.twig' %}
+{% set query = app.request.query.get('s') %}
 
-{% block title %}
+{# Titre de la page #}
+{% block title %}Résultat de la recherche "{{ query }}"{% endblock %}
 
-{% endblock %}
 
+{# Contenu de la page #}
 {% block body %}
+    
+    {# Lien pour revenir à la liste des articles #}
+    <div class="row">
+        <div class="col-3  mt-2 ms-2">
+            <a href="{{ path('news_list') }}" class="btn btn-danger text-decoration-none text-light">Retour à la liste des articles</a>
+        </div>
+    </div>
+        
+        {# Titre h1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Résultat de la recherche "{{ query }}"</h1>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-12 col-md-8 mx-auto">
+                
+                <div class="row">
+                    {# Affichage du nombre total de publications (attribut apporté par knp_paginator) #}
+                    <p class="col-12 text-center">Nombre total d'articles : {{ articles.getTotalItemCount }}</p>
+                </div>
+            </div>
+        </div>
+                
+                {# S'il y a des articles, on affiche le menu de pagination de knp_paginator #}
+                {% if articles is not empty %}
+                    
+                    <div class="row">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(articles) }}
+                            </div>
+                        </div>
+                    </div>
+                
+                {% endif %}
+    
+                {% if articles is not empty %}
+        
+                    {% for article in articles %}
+                        <div class="row">
+                            <div class="col-10 offset-1 d-flex flex-row flex-wrap">
+                                {% for article in articles %}
+                                    <div class="card-list">
+                                        <div class="card-header-list">
+                                            <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}"><img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/></a>
+                                        </div>
+                                        <div class="card-body-list">
+                                            <span class="tag tag-teal mb-3">Technology</span> <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}"><h4>{{ article.title }}</h4></a>
+                                            <p>{{ article.content|striptags|excerpt(20) }}</p>
+                                        </div>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <div>
+                                                <a onclick="return confirm('Êtes-vous sur de vouloir modifier cet article ?')"
+                                                        href="{{ path('news_article_edit', {'id': article.id}) }}"
+                                                        class="text-decoration-none text-warning me-3">
+                                                    <i class="fa-solid  fa-pen-to-square me-2"></i>
+                                                    Modifier
+                                                </a>
+                                    
+                                                <a onclick="return confirm('Êtes-vous sur de vouloir supprimer cet article ?')"
+                                                        href="{{ path('news_article_delete', {'id': article.id, 'csrf_token' : csrf_token('news_article_delete_' ~ article.id) }) }}"
+                                                        class="text-decoration-none text-danger">
+                                                    <i class="fa-solid fa-trash-can me-2"></i>
+                                                    Supprimer
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+        
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(articles) }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+        
+                    <div class="row">
+                        <p class="col-12 text-center alert alert-warning">Aucune publication à afficher</p>
+                    </div>
+                {% endif %}
+                
+                {# S'il y a des articles, on affiche le menu de pagination #}
+                {% if articles is not empty %}
+                    
+                    <div class="row">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(articles) }}
+                            </div>
+                        </div>
+                    </div>
+                
+                {% endif %}
+            
+            
+            </div>
+        
+        </div>
+    
+    </div>
 
 {% endblock %}
-
 
 

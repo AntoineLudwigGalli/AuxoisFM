@@ -4,7 +4,11 @@
 {% block body %}
     
     <div class="row text-center my-3">
-        <h1>Liste des articles</h1>
+        <form class="d-flex col-4 ms-2" method="GET" action="{{ path('news_search') }}">
+            <input name="s" class="form-control me-2" type="search" placeholder="Trouver un article" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <h1 class="col-4 fs-2">Liste des articles</h1>
     </div>
     
     {% if articles is not empty %}
