@@ -6,6 +6,9 @@ function renderCalendar(){
             lazyFetching: true,
             locale: 'fr',
             defaultView: 'timeGridWeek',
+            handleWindowResize: true,
+            height: 'auto',
+            contentHeight: 'auto',
             editable: true,
             eventSources: [
                 {
@@ -165,13 +168,14 @@ function displayCalendar(){
 function removeCalendar(){
 
     let calendarElement = document.querySelector('#calendar-holder');
+
     document.querySelector('body').prepend(calendarElement);
     calendarElement.classList.add("d-none");
     let overlayElement = document.querySelector('.overlay');
     overlayElement.parentElement.removeChild(overlayElement);
+    $('#calendar-holder div').remove();
 
 }
-
 
 // Écouteur d'évènement sur la section "grille et podcasts pour afficher l'overlay au clic et charger le calendrier ensuite
 document.querySelector("#podcasts").addEventListener('click', function(){

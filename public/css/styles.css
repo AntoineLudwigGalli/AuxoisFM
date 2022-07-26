@@ -132,10 +132,10 @@ body{
 
 .overlay{
     position: fixed;
-    top: 2rem;
-    right: 2rem;
-    bottom: 2rem;
-    left: 2rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-color: rgba(31,60,92,.8);
     display: flex;
     justify-content: center;
@@ -144,12 +144,16 @@ body{
 }
 
 .overlay #calendar-holder{
-    max-width: 75vw;
-    max-height: 75vh;
+    width: 100%;
     background-color: rgba(255,255,255,.9);
     border-radius: 10px;
     object-fit: cover;
     overflow: scroll;
+}
+
+.fc-toolbar{
+    display: flex;
+    flex-direction: column;
 }
 
 .overlay .close{
@@ -422,6 +426,27 @@ table th, table td{
         min-height: 40vh;
         position: static;
     }
+
+    .overlay #calendar-holder{
+        max-width: 90vw;
+    }
+
+    .fc-toolbar{
+        display: flex;
+        flex-direction: row;
+    }
 }
+@media screen and (min-width: 992px) {
 
+    .overlay {
+        top: 2rem;
+        right: 2rem;
+        bottom: 2rem;
+        left: 2rem;
+    }
 
+    .overlay #calendar-holder{
+        max-width: 75vw;
+        max-height: 75vh;
+    }
+}
