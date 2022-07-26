@@ -13,7 +13,7 @@ body{
 /*Header*/
 #header {
     background-color: #1f3c5c;
-    height: 10vh;
+    height: 15vh;
 }
 
 #logo{
@@ -406,3 +406,12 @@ table th, table td{
     padding: 15px;
 }
 
+/*Media queries*/
+
+
+@media screen and (min-width: 768px){
+
+    #header {
+        height: 10vh;
+    }
+}
