@@ -158,12 +158,31 @@ class RadioShowController extends AbstractController
                     $this->getParameter('show.logo.directory'),
                     $newFileName,
                 );
-
+                copy(
+                    $this->getParameter('show.logo.directory').$newFileName,
+                    $this->getParameter('article.photo.directory').$newFileName,
+                );
 
             }
+            $article = new Article();
+
+            if($show->getLogo() != null){
+                $articleLogo = $show->getLogo();
+            } else {
+                $articleLogo = "default_logo.jpeg";
+            }
+
+            $article
+                ->setCoverPicture($articleLogo)
+                ->setTitle($show->getName() . " : la nouvelle émission qui débarque sur Auxois FM !")
+                ->setContent("La nouvelle émission " . $show->getName() . " arrive sur les ondes d'Auxois FM à partir du ". $show->getStartDate()->format('d/m/Y') ." à ".$show->getShowTime()->format
+                    ('H:i') . " ! Découvrez là dès maintenant en cliquant ici : <a href='" .
+                    $show->getwebPageLink()."' class='btn btn-primary'>Découvrir l'émission</a>")
+                ->setPublicationDate(new \DateTime())->setSlug($slugger->slug($article->getTitle())->lower());
             
             $em = $doctrine->getManager();
             $em->persist($show);
+            $em->persist($article);
             $em->flush();
 
 
