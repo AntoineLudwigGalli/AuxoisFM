@@ -41,7 +41,11 @@ class MainController extends AbstractController
             }
         }
         $articlesRepo = $doctrine->getRepository(Article::class);
-        $articles = $articlesRepo->findBy([], ['publicationDate' => 'ASC']);
+        $articles = $articlesRepo->findBy(
+            [],
+            ['publicationDate' => 'DESC'],
+            $this->getParameter('articles.last_article_displayed_on_home'),
+        );
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',

@@ -22,7 +22,7 @@ class Article
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $coverPicture = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

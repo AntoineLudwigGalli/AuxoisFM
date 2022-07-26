@@ -19,7 +19,7 @@ class UserProfileController extends AbstractController
     #[Route('/', name: 'profile')]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
-        $bgc = "red";
+        $bgc = "#c95f5f";
 
         $emailForm=$this->createForm(ChangeEmailFormType::class);
         $emailForm->handleRequest($request);

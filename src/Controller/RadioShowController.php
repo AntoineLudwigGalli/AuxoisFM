@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\DynamicContent;
 use App\Entity\Podcast;
 use App\Entity\RadioShow;
@@ -183,7 +184,7 @@ class RadioShowController extends AbstractController
         #[Route('/{slug}/nouveau-podcast', name: 'new_podcast')]
         #[IsGranted('ROLE_ANIMATOR')]
         #[ParamConverter('show', options: ['mapping' => ['slug' => 'slug']])]
-        public function newPodcast(ManagerRegistry $doctrine, Request $request, RadioShow $show): Response
+        public function newPodcast(ManagerRegistry $doctrine, Request $request, RadioShow $show, SluggerInterface $slugger): Response
         {
             $podcast = new Podcast();
 
@@ -192,11 +193,28 @@ class RadioShowController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-
                 $podcast->setRadioShow($show);
+
+                $article = new Article();
+
+                if($podcast->getRadioShow()->getLogo() != null){
+                    $articleLogo = $podcast->getRadioShow()->getLogo();
+                } else {
+                    $articleLogo = "default_logo.jpeg";
+                }
+
+                $article
+                    ->setCoverPicture($articleLogo)
+                    ->setTitle("Un nouveau podcast de l'émission " . $podcast->getRadioShow()->getName() . " est en ligne !")
+                    ->setContent("Un nouveau podcast de l'émission " . $podcast->getRadioShow()->getName() . " est en ligne ! Il est à écouter sur la page de l'émission cliquant ici : <a href='" .
+                        $podcast->getRadioShow()->getwebPageLink() ."' class='btn btn-primary'>Ecouter le podcast</a>"
+                        )
+                    ->setPublicationDate(new \DateTime())->setSlug($slugger->slug($article->getTitle())->lower())
+;
 
                 $em = $doctrine->getManager();
                 $em->persist($podcast);
+                $em->persist($article);
                 $em->flush();
 
                 $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);

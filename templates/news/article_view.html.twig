@@ -22,7 +22,7 @@
                     <h1 class="col-10 offset-1 text-center mt-3">{{ article.title }}</h1>
                 </div>
                 <div class="card-header-view d-flex flex-row justify-content-center">
-                    <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}"><img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/></a>
+                    <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}" class="d-flex flex-row justify-content-center"><img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/></a>
                 </div>
                 <div class="card-body-view">
                     
