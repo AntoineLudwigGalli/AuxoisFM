@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-12 d-flex flex-column flex-lg-row align-items-lg-center" id="header">
-        <div class="col-lg-3 col-6 offset-3 offset-lg-0">
+    <div class="col-12 d-flex flex-column flex-md-row align-items-md-center" id="header">
+        <div class="col-6 offset-3 col-md-4 offset-md-0">
             <a href="{{ path('main_home') }}"><img src="{{ asset('images/logo.png') }}" alt="logo d'AuxoisFM" id="logo" class="img-fluid"></a>
         </div>
         
         {% if app.user %}
-            <ul class="btn btn-light log-btn col-lg-2 offset-lg-6 col-10 offset-1 my-0">
+            <ul class="btn btn-light log-btn my-0 col-10 offset-1 col-md-2 offset-md-5">
                 <li class="nav-item dropdown">
                     {# Texte du bouton du menu déroulant #}
                     <a class="nav-link dropdown-toggle" href="#" id="profil-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,12 +51,12 @@
                 </li>
             </ul>
         {% else %}
-            <div class="col-12 d-flex flex-row">
-                <div class="col-lg-1 me-lg-4 col-4 offset-lg-6 offset-1">
-                    <a href="{{ path('app_login') }}" class="btn btn-light log-btn ms-5">Connexion</a>
+            <div class="col-12 d-flex flex-row justify-content-center col-md-8 col-lg-12">
+                <div class="col-4 offset-1 col-md-2 offset-md-5 me-md-4 col-lg-1 offset-lg-1 ">
+                    <a href="{{ path('app_login') }}" class="btn btn-light log-btn me-md-2 ">Connexion</a>
                 </div>
-                <div class="col-lg-1 me-lg-4 col-4">
-                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn ms-5">Inscription</a>
+                <div class="col-4 col-md-2 me-md-4 col-lg-1">
+                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn ms-md-3">Inscription</a>
                 </div>
             </div>
         {% endif %}
