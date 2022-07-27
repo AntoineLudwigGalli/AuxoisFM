@@ -122,13 +122,8 @@ class RadioShowCreationFormType extends AbstractType
                     'Jeudi' => "4",
                     'Vendredi' => "5",
                     'Samedi' => "6",
-                    'Dimanche' => "7",
+                    'Dimanche' => "0",
                 ],
-                'constraints' => [
-                    new NotBlank([ // Erreur si le champ n'est pas rempli
-                        'message' => 'Merci de saisir un jour de diffusion valide pour votre émission'
-                    ]),
-                ]
             ])
 
 

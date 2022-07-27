@@ -57,7 +57,7 @@ class RadioShow
     private ?\DateTimeInterface $showDuration = null;
 
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true) ]
     private ?int $timeInterval = null;
 
     #[ORM\Column]

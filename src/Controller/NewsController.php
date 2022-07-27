@@ -37,7 +37,7 @@ class NewsController extends AbstractController
         $query = $em->createQuery('SELECT a FROM App\Entity\Article a ORDER BY a.publicationDate DESC');
         $articles = $paginator->paginate($query, //Requête créée juste avant
             $requestedPage, // Page qu'on souhaite voir
-            5, // Nombre d'articles à afficher par page
+            8, // Nombre d'articles à afficher par page
         );
         return $this->render('news/list.html.twig', [
             'controller_name' => 'NewsController',

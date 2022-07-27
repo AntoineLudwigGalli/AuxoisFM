@@ -60,6 +60,7 @@ function renderCalendar(){
                         
                         if (j != 0) {
                             showStartingMoment = new Date(showStartingMoment.setDate(showStartingMoment.getDate()+data[i].timeInterval));
+                            showEndingMoment = new Date(showEndingMoment.setDate(showEndingMoment.getDate()+data[i].timeInterval));
                         }
 
                         calendar.addEvent({
