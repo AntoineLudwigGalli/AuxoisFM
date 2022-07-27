@@ -54,24 +54,7 @@
             
             <div class="d-flex flex-column justify-content-center d-lg-none align-items-center">
                 <h3>Vous écoutez actuellement : </h3>
-                {% set a_show_is_on_air = false  %}
-                {% for show in shows %}
-                    {% if
-                        show.startDate|date('Y-m-d') == "now"|date("Y-m-d") and
-                        show.showTime|date('H:i') < "now"|date("H:i") and
-                        "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')
-                    %}
-                        {% set a_show_is_on_air = true  %}
-                        <a class="on-air-txt" href="{{ show.webPageLink }}">
-                            <h3>{{ show.name|upper }}</h3>
-                        </a>
-                        <a href='{{ show.webPageLink }}' class="on-air-img mb-3 col-8 offset-2 d-flex align-items-center justify-content-center"> <img src='{{ asset('images/show_logo/' ~ show.logo) }}' alt="" class="img-fluid"> </a>
-                    {% endif %}
-                {% endfor %}
-                {% if a_show_is_on_air == false %}
-                    <h3 class="on-air-txt">La Playlist AuxoisFM</h3>
-                    <img src='{{ asset('images/show_logo/playlistauxoisfm.png' ) }}' alt="" class="img-fluid on-air-img mb-3 col-10 col-lg-8 offset-lg-2">
-                {% endif %}
+                {{ include( 'partials/on-air-display.hmtl.twig' ) }}
                     <audio src="{{ radioUrl }}" controls type="audio/mpeg"></audio>
             </div>
             
@@ -88,24 +71,7 @@
                 
                 <div class="flip-card-back d-none d-lg-flex flex-lg-column justify-content-lg-around">
     
-                        {% set a_show_is_on_air = false  %}
-                            {% for show in shows %}
-                                {% if
-                                    show.startDate|date('Y-m-d') == "now"|date("Y-m-d") and
-                                    show.showTime|date('H:i') < "now"|date("H:i") and
-                                    "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')
-                                %}
-                                    {% set a_show_is_on_air = true  %}
-                                    <a class="on-air-txt" href="{{ show.webPageLink }}">
-                                        <h3>{{ show.name|upper }}</h3>
-                                    </a>
-                                    <a href='{{ show.webPageLink }}' class="on-air-img mb-3 col-8 offset-2 d-flex align-items-center justify-content-center"> <img src='{{ asset('images/show_logo/' ~ show.logo) }}' alt="" class="img-fluid"> </a>
-                                {% endif %}
-                            {% endfor %}
-                        {% if a_show_is_on_air == false %}
-                            <h3 class="on-air-txt">La Playlist AuxoisFM</h3>
-                            <img src='{{ asset('images/show_logo/playlistauxoisfm.png' ) }}' alt="" class="img-fluid on-air-img mb-3 col-8 offset-2">
-                        {% endif %}
+                    {{ include( 'partials/on-air-display.hmtl.twig' ) }}
     
                     <div class="now-playing back-btn btn btn-outline-light col-8 offset-2 d-flex flex-row align-items-center justify-content-center mb-3">
                         <h3>Now Playing...</h3>

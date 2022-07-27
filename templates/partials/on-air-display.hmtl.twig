@@ -1,0 +1,23 @@
+{% set a_show_is_on_air = false  %}
+                            {% for show in shows %}
+                                {% if
+                                    show.startDate|date('Y-m-d') == "now"|date("Y-m-d") and
+                                    show.showTime|date('H:i') < "now"|date("H:i") and
+                                    "now"|date("H:i") < show.showTime|date_modify("+"~ show.showDuration|date("H") ~" hours +"~ show.showDuration|date("i") ~" minutes" )|date('H:i')
+                                %}
+                                    {% set a_show_is_on_air = true  %}
+                                    <a class="on-air-txt" href="{{ show.webPageLink }}">
+                                        <h3>{{ show.name|upper }}</h3>
+                                    </a>
+                                    {% if show.logo %}
+                                        <a href='{{ show.webPageLink }}' class="on-air-img mb-md-3 col-lg-8 offset-lg-2 d-flex align-items-center justify-content-center"> <img src='{{ asset('images/show_logo/' ~ show.logo) }}' alt="" class="img-fluid"> </a>
+        
+                                    {% else %}
+                                        <a href='{{ show.webPageLink }}' class="on-air-img mb-md-3 col-lg-8 offset-lg-2 d-flex align-items-center justify-content-center"> <img src='{{ asset('images/show_logo/default_logo.jpeg') }}' alt="" class="img-fluid"> </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% if a_show_is_on_air == false %}
+                            <h3 class="on-air-txt">La Playlist AuxoisFM</h3>
+                            <img src='{{ asset('images/show_logo/playlistauxoisfm.png' ) }}' alt="" class="img-fluid on-air-img mb-3 col-8 offset-2">
+                        {% endif %}
