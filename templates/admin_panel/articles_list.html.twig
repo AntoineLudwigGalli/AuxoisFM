@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+{% block body %}
+    <a href="{{ path('admin_panel_home') }}" class="btn btn-danger col-1 mt-2 ms-4 position-absolute">Retour</a>
+    <div class=" col-12 col-md-10 offset-md-1">
+        
+        <div class="row">
+            <h1 class="col-12 text-center">Liste des articles </h1>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-12 ">
+                
+                
+                {% if articles is not empty %}
+                    
+                    {# Affichage nb d'articles #}
+                    <div class="row">
+                        <p class="col-12 text-center">Nombre total d'articles
+                            : {{ articles.getTotalItemCount() }}</p>
+                    </div>
+                    
+                    
+                    
+                    {#                        Rechercher un article #}
+                    
+                    <div class="row">
+                        <div class=" search-form offset-md-3 col-md-6">
+                            <form method="GET" action="{{ path('admin_panel_articles_search') }}"
+                                    class="search-box d-flex pb-3">
+                                <input type="search" placeholder="Rechercher" name="search" aria-label="search"
+                                        class="form-control ">
+                                <button type="submit" class="btn btn-outline-success admin-button">Rechercher</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    {# Tableau #}
+                    <div class="row pt-5">
+                        
+                        <div class="col-12 table-responsive">
+                            
+                            <table class="align-middle table table-sm table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ knp_pagination_sortable(articles, 'Titre ', 'a.title') }}</th>
+                                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date de publication ', 'a.publicationDate') }}</th>
+{#             todo                       <th scope="col">{{ knp_pagination_sortable(articles, 'Nombre de commentaires ', 'a.comments') }}</th>#}
+                                    <th scope="col">{{ knp_pagination_sortable(articles, 'Photo de couverture ', 'a.coverPicture') }}</th>
+                                
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                {% for article in articles %}
+                                    <tr>
+                                        <td>{{ article.title|capitalize }}</td>
+                                        <td>{{ article.publicationDate|date('d/m/Y à H:i') }}</td>
+                                        <td> {% if article.coverPicture is null %}
+                                                
+                                                <img src="{{ asset('images/articles_covers/default_cover.jpeg') }}" alt="Photo de couverture par défaut" class="img-fluid
+                                    img-thumbnail show-list-logo">
+                                            
+                                            {% else %}
+                                                
+                                                <img src="{{ asset('images/articles_covers/'~ article.coverPicture) }}" alt="Photo de profil" class="img-fluid
+                                    img-thumbnail show-list-logo">
+                                            
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div>
+            
+                                                <a class="text-decoration-none text-warning me-3" href="{{ path('admin_panel_article_edit', {'id': article.id}) }}"> <i class="fa-solid fa-pen-to-square"></i> Modifier
+                                                </a>
+        
+                                            </div>
+                                            <div class="mt-3">
+                                                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette émission ?')" href="{{ path('admin_panel_article_delete', {'id': article.id, 'csrf_token' : csrf_token('admin_article_delete' ~ article.id)}) }}" class=" text-decoration-none
+                                                text-danger"> <i
+                                                            class="fa-solid fa-trash-can"></i>Supprimer </a>
+                                            </div>
+                                        </td>
+                                        <td><td><a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug}) }}" class="btn btn-primary mx-2"><i class="fa-solid fa-arrow-right"></i></a></td>
+                                    </tr>
+                                
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        
+                        </div>
+                    
+                    </div>
+                    
+                    {# Pagination #}
+                    <div class="row">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(articles) }}
+                            </div>
+                        </div>
+                    </div>
+                
+                {% else %}
+                    
+                    <div class="alert alert-warning w-100 text-center">Aucune utilisateur à afficher</div>
+                
+                {% endif %}
+            
+            </div>
+        
+        </div>
+    </div>
+{% endblock %}
+
+
+

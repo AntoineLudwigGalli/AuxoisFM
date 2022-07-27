@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu d'administration{% endblock %}
+
+{% block body %}
+  <div class="col-12">
+            
+            <div class="row">
+                <h1 class="col-12 text-center blue-line my-5 blue-text ">Menu d'administration</h1>
+            </div>
+            
+            <div class="row">
+                <h2 class="col-12 text-center mt-3 blue-text">Le site d'AuxoisFM, c'est actuellement :</h2>
+            </div>
+            <div class="row d-md-flex flex-md-row justify-content-md-center align-items-md-center">
+                <div class="col-12 col-md-10 offset-md-1">
+                    <div class="row separation-row"></div>
+                    <div class="row">
+                        <div class="col-md-2 col-6">
+                            <a href="{{ path('admin_panel_shows_list') }}" class="admin-button mt-3 btn">{{ shows.getTotalItemCount() }} émissions</a>
+                        </div>
+                        <div class="col-md-2  col-6">
+                            <a href="{{ path('admin_panel_shows_list') }}" class="admin-button mt-3 btn">{{ podcasts.getTotalItemCount() }} podcasts</a>
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <a href="{{ path('admin_panel_users_list') }}" class="admin-button mt-3 btn">{{ users.getTotalItemCount() }} inscrits</a>
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <a href="{{ path('admin_panel_articles_list') }}" class="admin-button mt-3 btn">{{ articles.getTotalItemCount() }} articles</a>
+                        </div>
+                        <div class="col-md-2  col-6">
+                            <a href="{{ path('admin_panel_articles_list') }}" class="admin-button mt-3 btn">{{ comments.getTotalItemCount() }} commentaires </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

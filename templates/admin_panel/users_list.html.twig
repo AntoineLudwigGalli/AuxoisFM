@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des utilisateurs{% endblock %}
+{% block body %}
+    <a href="{{ path('admin_panel_home') }}" class="btn btn-danger col-1 mt-2 ms-4 position-absolute">Retour</a>
+    <div class=" col-12 col-md-10 offset-md-1">
+        
+        <div class="row">
+            <h1 class="col-12 text-center">Liste des utilisateurs </h1>
+        </div>
+        <div class="row">
+            <div class="export-button col-12 text-center mb-2">
+                <a href=" {{ path('admin_panel_users_list_export') }} " class="btn col-12 admin-button col-md-4">Exporter les données utilisateur</a>
+            </div>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-12 ">
+                
+                
+                {% if users is not empty %}
+                    
+                    {# Affichage nb d'utilisateurs #}
+                    <div class="row">
+                        <p class="col-12 text-center">Nombre total d'utilisateurs
+                            : {{ users.getTotalItemCount() }}</p>
+                    </div>
+                    
+                    {#                        Rechercher un utilisateur #}
+                    
+                    <div class="row">
+                        <div class=" search-form offset-md-3 col-md-6">
+                            <form method="GET" action="{{ path('admin_panel_users_search') }}"
+                                    class="search-box d-flex pb-3">
+                                <input type="search" placeholder="Rechercher" name="search" aria-label="search"
+                                        class="form-control ">
+                                <button type="submit" class="btn admin-button">Rechercher</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    {# Tableau #}
+                    <div class="row pt-5">
+                        
+                        <div class="col-12 table-responsive">
+                            
+                            <table class="align-middle table table-sm table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Pseudo ', 'u.pseudonym') }}</th>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Nom ', 'u.lastname') }}</th>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Prénom ', 'u.firstname') }}</th>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Rôle ', 'u.roles') }}</th>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Email ', 'u.email') }}</th>
+                                        <th scope="col">{{ knp_pagination_sortable(users, 'Photo de profil ', 'u.photo') }}</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.pseudonym|capitalize }}</td>
+                                        <td>{{ user.lastname|upper }}</td>
+                                        <td>{{ user.firstname|capitalize }}</td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                {% if user.roles[0] == "ROLE_ADMIN" %}
+                                                    Administrateur
+                                                {% elseif user.roles[0] == "ROLE_ANIMATOR" %}
+                                                    Animateur
+                                                    <a href="{{ path('admin_panel_change_user_role', {'id': user.id, 'csrf_token' : csrf_token('user_change_roles' ~ user.id)}) }}">Passer visiteur</a>
+                                                {% elseif user.roles[0] == "ROLE_USER" %}
+                                                    Visiteur
+                                                    <a href="{{ path('admin_panel_change_user_role', {'id': user.id, 'csrf_token' : csrf_token('user_change_roles' ~ user.id)}) }}">Passer animateur</a>
+                                                {% endif %}
+                                                
+                                            </div>
+                                        </td>
+                                        <td>{{ user.email }}</td>
+                                        <td> {% if user.photo is null %}
+        
+                                                <img src="{{ asset('images/profil/default_profile.jpg') }}" alt="Photo de profil par défaut" class="img-fluid
+                                    img-thumbnail show-list-logo">
+    
+                                            {% else %}
+        
+                                                <img src="{{ asset('images/profil/'~ user.photo) }}" alt="Photo de profil" class="img-fluid
+                                    img-thumbnail show-list-logo">
+    
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.roles[0] == "ROLE_USER" %}
+                                                <div class="mt-3">
+                
+                                                    <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                            href="{{ path('admin_panel_user_delete', {'id': user.id, 'csrf_token' : csrf_token('user_delete' ~ user.id)}) }}"
+                                                            class="text-decoration-none text-danger">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                        Supprimer </a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        
+                        </div>
+                    
+                    </div>
+                    
+                    {# Pagination #}
+                    <div class="row">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(users) }}
+                            </div>
+                        </div>
+                    </div>
+                
+                {% else %}
+                    
+                    <div class="alert alert-warning w-100 text-center">Aucune utilisateur à afficher</div>
+                
+                {% endif %}
+            
+            </div>
+        
+        </div>
+    </div>
+{% endblock %}
+
+
+

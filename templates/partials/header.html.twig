@@ -31,9 +31,7 @@
                         {# Bouton de la page Administration #}
                         {% if app.user.roles[0] == "ROLE_ADMIN" %}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item ms-0" target="_blank" href="#
-    {# todo {{ path('admin_panel_index') }} #}
-    ">
+                            <a class="dropdown-item ms-0" target="_blank" href="{{ path('admin_panel_home') }}">
                                 <i class="fa-solid fa-gears me-1"></i>Administration
                             </a>
                         {% endif %}

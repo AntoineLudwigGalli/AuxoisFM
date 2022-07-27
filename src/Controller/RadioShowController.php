@@ -123,7 +123,6 @@ class RadioShowController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             $webpageOptions->setBackgroundColor("#ffffff");
             $webpageOptions->setTextColor('#000000');
 

@@ -13,7 +13,7 @@
             <div class="col-6 offset-3 profile-container">
                 <div class="row">
                     <div class="col-8 offset-2 mt-4">
-                        {% if app.user.photo is null %}#}
+                        {% if app.user.photo is null %}
                             <img src="{{ asset('images/profil/default_profile.jpg')|imagine_filter('profil') }}" alt="Photo de profil par défaut" class="img-fluid img-thumbnail">
                         
                         {% else %}
