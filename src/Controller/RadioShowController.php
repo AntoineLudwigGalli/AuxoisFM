@@ -15,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -247,18 +248,28 @@ class RadioShowController extends AbstractController
                     unlink($this->getParameter('podcast.audio.directory') . $audio);
                 }
 
+
                 /*Génération nom*/
-                do {
-                    $newFileName = md5(random_bytes(50)) . '.' . $audio->guessExtension();
-                } while (file_exists($this->getParameter('podcast.audio.directory') . $newFileName));
+
+                $newFileName = $podcast->getRadioShow()->getName() .'_'. $podcast->getBroadcastDate()->format("Y-m-d") . '.' . $audio->guessExtension();
 
                 $podcast->setPodcastLink($newFileName);
 
                 $audio->move(
-                    $this->getParameter('podcast.audio.directory'),
+                    $this->getParameter('podcast.audio.directory').$podcast->getRadioShow()->getName(),
                     $newFileName,
                 );
+
+                //Limite à 3 podcasts par page, ensuite on détruit le fichier dans le dossier
+                $directory = $this->getParameter('podcast.audio.directory').$podcast->getRadioShow()->getName();
+                $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+                rsort($scanned_directory);
+
+                if(count($scanned_directory)>3){
+                    unlink($directory."/".$scanned_directory[2]);
+                }
             }
+
             $em = $doctrine->getManager();
             $em->persist($podcast);
             $em->persist($article);

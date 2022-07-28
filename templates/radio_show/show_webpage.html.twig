@@ -63,9 +63,11 @@
             <a href="{{ path('show_new_podcast', {'slug' : show.slug}) }}" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
         {% endif %}
     
+    
         {% set i = 0 %}
         {% for podcast in podcasts %}
-        
+            {% if i < 3 %}
+            
             <div class="row ms-3 my-4">
                 <h4 class="col-12" style="color: {{ textColor }}">Emission du
                     {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}
@@ -78,7 +80,7 @@
             <div class="row ms-3 d-flex flex-row align-items-center ">
                 <div class="gap-audio-player col-9">
                     <audio>
-                        <source src="{{ asset('audio/' ~ podcast.podcastLink) }}">
+                        <source src="{{ asset('audio/'~ podcast.radioShow.name ~ '/' ~ podcast.podcastLink) }}">
                     </audio>
                 </div>
             
@@ -93,7 +95,14 @@
             </div>
         
             {% set i = i + 1 %}
+            {% endif %}
         {% endfor %}
+        <h2 class="col-12 d-flex flex-row align-items-center justify-content-center" style="color: {{ textColor }}">Archives à télécharger :</h2>
+        {% for podcast in podcasts %}
+            <a href="{{ podcast.downloadLink }}" class="col-6 offset-3">Emission du {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}</a>
+        {% endfor %}
+        
+        
     {% else %}
         <div class="col-8 separation-line">
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3" style="color: {{ textColor }}">Podcasts</h2>
@@ -102,10 +111,9 @@
             {% endif %}
         
         {% set i = 0 %}
+            
         {% for podcast in podcasts %}
-            
-            
-          
+            {% if i < 3 %}
             <div class="row ms-3 my-4">
                 <h4 class="col-12" style="color: {{ textColor }}">Emission du
                     {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}
@@ -118,7 +126,7 @@
             <div class="row ms-3 d-flex flex-row align-items-center ">
                 <div class="gap-audio-player col-9">
                     <audio>
-                        <source src="{{ asset('audio/' ~ podcast.podcastLink) }}">
+                        <source src="{{ asset('audio/'~ podcast.radioShow.name ~ '/' ~ podcast.podcastLink) }}">
                     </audio>
                 </div>
                 
@@ -135,8 +143,9 @@
             </div>
             
             {% set i = i + 1 %}
+            {% endif %}
         {% endfor %}
-
+            
         </div>
         {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}
         <div class="d-flex flex-column col-4">

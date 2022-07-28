@@ -26,6 +26,7 @@
         "symfony/doctrine-messenger": "6.*",
         "symfony/dotenv": "6.*",
         "symfony/expression-language": "6.*",
+        "symfony/filesystem": "6.*",
         "symfony/flex": "^2",
         "symfony/form": "6.*",
         "symfony/framework-bundle": "6.*",
