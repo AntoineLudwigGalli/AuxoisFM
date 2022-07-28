@@ -29,6 +29,7 @@
 !/public/images/show_logo/.gitignore
 /public/images/articles_covers/*
 !/public/images/articles_covers/.gitignore
+/public/images/articles_content_pictures/*
 ###< custom settings ###
 
 ###> liip/imagine-bundle ###
