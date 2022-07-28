@@ -9,6 +9,7 @@ parameters:
     app.user.photo.directory: '%kernel.project_dir%/public/images/profil/'
     article.photo.directory: '%kernel.project_dir%/public/images/articles_covers/'
     show.logo.directory: '%kernel.project_dir%/public/images/show_logo/'
+    podcast.audio.directory: '%kernel.project_dir%/public/audio/'
 
 
 services:

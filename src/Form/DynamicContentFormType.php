@@ -24,7 +24,7 @@ class DynamicContentFormType extends AbstractType
                     new Length([
                         'min' => 5,
                         'minMessage' => 'Le contenu doit contenir au moins {{ limit }} caractères',
-                        'max' => 5000,
+                        'max' => 50000,
                         'maxMessage' => 'Le contenu doit contenir au maximum {{ limit }} caractères'
                     ]),
                 ]

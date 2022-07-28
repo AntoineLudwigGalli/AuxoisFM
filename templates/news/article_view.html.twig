@@ -3,7 +3,7 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block body %}
-    
+  
     
     {# Lien pour revenir à la liste des articles #}
     <div class="row">
@@ -22,15 +22,27 @@
                     <h1 class="col-10 offset-1 text-center mt-3">{{ article.title }}</h1>
                 </div>
                 <div class="card-header-view d-flex flex-row justify-content-center">
-                    <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}" class="d-flex flex-row justify-content-center"><img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/></a>
+                    <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}" class="d-flex flex-row justify-content-center">
+                        {% if article.category == "Emission de radio" or article.category == "Podcast" %}
+                            <img src="{{ asset("images/show_logo/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                        {% else %}
+                            <img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                        {% endif %}
+                        
+                    </a>
                 </div>
                 <div class="card-body-view">
                     
                     <div class="col-10 offset-1 mb-3">
                         {{ article.content|purify }}
                     </div>
-                    <footer class="col-12 text-end blockquote-footer mt-0 mb-4">
-                        Publié le <span class="text-black">{{ article.publicationDate|date('d/m/Y à H\\hi') }}</span>
+{#                    todo: changer nom de domaine quand en production #}
+                    <iframe class="col-10 offset-1" src="https://www.facebook.com/plugins/share_button.php?href=http://localhost:8000{{  path(app.request.attributes.get('_route'),
+                        app.request.attributes.get('_route_params')) }}&layout=button_count&size=large&width=104&height=28&appId" width="104" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                 
+                   
+                    <footer class="col-12  mt-0 mb-4">
+                        <p class="blockquote-footer text-end">Publié le <span class="text-black ">{{ article.publicationDate|date('d/m/Y à H\\hi') }}</span></p>
                     </footer>
                     
                     {% if is_granted('ROLE_ADMIN') %}

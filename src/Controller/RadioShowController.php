@@ -159,13 +159,15 @@ class RadioShowController extends AbstractController
                     $this->getParameter('show.logo.directory'),
                     $newFileName,
                 );
-                copy(
-                    $this->getParameter('show.logo.directory') . $newFileName,
-                    $this->getParameter('article.photo.directory') . $newFileName,
-                );
+
 
             }
             $article = new Article();
+
+            copy(
+                $this->getParameter('show.logo.directory') . $show->getLogo(),
+                $this->getParameter('article.photo.directory') . $show->getLogo(),
+            );
 
             if ($show->getLogo() != null) {
                 $articleLogo = $show->getLogo();
@@ -181,6 +183,7 @@ class RadioShowController extends AbstractController
                     $show->getShowTime()->format
                     ('H:i') . " ! Découvrez là dès maintenant en cliquant ici : <a href='" .
                     $show->getwebPageLink() . "' class='btn btn-primary'>Découvrir l'émission</a>")
+                ->setCategory('Emission de radio')
                 ->setPublicationDate(new \DateTime())->setSlug($slugger->slug($article->getTitle())->lower());
 
             $em = $doctrine->getManager();
@@ -215,6 +218,7 @@ class RadioShowController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $podcast->setRadioShow($show);
 
             $article = new Article();
@@ -232,8 +236,29 @@ class RadioShowController extends AbstractController
                 ->setContent("Un nouveau podcast de l'émission " . $podcast->getRadioShow()->getName() . " est en ligne ! Il est à écouter sur la page de l'émission cliquant ici : <a href='" .
                     $podcast->getRadioShow()->getwebPageLink() . "' class='btn btn-primary'>Ecouter le podcast</a>"
                 )
+                ->setCategory('Podcast')
                 ->setPublicationDate(new \DateTime())->setSlug($slugger->slug($article->getTitle())->lower());
 
+            $audio = $form->get('podcastLink')->getData();
+
+            if ($audio != null) {
+
+                if (file_exists($this->getParameter('podcast.audio.directory') . $audio)) {
+                    unlink($this->getParameter('podcast.audio.directory') . $audio);
+                }
+
+                /*Génération nom*/
+                do {
+                    $newFileName = md5(random_bytes(50)) . '.' . $audio->guessExtension();
+                } while (file_exists($this->getParameter('podcast.audio.directory') . $newFileName));
+
+                $podcast->setPodcastLink($newFileName);
+
+                $audio->move(
+                    $this->getParameter('podcast.audio.directory'),
+                    $newFileName,
+                );
+            }
             $em = $doctrine->getManager();
             $em->persist($podcast);
             $em->persist($article);
@@ -241,6 +266,8 @@ class RadioShowController extends AbstractController
 
             $showOptionsRepo = $doctrine->getRepository(ShowWebpageOptions::class);
             $options = $showOptionsRepo->findOneBy(["webpage" => $show->getId()]);
+
+
 
             $this->addFlash('success', 'Le contenu a bien été modifié !');
 

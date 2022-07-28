@@ -7,20 +7,110 @@
     <title>{% block title %}{% endblock %}</title>
     {% block cssIncludes %}{% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {#    Pure Drawer librairy pour menu offcanva #}
+    <link rel="stylesheet" href="{{ asset('css/pure-drawer.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/audio-player.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body style="background-color: {{ bgc|default('#ffffff') }}">
+
+{# Menu Offcanva #}
+<div class="pure-container" data-effect="pure-effect-scaleRotate">
+    <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right">
+    <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right">
+        <span class="pure-toggle-icon"></span>
+    </label>
+    
+    <div class="pure-drawer" data-position="right">
+        <div class="row my-3">
+            <h2 class="col-4 offset-4">Menu</h2>
+        </div>
+        <div class="row ">
+            <div class="col-10 offset-1 d-flex flex-column">
+            
+            {% if app.user %}
+                
+                <ul class="btn btn-light log-btn col-12 my-2">
+                    <li class="nav-item dropdown">
+                        {# Texte du bouton du menu déroulant #}
+                        <a class="nav-link dropdown-toggle" href="#" id="profil-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {# Affichage du prénom de l'utilisateur connecté #}
+                            <i class="fa-solid fa-headphones me-1"></i>{{ app.user.pseudonym }}
+                        </a>
+                        {# Liste des boutons du menu déroulant #}
+                        <div class="dropdown-menu col-12" aria-labelledby="profil-dropdown">
+                            {# Bouton de la page mon profil #}
+                            <a class="dropdown-item ms-0" href="{{ path('user_profile') }}" target="_blank">
+                                <i class="fa-solid fa-circle-user me-1"></i>Profil
+                            </a>
+                        
+                            {# Bouton de la page Mon Emission #}
+                            {% if app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN" %}
+                                <a class="dropdown-item ms-0" href="{{ path('show_list') }}">
+                                    <i class="fa-solid fa-radio me-1"></i>Emissions
+                                </a>
+                            {% endif %}
+                        
+                        
+                        
+                            {# Bouton de la page Administration #}
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item ms-0" target="_blank" href="{{ path('admin_panel_home') }}">
+                                    <i class="fa-solid fa-gears me-1"></i>Administration
+                                </a>
+                            {% endif %}
+                        
+                        
+                        
+                            {# Séparateur #}
+                            <div class="dropdown-divider"></div>
+                        
+                            {# Bouton de la page de déconnexion #}
+                            <a class="dropdown-item ms-0" href="{{ path('app_logout') }}">
+                                <i class="fas fa-sign-out-alt me-1"></i>Déconnexion
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                
+                
+            {% else %}
+           
+                    <a href="{{ path('app_login') }}" class="btn btn-light log-btn my-2">Connexion</a>
+                
+                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn my-2">Inscription</a>
+                
+            {% endif %}
+               
+                
+                    <a href="{{ path('news_list') }}" class="btn btn-light log-btn my-2">Actualités</a>
+        
+                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn my-2">Histoire de la radio</a>
+                    
+                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn my-2">Conditions générales d'utilisation</a>
+                    
+                    <a href="{{ path('app_register') }}" class="btn btn-light log-btn my-2">Mentions légales</a>
+              
+            </div>
+        </div>
+    </div>
+    
+    <div class="pure-pusher-container">
+        <div class="pure-pusher">
+     
     <div class="container-fluid p-0">
     {{ include('partials/header.html.twig') }}
-    
-    {# Affihcage des messages flashes #}
+      {# Affichage des messages flashes #}
     {% include 'partials/flashes.html.twig' %}
     {% block body %}{% endblock %}
 
     </div>
-    
+        </div>
+    </div>
+    <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
+</div>
     {% block jsIncludes %}{% endblock %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {#  Bootstrap  #}

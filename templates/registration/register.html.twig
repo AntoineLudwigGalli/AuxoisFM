@@ -6,7 +6,7 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <div class="row">
+    <div class="row mt-3">
         <h1 class="text-center">Inscription</h1>
     </div>
     
@@ -23,7 +23,11 @@
             {{ form_row(registrationForm.photo) }}
             {{ form_row(registrationForm.agreeTerms) }}
             {#    todo : faire le style des boutons #}
-            <button type="submit" class="btn">Inscription</button>
+            <div class="col-md-6 mx-auto">
+                <button class="btn btn-lg admin-button mb-3 w-100" type="submit">
+                    Je me m'inscris
+                </button>
+            </div>
             {{ form_end(registrationForm) }}
         </div>
     </div>

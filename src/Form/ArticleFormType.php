@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Article;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +39,22 @@ class ArticleFormType extends AbstractType
                         'minMessage' => "Le titre doit contenir au minimum {{ limit }} caractères.",
                         'maxMessage' => "Le titre doit contenir au maximum {{ limit }} caractères.",
                     ])
+                ],
+            ])
+            ->add('category', ChoiceType::class, [
+                'label' => 'Catégorie',
+                'placeholder' => 'Choisir la catégorie d\'article',
+                'choices' => [
+                    'Actualité' => 'Actualité',
+                    'Évènement' =>  'Évènement',
+                    'Emission de radio' => 'Emission de radio',
+                    'Découverte' => 'Découverte',
+                    'Annonce' => 'Annonce'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner une catégorie'
+                    ]),
                 ],
             ])
             ->add('content', CKEditorType::class, [

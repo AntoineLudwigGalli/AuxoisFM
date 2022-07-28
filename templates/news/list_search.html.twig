@@ -52,7 +52,13 @@
                                 {% for article in articles %}
                                     <div class="card-list">
                                         <div class="card-header-list">
-                                            <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}"><img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/></a>
+                                            <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}">
+                                                {% if article.category == "Emission de radio" or article.category == "Podcast" %}
+                                                    <img src="{{ asset("images/show_logo/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                                                {% else %}
+                                                    <img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                                                {% endif %}
+                                            </a>
                                         </div>
                                         <div class="card-body-list">
                                             <span class="tag tag-teal mb-3">Technology</span> <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug }) }}"><h4>{{ article.title }}</h4></a>

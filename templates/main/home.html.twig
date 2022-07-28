@@ -35,7 +35,11 @@
             <div class="owl-carousel owl-theme ">
                 {% for article in articles %}
                 <div class="item py-2">
-                    <img src="{{ asset('images/articles_covers/' ~ article.coverPicture) }}" class="img-fluid" alt=""/>
+                    {% if article.category == "Emission de radio" or article.category == "Podcast" %}
+                        <img src="{{ asset("images/show_logo/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                    {% else %}
+                        <img src="{{ asset("images/articles_covers/" ~ article.coverPicture) }}" alt="{{ article.title }}"/>
+                    {% endif %}
                     <a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug}) }}" target="_blank" class="img-text">{{ article.title }}</a>
                 </div>
                 {% endfor %}

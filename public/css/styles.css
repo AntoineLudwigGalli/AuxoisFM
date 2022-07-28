@@ -13,7 +13,7 @@ body{
 /*Header*/
 #header {
     background-color: #1f3c5c;
-    height: 17vh;
+    height: 10vh;
     position: relative;
 }
 
@@ -42,6 +42,11 @@ body{
 .log-btn:hover {
     border-radius: 25px;
     border: #c95f5f 5px solid;
+}
+
+/*Menu Offcanvas*/
+.pure-drawer h2{
+    color: #7adcf1;
 }
 
 /*Accueil*/
@@ -122,13 +127,11 @@ body{
 
 /*Grille des programmes et podcasts*/
 
-
 #calendar-holder{
     height: 80vh;
     object-fit: cover;
     z-index: 100;
 }
-
 
 .overlay{
     position: fixed;
@@ -418,7 +421,7 @@ table th, table td{
     color: #6c575d;
     border: 2px solid #1f3c5c;
     text-decoration: none;
-    padding: 1rem;
+    padding: .8rem;
     text-transform: uppercase;
     font-size: 0.8rem;
 }
@@ -440,10 +443,6 @@ table th, table td{
 
 
 @media screen and (min-width: 768px){
-
-    #header {
-        height: 10vh;
-    }
 
     #player {
         max-height: 40vh;
