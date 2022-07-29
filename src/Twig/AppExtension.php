@@ -3,10 +3,13 @@
 namespace App\Twig;
 
 use App\Entity\DynamicContent;
+use App\Entity\RadioShow;
 use Doctrine\Persistence\ManagerRegistry;
 use HTMLPurifier;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -19,13 +22,17 @@ class AppExtension extends AbstractExtension
     private HTMLPurifier $purifier;
     private UrlGeneratorInterface $urlGenerator;
     private AuthorizationCheckerInterface $authenticateUser;
+    private Security $security;
 
-    public function __construct(ManagerRegistry $doctrine, HTMLPurifier $purifier, UrlGeneratorInterface $urlGenerator, AuthorizationCheckerInterface $authenticateUser)
+
+    public function __construct(ManagerRegistry $doctrine, HTMLPurifier $purifier, UrlGeneratorInterface $urlGenerator, AuthorizationCheckerInterface $authenticateUser, Security $security)
     {
         $this->doctrine = $doctrine;
         $this->purifier = $purifier;
         $this->urlGenerator = $urlGenerator;
         $this->authenticateUser = $authenticateUser;
+        $this->security = $security;
+
     }
 
     public function getFunctions(): array
@@ -37,15 +44,18 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function displayDynamicContent(string $title, string $slug): string
+    public function displayDynamicContent(string $title, string $slug,): string
     {
 // On va chercher par nom le dynamic content que l'on souhaite
         $dynamicContentRepo = $this->doctrine->getRepository(DynamicContent::class);
-
         $currentDynamicContent = $dynamicContentRepo->findOneByTitle($title);
 
-        if($this->authenticateUser->isGranted('ROLE_ANIMATOR')){
-// Si l'utilisateur est admin, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
+        $showsRepo = $this->doctrine->getRepository(RadioShow::class);
+        $show= $showsRepo->findOneBy(['slug' => $slug]);
+        dump($show->getAnimator());
+        dump($this->security->getUser());
+        if( ($this->authenticateUser->isGranted('ROLE_ANIMATOR') && $show->getAnimator() === $this->security->getUser()) or $this->authenticateUser->isGranted('ROLE_ADMIN')){
+// Si l'utilisateur est admin l'animateur de l'émission, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('show_dynamic_content_edit', ['title' => $title, 'slug' => $slug]) . '">Modifier</a>');
 
         } else {

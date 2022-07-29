@@ -10,7 +10,7 @@
     
     
     <div class="row mt-3">
-        {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
+        {% if app.user != null and ((app.user == show.animator and app.user.roles[0] == "ROLE_ANIMATOR") or app.user.roles[0] == "ROLE_ADMIN") %}
             <div class="row d-flex flex-row position-absolute">
                 <a href="{{ path('show_list') }}" class="btn btn-danger col-1 mt-2 ms-4 position-absolute">Retour</a>
                 <div class="col-4 offset-8 d-flex flex-row justify-content-end">
@@ -46,10 +46,10 @@
         <div class="row">
             <h1 class="col-12 d-flex flex-row align-items-center justify-content-center my-4" style="color: {{ textColor }}">{{ show.name }}</h1>
         </div>
-    </div>
+   
     
     <div class="row">
-        <div class="col-10 offset-1 d-flex flex-row align-items-center justify-content-center my-4">
+        <div class="col-10 offset-1 d-flex flex-column align-items-center justify-content-center my-4">
             <p class="d-flex flex-column align-items-center justify-content-center" title="Ajoutez une description à l'émission">{{ display_dynamic_content( (show.slug ~ '-description'), show.slug, ) }} </p>
         </div>
     </div>
@@ -59,7 +59,7 @@
     {% if not show.youtubeURL and not show.spotifyURL and not show.deezerURL %}
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center" style="color: {{ textColor }}">Podcasts</h2>
         
-        {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
+        {% if (app.user != null and app.user == show.animator and app.user.roles[0] == "ROLE_ANIMATOR") or app.user.roles[0] == "ROLE_ADMIN" %}
             <a href="{{ path('show_new_podcast', {'slug' : show.slug}) }}" class="btn btn-primary col-4 offset-4">Ajouter un podcast</a>
         {% endif %}
     
@@ -106,7 +106,7 @@
     {% else %}
         <div class="col-8 separation-line">
         <h2 class="col-12 d-flex flex-row align-items-center justify-content-center my-3" style="color: {{ textColor }}">Podcasts</h2>
-            {% if app.user != null and (app.user.roles[0] == "ROLE_ANIMATOR" or app.user.roles[0] == "ROLE_ADMIN") %}
+            {% if app.user != null and ((app.user == show.animator and app.user.roles[0] == "ROLE_ANIMATOR") or app.user.roles[0] == "ROLE_ADMIN") %}
                 <a href="{{  path('show_new_podcast', {'slug' : show.slug}) }} " class="btn btn-primary col-4 offset-4" >Ajouter un podcast</a>
             {% endif %}
         
@@ -145,6 +145,12 @@
             {% set i = i + 1 %}
             {% endif %}
         {% endfor %}
+            <h2 class="col-12 d-flex flex-row align-items-center justify-content-center" style="color: {{ textColor }}">Archives à télécharger :</h2>
+            {% for podcast in podcasts %}
+                {% if podcast.downloadLink != null %}
+                <a href="{{ podcast.downloadLink }}" class="col-4 offset-4 text-center">Emission du {{ podcast.broadcastDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}</a>
+                {% endif %}
+            {% endfor %}
             
         </div>
         {#        Affichage des widgets Youtube, Spotify et Deezer s'ils existent #}

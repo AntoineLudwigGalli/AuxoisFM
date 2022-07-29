@@ -21,7 +21,7 @@ class MainController extends AbstractController
         $showsRepo = $doctrine->getRepository(RadioShow::class);
         $shows = $showsRepo->findBy([], ['name' => 'ASC']);
 
-        // Afin d'avoir une boucle qui n'affiche plus les émissions après 52 itérations, on réinitialise la date de début à la date de diffusion de l'avant dernière émission
+        // Afin d'avoir une boucle affiche tout de même les émissions après 52 itérations, on réinitialise la date de début à la date de diffusion une fois celle-ci passée
         foreach ($shows as $show) {
             if ($show->getTimeInterval() != 0) {
                 $date = $show->getStartDate();
