@@ -3,10 +3,10 @@
 
 {% block body %}
 <div class="row mt-5">
-    <h1 class="text-center">Modifier la photo de profil</h1>
+    <h1 class="text-center p-0">Modifier la photo de profil</h1>
 </div>
 <div class="row">
-    <div class="col-12 d-flex justify-content-center my-5 profile-picture">
+    <div class="col-12 d-flex justify-content-center my-5 profile-picture p-0">
     {% if app.user.photo %}
         <img src="{{ asset('images/profil/' ~ app.user.photo) }}" alt="Photo de profil">
     {% else %}
@@ -14,13 +14,17 @@
     {% endif %}
     </div>
 </div>
-    <div class="row">
-        <div class="col-4 offset-4">
-            {{ form(form) }}
-            <a href="{{ path('user_profile') }}" class="btn btn-danger col-12">Retour</a>
+<div class="row">
+    <div class="col-4 offset-4">
+        {{ form_start(form) }}
+        {{ form_row(form.photo) }}
+        <div class="row d-flex flex-column">
+            <button class="col-12 admin-button mb-2" type="submit">Publier</button>
+            <a href="{{ path('user_profile') }}" class="admin-button-cancel col-12 text-center">Retour</a>
         </div>
-        
+        {{ form_end(form) }}
     </div>
+</div>
 
 {% endblock %}
 

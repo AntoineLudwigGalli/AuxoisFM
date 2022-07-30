@@ -4,12 +4,18 @@
 {% block body %}
     
     <div class="row text-center my-3">
-        <a href="{{ path('news_new_article') }}" class="btn btn-primary col-2 d-flex flex-row align-items-center justify-content-center ms-4">Créer un article</a>
-        <h1 class="col-4 offset-1 fs-2">Liste des articles</h1>
-        <form class="d-flex col-4 ms-2" method="GET" action="{{ path('news_search') }}">
+        {% if app.user != null and app.user.roles[0] == "ROLE_ADMIN" %}
+            <a href="{{ path('news_new_article') }}" class="btn btn-primary col-2 d-flex flex-row align-items-center justify-content-center ms-4">Créer un article</a>
+            <h1 class="col-4 offset-2 fs-2">Liste des articles</h1>
+            {% else %}
+                <h1 class="col-4 offset-4 fs-2">Liste des articles</h1>
+        {% endif %}
+        <form class="d-flex col-3 ms-2" method="GET" action="{{ path('news_search') }}">
             <input name="s" class="form-control me-2" type="search" placeholder="Trouver un article" aria-label="Search">
             <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
         </form>
+    
+       
        
     </div>
     
@@ -36,10 +42,8 @@
                                 <p>{{ article.content|striptags|excerpt(20) }}</p>
                             </div>
                             {% if is_granted('ROLE_ADMIN') %}
-                            <div>
-                                <a onclick="return confirm('Êtes-vous sur de vouloir modifier cet article ?')"
-                                        href="{{ path('news_article_edit', {'id': article.id}) }}"
-                                        class="text-decoration-none text-warning me-3 ms-1">
+                            <div class="d-flex flex-row justify-content-center">
+                                <a href="{{ path('news_article_edit', {'id': article.id}) }}" class="text-decoration-none text-warning me-3 ms-1">
                                     <i class="fa-solid fa-pen-to-square me-1"></i>
                                     Modifier
                                 </a>

@@ -22,10 +22,9 @@
             </div>
           
             {#    todo : faire le style des boutons #}
-            <div class="col-md-6 offset-md-3">
-                <button class="btn btn-lg admin-button mb-3 w-100" type="submit">
-                    Publier l'article
-                </button>
+            <div class="row d-flex flex-row justify-content-around mb-4">
+                <button class="col-4 admin-button" type="submit">Publier l'article</button>
+                <a href="{{ path('news_list') }}" class="col-4 admin-button-cancel text-center">Annuler la création de l'article</a>
             </div>
             
             {{ form_end(form) }}

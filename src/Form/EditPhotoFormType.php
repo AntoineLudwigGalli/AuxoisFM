@@ -39,10 +39,7 @@ class EditPhotoFormType extends AbstractType
                 ],
             ])
 
-            ->add('save', SubmitType::class, [
-                'label' => 'Publier',
-                'attr' => [
-                    'class' => 'btn btn-outline-primary w-100',]]);
+
         ;
     }
 
