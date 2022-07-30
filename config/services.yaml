@@ -10,6 +10,7 @@ parameters:
     article.photo.directory: '%kernel.project_dir%/public/images/articles_covers/'
     show.logo.directory: '%kernel.project_dir%/public/images/show_logo/'
     podcast.audio.directory: '%kernel.project_dir%/public/audio/'
+    google_recaptcha.private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'
 
 
 services:

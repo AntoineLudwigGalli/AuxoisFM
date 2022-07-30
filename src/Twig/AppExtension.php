@@ -55,7 +55,7 @@ class AppExtension extends AbstractExtension
         dump($show->getAnimator());
         dump($this->security->getUser());
         if( ($this->authenticateUser->isGranted('ROLE_ANIMATOR') && $show->getAnimator() === $this->security->getUser()) or $this->authenticateUser->isGranted('ROLE_ADMIN')){
-// Si l'utilisateur est admin l'animateur de l'émission, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
+// Si l'utilisateur est admin ou l'animateur de l'émission, on lui crée un bouton modifier avec une url spécifique au nom du dynamic content.
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent())) . ('<a href="' . $this->urlGenerator->generate('show_dynamic_content_edit', ['title' => $title, 'slug' => $slug]) . '">Modifier</a>');
 
         } else {

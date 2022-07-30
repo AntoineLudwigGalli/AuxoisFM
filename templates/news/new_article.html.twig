@@ -7,10 +7,34 @@
     <div class="row">
         <h1 class="col-12 text-center my-5">Créer un nouvel article</h1>
     </div>
-    
-   v
+    <div class="row">
+        <div class="col-8 offset-2">
+            {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.category) }}
+            {{ form_row(form.coverPicture) }}
+            {{ form_row(form.content) }}
+            
+            
+           
+            <div class="col-md-4 offset-md-4 mb-2 d-flex flex-row align-items-center justify-content-center">
+                <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
+            </div>
+          
+            {#    todo : faire le style des boutons #}
+            <div class="col-md-6 offset-md-3">
+                <button class="btn btn-lg admin-button mb-3 w-100" type="submit">
+                    Publier l'article
+                </button>
+            </div>
+            
+            {{ form_end(form) }}
+        </div>
+    </div>
 
 {% endblock %}
-
+{% block jsIncludes %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
 
 

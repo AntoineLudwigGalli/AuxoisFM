@@ -6,11 +6,13 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleFormType;
 use App\Form\CommentFormType;
+use App\Recaptcha\RecaptchaValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -48,7 +50,7 @@ class NewsController extends AbstractController
 
     #[Route('/nouvel-article/', name: 'new_article')]
     #[isGranted('ROLE_ADMIN')]
-    public function newArticle(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response {
+    public function newArticle(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, RecaptchaValidator $recaptcha): Response {
         $article = new Article();
 
         $form = $this->createForm(ArticleFormType::class, $article);
@@ -56,6 +58,17 @@ class NewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération de la réponse envoyée par le captcha dans le formulaire
+
+            $recaptchaResponse = $request->request->get('g-recaptcha-response', null);
+
+            // Si le captcha n'est pas valide, on crée une nouvelle erreur dans le formulaire (ce qui l'empêchera de créer l'article et affichera l'erreur)
+
+            if($recaptchaResponse == null || !$recaptcha->verify( $recaptchaResponse, $request->server->get('REMOTE_ADDR') )){
+
+                // Ajout d'une nouvelle erreur manuellement dans le formulaire
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
             $article->setPublicationDate(new \DateTime())->setSlug($slugger->slug($article->getTitle())->lower());
 
             $photo = $form->get('coverPicture')->getData();

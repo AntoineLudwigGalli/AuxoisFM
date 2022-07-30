@@ -93,9 +93,6 @@ class ArticleFormType extends AbstractType
                 ],
             ])
 
-            ->add('save', SubmitType::class, [
-                'label' => "Publier l'article"
-            ])
         ;
     }
 

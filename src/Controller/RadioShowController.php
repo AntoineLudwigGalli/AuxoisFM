@@ -11,10 +11,12 @@ use App\Form\DynamicContentFormType;
 use App\Form\PodcastFormType;
 use App\Form\RadioShowCreationFormType;
 use App\Form\ShowWebpageOptionsFormType;
+use App\Recaptcha\RecaptchaValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,7 +114,7 @@ class RadioShowController extends AbstractController
 
     #[Route('/nouvelle-emission/', name: 'new_show')]
     #[isGranted('ROLE_ANIMATOR')]
-    public function newRadioShow(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, UrlGeneratorInterface $router): Response
+    public function newRadioShow(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, UrlGeneratorInterface $router, RecaptchaValidator $recaptcha): Response
     {
         $show = new RadioShow();
         $webpageOptions = new ShowWebpageOptions();
@@ -122,6 +124,18 @@ class RadioShowController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Récupération de la réponse envoyée par le captcha dans le formulaire
+
+            $recaptchaResponse = $request->request->get('g-recaptcha-response', null);
+
+            // Si le captcha n'est pas valide, on crée une nouvelle erreur dans le formulaire (ce qui l'empêchera de créer l'article et affichera l'erreur)
+
+            if($recaptchaResponse == null || !$recaptcha->verify( $recaptchaResponse, $request->server->get('REMOTE_ADDR') )){
+
+                // Ajout d'une nouvelle erreur manuellement dans le formulaire
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
 
             $webpageOptions->setBackgroundColor("#ffffff");
             $webpageOptions->setTextColor('#000000');

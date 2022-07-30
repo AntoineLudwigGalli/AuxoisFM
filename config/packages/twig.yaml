@@ -6,6 +6,7 @@ twig:
 
     globals:
       radioUrl: '%auxoisfm.url.liveradio%'
+      google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 when@test:
     twig:

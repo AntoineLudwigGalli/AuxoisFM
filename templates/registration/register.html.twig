@@ -21,14 +21,26 @@
                 label: 'Mot de passe'
             }) }}
             {{ form_row(registrationForm.photo) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-            {#    todo : faire le style des boutons #}
-            <div class="col-md-6 mx-auto">
-                <button class="btn btn-lg admin-button mb-3 w-100" type="submit">
-                    Je me m'inscris
-                </button>
+           
+            <div class="row mb-3">
+                <div class="col-md-4 offset-md-2">
+                 {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+                <div class="col-md-6 ">
+                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
+                </div>
             </div>
+                {#    todo : faire le style des boutons #}
+                <div class="col-md-6 mx-auto">
+                    <button class="btn btn-lg admin-button mb-3 w-100" type="submit">
+                        Je me m'inscris
+                    </button>
+                </div>
+           
             {{ form_end(registrationForm) }}
         </div>
     </div>
+{% endblock %}
+{% block jsIncludes %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
