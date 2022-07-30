@@ -1,4 +1,12 @@
-
+function UrlExists(url) {
+    let http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status != 404)
+        audioToPlay = radioStreamUrl;
+    else
+        audioToPlay = "../audio/default/01-Blue Marks on Her Neck.wav"
+}
 
 TweenMax.set('#ripple-circle circle', {scale:0.5, transformOrigin:'50% 50%'});
 TweenMax.fromTo('#svg-line', 2, {x:-2.5}, {x:2.5,repeat:-1,ease:Elastic.easeInOut, yoyo:true});
@@ -44,9 +52,12 @@ $('.active-box').hover(function(){
     $(hoverCircle).css({'fill': '#486CA3'});
     TweenMax.to('.pause-text', 0.35, {autoAlpha: 0, y:0, transformOrigin:'50% 50%', ease:Back.easeIn});
 });
+let audioToPlay;
+let radioStreamUrl = 'http://auxoisfm.ice.infomaniak.ch/auxoisfm-128';
+UrlExists(radioStreamUrl);
 
 let audioMp3 = new Audio();
-audioMp3.src = "http://auxoisfm.ice.infomaniak.ch/auxoisfm-128";
+audioMp3.src = audioToPlay;
 
 
 function playAudio(){
